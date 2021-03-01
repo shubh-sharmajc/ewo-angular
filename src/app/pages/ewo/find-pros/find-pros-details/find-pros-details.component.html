@@ -1,0 +1,155 @@
+<div class="container find-pros-details mt-35 my-10 rounded bg-white" detect-scroll (onScroll)="scrollHandler($event)"
+     [bottomOffset]="500">
+  <div class="text-666 py-5 fs-px-14">{{breadcrumb?.join(' / ')}}</div>
+  <div class="text-secondary pb-5 fs-px-30">{{searchTitle}}, {{currentUser.country | titlecase}} {{currentUser.country_code}} ({{proMetaData?.total ? proMetaData?.total : 0}})</div>
+  <hr class="mb-5 mt-0"/>
+  <div class="row">
+    <div class="col-lg-2 col-md-6 col-sm-12">
+      <ng-select class="form-group custom-grey details find-pros locations z-index-500" [items]="locations"
+                 [closeOnSelect]="false" [searchable]="false" bindLabel="city" placeholder="Locations"
+                 [(ngModel)]="qp.location" (change)="findProviders()">
+        <ng-template ng-header-tmp>
+          <input type="text" class="form-control fs-px-14" [(ngModel)]="qp.searchLocation"
+                 placeholder="City & State, or Zip" (ngModelChange)="locationChange.next($event)"/>
+        </ng-template>
+        <ng-template ng-option-tmp let-item="item">
+          <p class="mt-2 mb-2 fs-px-14">
+            {{oPath.get(item, 'city')}}, {{oPath.get(item, 'st')}} {{oPath.get(item, 'zip')}}
+          </p>
+        </ng-template>
+      </ng-select>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-12 p-lg-0">
+      <div class="form-group position-relative">
+        <input style="text-indent: 1rem;height: 36px" type="text" class="form-control fs-px-15"
+               placeholder="Conditions treated or services" [(ngModel)]="qp.searchString"
+               (ngModelChange)="searchStrChange.next($event)"/>
+        <img class="search-icon" src="assets/img/search-mediabook.svg"/>
+      </div>
+    </div>
+    <div class="col-lg-2 col-md-6 col-sm-12">
+      <ng-select class="form-group custom-grey details find-pros z-index-500" [closeOnSelect]="true"
+                 [items]="proCategories" [searchable]="false" bindLabel="name" bindValue="_id"
+                 placeholder="Pro Categories" [(ngModel)]="qp.category" (change)="findProviders()">
+      </ng-select>
+    </div>
+    <div class="col-lg col-md-6 col-sm-12 p-lg-0">
+      <ng-select class="form-group custom-grey details find-pros ratings z-index-500" [closeOnSelect]="true"
+                 [items]="ratings" [searchable]="false" bindLabel="name" bindValue="value" placeholder="Ratings"
+                 [(ngModel)]="qp.rating" (change)="findProviders()">
+        <ng-template ng-option-tmp let-item="item">
+          <app-rating [rate]="item.value" [readonly]="true"></app-rating>
+        </ng-template>
+      </ng-select>
+    </div>
+    <div class="col-lg col-md-6 col-sm-12">
+      <ng-select class="form-group custom-grey details find-pros z-index-500" [closeOnSelect]="true"
+                 [items]="priceRange" [searchable]="false" bindLabel="name" bindValue="value" placeholder="Price range"
+                 [(ngModel)]="qp.price_range" (change)="findProviders()">
+      </ng-select>
+    </div>
+    <div class="col-lg col-md-6 col-sm-12 pl-lg-0">
+      <ng-select class="form-group custom-grey details find-pros disable ratings z-index-500" [closeOnSelect]="true"
+                 [items]="insurance" [searchable]="false" bindLabel="name" placeholder="Insurance">
+      </ng-select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="d-flex align-items-center mb-3">
+        <span class="fs-px-14 mr-5 text-dark">Selected:</span>
+        <button type="button" class="btn btn-primary-outline btn-badge mr-4"
+                *ngIf="qp?.price_range || qp?.price_range === 0">
+          {{getPriceRange(qp?.price_range)?.name}}
+          <span class="badge badge-light" (click)="removeQP('price_range')">X</span>
+        </button>
+        <button type="button" class="btn btn-primary-outline btn-badge mr-4" *ngIf="qp?.category">
+          {{getCategory(qp?.category)?.name}} <span class="badge badge-light" (click)="removeQP('category')">X</span>
+        </button>
+        <button type="button" class="btn btn-primary-outline btn-badge mr-4" *ngIf="qp?.location">
+          {{qp?.location?.city}}, {{qp?.location?.st}} {{qp?.location?.zip}}
+          <span class="badge badge-light" (click)="removeQP('location')">X</span>
+        </button>
+        <button type="button" class="btn btn-primary-outline btn-badge mr-4" *ngIf="qp?.rating">
+          Rating {{qp?.rating}} <span class="badge badge-light" (click)="removeQP('rating')">X</span>
+        </button>
+        <button type="button" class="btn btn-primary-outline btn-badge mr-4" *ngIf="qp?.searchString">
+          {{qp?.searchString}} <span class="badge badge-light" (click)="removeQP('searchString')">X</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <hr class="mb-2 mt-0"/>
+  <div class="row">
+    <div class="col-md-8">
+
+    </div>
+    <div class="col-md-4">
+      <div class="text-center">
+        <button  type="submit" mat-button (click)="openDialog()" class="btn btn-primary btn-hw mb-3 mt-2">Customize search</button>
+      </div>
+    </div>
+  </div>
+  
+  <ng-container *ngFor="let data of proData;let i = index">
+    <div class="row">
+      <div class="col-lg-8 col-md-12 col-sm-12 col-12">
+        <div class="row">
+          <div class="col-lg-8 col-md-6 col-sm-12 col-12">
+            <div class="text-secondary fs-px-20 font-weight-bold">{{data?.name?.name}}</div>
+            <div class="d-flex align-items-center mb-2">
+              <div class="pr-5">
+                <app-rating [rate]="data.location.ratings" [readonly]="true"></app-rating>
+              </div>
+              <span>{{data?.location?.review_count}} Reviews</span>
+            </div>
+            <p class="text-666 text-justify fs-px-14 lh-5 mr-10">{{data?.location?.description}}</p>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-12 col-12 pt-8">
+            <p class="text-secondary fs-px-14 font-weight-bold mb-2">Contact info</p>
+            <p class="text-666 fs-px-14 lh-5" *ngIf="data?.location?.address" style="padding-top: 4px">
+              {{getLocInfo(data?.location)?.address}}</p>
+            <p class="text-666 fs-px-14 lh-5" *ngIf="data?.location?.address1">
+              {{getLocInfo(data?.location)?.address1}}</p>
+            <p class="text-666 fs-px-14 lh-5">{{data?.location?.phone?.num | mask: '(000) 000 0000'}}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-8 col-6">
+            <a class="btn btn-primary btn-hw lh-7" [routerLink]="['/pro/user/'+ data?.user?.username]"
+               [queryParams]="{locId: data?.location?._id}">View Profile</a>
+          </div>
+          <div class="col-lg-4 col-6">
+            <button (click)="contact()" type="text" class="btn btn-primary btn-hw">Message</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-12 col-sm-12 col-12">
+        
+        <ngx-hm-carousel name="carousel" class="mediabook-item-carousel">
+          <section ngx-hm-carousel-container class="content">
+            <article *ngFor="let img of carousel;let i = index" class="item cursor-pointer visible_important"
+                     ngx-hm-carousel-item>
+              <div><img class="image" [src]="img.path"/></div>
+            </article>
+          </section>
+          <ng-template #carouselPrev>
+            <div class="click-area">
+              <img style="width: 25px!important;" src="assets/img/left1-arrow.svg">
+            </div>
+          </ng-template>
+          <ng-template #carouselNext>
+            <div class="click-area">
+              <img style="width: 25px!important;" src="assets/img/right-arrow.svg">
+            </div>
+          </ng-template>
+        </ngx-hm-carousel>
+        <!--<div class="fs-px-16 text-666 my-2">Work & play: vacation in leavenworth</div>-->
+      </div>
+    </div>
+    <hr class="my-5"/>
+  </ng-container>
+  <ng-container *ngIf="!proData?.length">
+    <h6 class="py-5 text-center">Providers not found.</h6>
+  </ng-container>
+</div>

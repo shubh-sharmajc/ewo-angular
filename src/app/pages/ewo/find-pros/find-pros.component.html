@@ -1,0 +1,101 @@
+<div class="container find-pros rounded bg-white">
+  <!-- <div class="row pt-5">
+    <div class="col"><h6 class="mb-0 fs-px-14 font-weight-normal">Home / Find Pros / Personal Wellness</h6></div>
+  </div> -->
+
+  <div class="row find-pros-banner">
+    <div class="col-md-12">
+      <div class="upper-section">
+        <div class="ng-select-parent">
+          <ng-select class="custom-grey" [closeOnSelect]="true" [items]="industries" [searchable]="false"
+            bindLabel="name" placeholder="Personal Wellness">
+          </ng-select>
+        </div>
+        <!-- <div class="fs-px-14 text-secondary mr-3">Viewing</div> -->
+        <div class="btn-group" role="group" aria-label="Viewing" btnRadioGroup [(ngModel)]="viewing">
+          <button type="button" class="btn btn-outline-primary fs-px-14" btnRadio="categories">Pro Categories
+          </button>
+          <button type="button" class="btn btn-outline-primary fs-px-14" btnRadio="services">Services</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="searchForm-main">
+        <form class="form-inline" [formGroup]="searchForm" autocomplete="off">
+          <div class="text-center w-100">
+            <h4 class="text-white pb-2">Find the provider you need</h4>
+          </div>
+          <div class="input-group w-100" formGroupName="search">
+            <div class="input-group-append">
+              <div class="input-group-text bg-white border-right-0 rounded-left">
+                <img src="assets/img/search-icon.svg" />
+              </div>
+            </div>
+            <ng-container formGroupName="name">
+              <ng-template #proSearchTpl let-model="item" let-index="index">
+                <p class="my-2 fs-px-14" *ngIf="oPath.get(model, 'name.name')">
+                  <strong class="mr-2">Business Name:</strong>{{oPath.get(model, 'name.name')}}
+                </p>
+                <p class="my-2 fs-px-14" *ngIf="oPath.get(model, 'category.name')">
+                  <strong class="mr-2">Category Name:</strong>{{oPath.get(model, 'category.name')}}
+                </p>
+                <p class="my-2 fs-px-14" *ngIf="oPath.get(model, 'location.name')">
+                  <strong class="mr-2">Location:</strong>{{oPath.get(model, 'location.name')}}
+                </p>
+              </ng-template>
+              <input type="text" class="form-control border-left-0 pl-0" formControlName="name" [typeaheadMinLength]="0"
+                [typeahead]="proDetail" [typeaheadAsync]="true" typeaheadWaitMs="500" [typeaheadScrollable]="true"
+                placeholder="Search by condition, provider category, service type" (keyup)="updateSearchForm()"
+                [typeaheadItemTemplate]="proSearchTpl" (typeaheadOnSelect)="onSelectProResult($event)" />
+            </ng-container>
+            <div class="input-group-prepend rounded-right">
+              <input type="text" class="form-control border-left-0 rounded-0 zipcode-input" formControlName="zipcode"
+                placeholder="Zipcode" />
+              <button type="button" class="btn btn-primary rounded-right find-btn" (click)="goToFindProDetails()">Find</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngFor="let data of proAllData;let i = index">
+    <div class="row py-3">
+      <div class="col-md-12 col-sm-12 pr-8 position-relative">
+        <h5 class="text-secondary">{{data.name}}</h5>
+        <div class="white-space">
+          <drag-scroll #dragScroll (reachesRightBound)="reachesRightBound($event, data)"
+            (reachesLeftBound)="reachesLeftBound($event, data)">
+            <ng-container *ngFor="let item of data[this.viewing];let j = index">
+              <a class="card mr-3 shadow-custom" drag-scroll-item [routerLink]="['/find-pros/details']"
+                [queryParams]="{category: viewing === 'categories' ? item._id : undefined, industryCategory: data.name, searchString: viewing === 'services' ? item.name : item.name}">
+                <img class="card-img-top" [src]="'https://picsum.photos/500/500?a='+((i+1)*(j+2))" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text text-secondary item-name text-truncate" [title]="item.name">{{item.name}}</p>
+                </div>
+              </a>
+            </ng-container>
+            <a href="javascript:void(0);" class="position-absolute" (click)="moveLeft(i)"
+              style="top: calc(50%);left: 30px;" *ngIf="!data.isReachesLeftBound">
+              <img src="assets/img/ellipse.svg" />
+              <img class="position-absolute"
+                style="top: 7px;left: 10px;-webkit-transform:rotate(180deg);-moz-transform: rotate(180deg);-ms-transform: rotate(180deg);-o-transform: rotate(180deg);transform: rotate(180deg);"
+                src="assets/img/right-vector.svg" />
+            </a>
+            <a href="javascript:void(0);" class="position-absolute" (click)="moveRight(i)"
+              style="top: calc(50%);right: 16px;" *ngIf="!data.isReachesRightBound">
+              <img src="assets/img/ellipse.svg" />
+              <img class="position-absolute" style="top: 7px;right: 10px;" src="assets/img/right-vector.svg" />
+            </a>
+          </drag-scroll>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="!proAllData?.length">
+    <div class="row py-5">
+      <div class="col-md-12 col-sm-12">
+        <h5 class="text-secondary mb-0 text-center">Categories are not available.</h5>
+      </div>
+    </div>
+  </ng-container>
+</div>

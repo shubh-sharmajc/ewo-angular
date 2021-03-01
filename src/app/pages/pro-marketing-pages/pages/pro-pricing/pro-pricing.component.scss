@@ -1,0 +1,46 @@
+.pro-pricing {
+  width: 100%;
+  margin-top: 50px;
+  padding: 20px 0;
+  font-family: Roboto;
+
+  .pricing-head {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 30px;
+    text-align: center;
+    color: #333333;
+    size: 18px;
+    line-height: 21.09px;
+  }
+
+  .main-head {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 158.47%;
+    text-align: center;
+    color: #333333;
+  }
+
+  .form-check-inline {
+    input.form-check-input {
+      height: 20px;
+      width: 20px;
+    }
+  }
+
+  .annual-payment:after {
+    content: '(Savings apply)';
+    position: absolute;
+    left: 0;
+    top: 1.5rem;
+    font-size: 12px;
+  }
+
+  .card {
+    min-height: 665px;
+  }
+}

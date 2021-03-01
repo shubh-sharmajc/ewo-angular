@@ -1,0 +1,80 @@
+<div class="save-in-mb-popup">
+  <div class="popup-header">
+    <ng-container *ngIf="imageData?.type !== 'PRO'">
+      <h4 *ngIf="imageData?.subject" class="popup-title">Save Experience</h4>
+      <h4 *ngIf="!imageData?.subject" class="popup-title">Save Photo</h4>
+    </ng-container>
+    <ng-container *ngIf="imageData?.type === 'PRO'">
+      <h4 class="popup-title">Save Pro</h4>
+    </ng-container>
+  </div>
+  <div class="popup-body">
+    <div class="section m0 p0">
+      <form [formGroup]="saveItemForm" (ngSubmit)="onSubmit()" autocomplete="off">
+        <div class="grid">
+          <div class="col4_sm-4_xs-12 mT20">
+            <div><img class="image" [src]="f['image_url'].value"/></div>
+          </div>
+          <div class="col8_sm-8_xs-12 mT20">
+            <ng-container *ngIf="imageData?.type !== 'PRO'">
+              <div class="title">{{imageData?.subject ? 'Subject' : 'Title'}} : <span class="subject">{{f['subject'].value}}</span>
+              </div>
+              <div class="description-text">
+                <div *ngIf="imageData?.description && imageData?.subject" class="description-title">Description :
+                  <span class="description"
+                        [innerHtml]="f['desc'].value.length > 150 && !showMoreText ? sanitizer.bypassSecurityTrustHtml(((f['desc'].value | slice:0:150) + '...')) : sanitizer.bypassSecurityTrustHtml((f['desc'].value))"></span>
+                  <a class="see-more" href="javascript:void(0);" *ngIf="f['desc'].value.length > 150"
+                     (click)="showMoreText = !showMoreText">{{(!showMoreText) ? 'see more' : ' less'}}</a>
+                </div>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="imageData?.type === 'PRO'">
+              <div class="title">Title : <span class="subject">{{f?.subject?.value}}</span></div>
+              <div class="description-text">
+                <div *ngIf="imageData?.description" class="description-title">Description :
+                  <span class="description"
+                        [innerHtml]="f['desc'].value.length > 150 && !showMoreText ? sanitizer.bypassSecurityTrustHtml(((f['desc'].value | slice:0:150) + '...')) : sanitizer.bypassSecurityTrustHtml((f['desc'].value))"></span>
+                  <a class="see-more" href="javascript:void(0);" *ngIf="f['desc'].value.length > 150"
+                     (click)="showMoreText = !showMoreText">{{(!showMoreText) ? 'see more' : ' less'}}</a>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+          <div class="col12_sm-12_xs-12 p-2 border-hr"></div>
+          <div class="col12_sm-12_xs-12 save-photo">
+            <div class="input">
+              <label class="content-label"><span>Select mediabook (required)</span>
+                <div class="text-danger" *ngIf="submitted && f.mediabook.errors && f.mediabook.errors.required">
+                  Mediabook is required.
+                </div>
+              </label>
+              <ng-select [ngClass]="{'green': media && media.name === 'Create new mediabook', 'red-border': submitted && f.mediabook.errors && f.mediabook.errors.required}"
+                         class="custom-grey action-dd save" [items]="mediaBookList" [closeOnSelect]="true"
+                         (change)="menuChange($event)" [searchable]="false" bindLabel="name" placeholder="Select" formControlName="mediabook"
+                         bindValue="_id" dropdownPosition="top">
+              </ng-select>
+            </div>
+            <div class="input mT20">
+              <label class="content-label">Notes (optional)</label>
+              <textarea #notes class="input-field notes" maxlength="500"
+                        placeholder="You can use this to track your reasons for saving."
+                        formControlName="notes"></textarea>
+              <span class="notesCharacters"><span>{{ 500 - notes.value.length }} remaining</span></span>
+            </div>
+          </div>
+          <div *ngIf="submitted && f.subject.errors" class="msg">
+            <div *ngIf="f.subject.errors.required">
+              Images without {{imageData?.subject ? 'subjects' : 'titles'}} cannot be saved. Please report this to
+              Support.
+            </div>
+          </div>
+          <div class="col12_sm-12_xs-12 text-right mT30 mb-15 buttons">
+            <button type="button" class="btn btn-cancel outline" value="Cancel" (click)="closeDialog()">Cancel
+            </button>
+            <button type="submit" class="btn btn-submit" value="Submit">Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

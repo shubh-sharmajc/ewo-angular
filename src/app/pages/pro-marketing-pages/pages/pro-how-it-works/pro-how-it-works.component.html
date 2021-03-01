@@ -1,0 +1,57 @@
+<div class="how-it-works">
+  <div class="container mt-28 px-3">
+    <ngx-hm-carousel [(ngModel)]="index" [data]="dataArr" class="carousel account-banner">
+      <section ngx-hm-carousel-container class="content">
+        <article class="item cursor-pointer visible_important" ngx-hm-carousel-item
+                 *ngFor="let data of dataArr | slice:0:3; let i = index">
+          <div class="img position-relative border-radius"
+               [ngStyle]="{'background-image': 'linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(196, 196, 196, 0) 50%), url(' + (data?.featured_image?.thumbnail ? '\''+ data?.featured_image?.thumbnail + '\'' : 'https://via.placeholder.com/800x300?text=NoImage') + ')'}">
+            <h1 class="resource-header ml-5 mt-5 pt-10"
+                [innerHtml]="sanitizer.bypassSecurityTrustHtml(((data.title)))"></h1>
+            <div class="d-flex justify-content-end mr-5 buttons">
+              <a *ngIf="!currentUser" class="btn btn-primary" [routerLink]="['/pro/sign-up']">Register Now</a>
+              <a *ngIf="currentUser && !business?.is_complete" [routerLink]="['/pro/resume-registration']"
+                 class="btn btn-primary">Resume registration</a>
+              <a *ngIf="currentUser && business?.is_complete" [routerLink]="['/pro/user/'+currentUser?.username]"
+                 class="btn btn-primary">View profile</a>
+            </div>
+          </div>
+        </article>
+        <ng-template #infiniteContainer></ng-template>
+      </section>
+      <ng-template #carouselContent let-avatar let-i="index">
+        <article class="item cursor-pointer visible_important">
+          <div class="img"
+               [ngStyle]="{'background-image': 'linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(196, 196, 196, 0) 50%), url(' + (data?.featured_image?.thumbnail ? '\''+ data?.featured_image?.thumbnail + '\'' : 'https://via.placeholder.com/800x300?text=NoImage') + ')'}">
+          </div>
+        </article>
+      </ng-template>
+      <ng-template #carouselDot let-model>
+        <div class="ball bg-accent"
+             [class.visible]="model.index === model.currentIndex"></div>
+      </ng-template>
+    </ngx-hm-carousel>
+    <div class="row mt-4">
+      <div class="col-md-12 col-sm-12">
+        <div class="container p-0 pro-user-grid">
+          <div class="row">
+            <div class="col-md-4" *ngFor="let data of dataArr">
+              <div class="card mb-2">
+                <a class="card-img-top">
+                  <img class="border-radius" [src]="data?.featured_image?.thumbnail"
+                       onerror="this.src = 'https://via.placeholder.com/500x250?text=No Image'"/>
+                </a>
+                <div class="card-body p-2">
+                  <h5 class="card-title text-truncate text-blue w-100 fs-px-18 uppercase">{{data.title}}</h5>
+                  <p class="card-text w-100 text-666 fs-px-14 multi-truncate"
+                     [innerHtml]="sanitizer.bypassSecurityTrustHtml(((data.content)))"></p>
+                  <a [href]="WP_STORIES_LINK+'marketing_pages/'+data.slug">Read more</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+.my-reviews {
+  .nav {
+    .nav-item {
+      a.nav-link {
+        font-family: Roboto, sans-serif;
+        font-style: normal;
+        font-weight: 500;
+        color: #333333;
+        font-size: 16px;
+      }
+
+      a.nav-link.active, a.nav-link:hover {
+        color: #3AA757;
+      }
+    }
+  }
+
+  .business-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 20%;
+  }
+
+  .business-profile-link {
+    color: #333333;
+  }
+
+  .business-profile-link:hover {
+    color: #3AA757;
+  }
+
+  .search-icon {
+    position: absolute;
+    top: 41px;
+    right: 394px;
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+  }
+}

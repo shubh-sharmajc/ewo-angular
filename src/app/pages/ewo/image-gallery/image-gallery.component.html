@@ -1,0 +1,256 @@
+<section class="image-gallery-page">
+  <div class="container">
+    <div class="grid pt-5 pb-1 back-button" (click)="goTOBack()"><a class="d-flex align-items-center"><img
+      class="mr-1" src="assets/img/backmobile.svg"/>
+      <span class="text-secondary">Back</span></a></div>
+    <div class="grid pt-0">
+      <div class="col12 col12_sm-12_xs-12 image-slider mT10 px-0" *ngIf="!isDefaultImgView" style="height: 800px;">
+        <ngx-hm-carousel class="carousel img-gallery-carousel" [(ngModel)]="imgCarouselIndex" [data]="carouselArr"
+                         *ngIf="imgObj?.is_gallery" [infinite]="true" [aniTime]="100">
+          <section ngx-hm-carousel-container class="content">
+            <article class="item cursor-pointer" ngx-hm-carousel-item *ngFor="let img of carouselArr;let i = index"
+                     [ngClass]="{'visible': imgCarouselIndex===i}">
+              <div class="img" (click)="toggleImgView()"
+                   [ngStyle]="{'background-image': 'url(\'' + img?.picture_1500_url + '\')'}">
+              </div>
+
+            </article>
+            <ng-template #infiniteContainer></ng-template>
+          </section>
+          <!-- only using in infinite mode or autoplay mode, that will render with-->
+          <ng-template #carouselContent let-img let-i="index">
+            <article class="item cursor-pointer" [ngClass]="{'visible': imgCarouselIndex===i}">
+              <div class="img" (click)="toggleImgView()"
+                   [ngStyle]="{'background-image': 'url(\'' + img?.picture_1500_url + '\')'}">
+              </div>
+
+            </article>
+          </ng-template>
+          <ng-template #carouselPrev>
+            <div class="click-area" (click)="getNextMediaBookImageData(imgCarouselIndex)">
+              <img class="left-arrow" src="assets/img/left1-arrow.svg">
+            </div>
+          </ng-template>
+          <ng-template #carouselNext>
+            <div class="click-area" (click)="getNextMediaBookImageData(imgCarouselIndex)">
+              <img class="right-arrow" src="assets/img/right-arrow.svg">
+            </div>
+          </ng-template>
+        </ngx-hm-carousel>
+        <img class="single-img" *ngIf="!imgObj?.is_gallery && imgObj?.picture_1500_url"
+             [src]="imgObj?.picture_1500_url" (click)="toggleImgView()"/>
+        <button type="button" class="btn btn-submit findPros1" [routerLink]="'/find-pros'">Find Local Pros</button>
+      </div>
+      <div class="col8 col8_sm-12_xs-12 px-0">
+        <div class="image-slider mT10" *ngIf="isDefaultImgView">
+          <ngx-hm-carousel class="carousel img-gallery-carousel" [(ngModel)]="imgCarouselIndex" [data]="carouselArr"
+                           *ngIf="imgObj?.is_gallery" [infinite]="true" [aniTime]="100">
+            <section ngx-hm-carousel-container class="content">
+              <article class="item cursor-pointer" ngx-hm-carousel-item *ngFor="let img of carouselArr;let i = index"
+                       [ngClass]="{'visible': imgCarouselIndex===i}">
+                <div class="img" (click)="toggleImgView()"
+                     [ngStyle]="{'background-image': 'url(\'' + img?.picture_1500_url + '\')'}">
+                </div>
+              </article>
+              <ng-template #infiniteContainer></ng-template>
+            </section>
+            <!-- only using in infinite mode or autoplay mode, that will render with-->
+            <ng-template #carouselContent let-img let-i="index">
+              <article class="item cursor-pointer" [ngClass]="{'visible': imgCarouselIndex===i}">
+                <div class="img" (click)="toggleImgView()"
+                     [ngStyle]="{'background-image': 'url(\'' + img?.picture_1500_url + '\')'}">
+                </div>
+              </article>
+            </ng-template>
+            <ng-template #carouselPrev>
+              <div class="click-area" (click)="getNextMediaBookImageData(imgCarouselIndex)">
+                <img class="left-arrow" src="assets/img/left1-arrow.svg">
+              </div>
+            </ng-template>
+            <ng-template #carouselNext>
+              <div class="click-area" (click)="getNextMediaBookImageData(imgCarouselIndex)">
+                <img class="right-arrow" src="assets/img/right-arrow.svg">
+              </div>
+            </ng-template>
+          </ngx-hm-carousel>
+          <img class="single-img" *ngIf="!imgObj?.is_gallery && imgObj?.picture_1500_url"
+               [src]="imgObj?.picture_1500_url" (click)="toggleImgView()"/>
+          <button type="button" [routerLink]="'/find-pros'" class="btn btn-submit findPros">Find Local Pros</button>
+        </div>
+        <div class="options-container">
+          <a class="option" appCheckLoginClick (ngClick)="shareViaEmail()">
+            <img src="assets/img/gallery_email.svg"/><span class="option-title">Email</span></a>
+          <div class="social-share">
+            <a class="option" appCheckLoginClick>
+              <img src="assets/img/share.svg"/><span class="option-title">Share</span></a>
+            <ng-select *ngIf="currentUser" class="social-share-dd" [items]="socialShare" bindLabel="name"
+                       [closeOnSelect]="true" [searchable]="false" [(ngModel)]="selectedSocialShare"
+                       (change)="changeSocialShare(selectedSocialShare)">
+              <ng-template ng-label-tmp let-item="item">
+                <div class="share-option">
+                  <img *ngIf="item?.icon" [src]="item.icon"/>
+                  <span>{{item.name}}</span>
+                </div>
+              </ng-template>
+              <ng-template ng-option-tmp let-item="item" let-index="index">
+                <div class="share-option">
+                  <img *ngIf="item?.icon" [src]="item.icon"/>
+                  <span>{{item.name}}</span>
+                </div>
+              </ng-template>
+            </ng-select>
+          </div>
+          <a class="option" appCheckLoginClick (ngClick)="openSaveImageModal()">
+            <img src="assets/img/save.svg"/><span class="option-title">Save</span>
+          </a>
+          <a appCheckLoginClick class="option"><img src="assets/img/comment.svg"/>
+            <span class="option-title">Comment | {{imgObj?.total_comment}}</span></a>
+          <a class="option" appCheckLoginClick (ngClick)="toggleLike($event, imgObj)"
+             [ngClass]="{'disabled' : disable}" style="min-width: 85px;">
+            <i class="zmdi zmdi-thumb-up like"
+               [class.green]="imgObj?.like?.is_like"></i>
+            <span class="option-title">
+              <span>{{imgObj?.like?.is_like ? 'Unlike' : 'Likes'}}</span> | {{imgObj?.total_like}}
+            </span>
+          </a>
+          <a appCheckLoginClick class="option" (ngClick)="copyURL()">
+            <img src="assets/img/copy_url.svg"/>
+            <span class="option-title">{{isURLCopied ? 'URL Copied' : 'Copy URL'}}</span>
+          </a>
+          <a class="option">
+            <ng-select class="mb-menu icon" [items]="actionMenu" [closeOnSelect]="true" [searchable]="false"
+                       bindLabel="name" [(ngModel)]="selectedAction"
+                       (change)="menuChange(selectedAction.name)"></ng-select>
+            <img src="assets/img/grey-three-dot.svg" (click)="openMenu($event)"/>
+          </a>
+        </div>
+        <div class="image-title-header">
+          <div class="image-title">{{imgObj?.subject ? imgObj?.subject : imgObj?.title}}</div>
+          <a class="btn outline story-btn" *ngIf="imgObj?.used_stories && imgObj?.used_stories.length"
+             [href]="WP_STORIES_LINK + imgObj?.used_stories[0].story_url">Go to story</a>
+        </div>
+        <div class="image-description" [innerHtml]="sanitizer.bypassSecurityTrustHtml(imgObj?.description)"></div>
+        <div class="image-title-header">
+          <div class="image-title"><span *ngIf="imgObj?.is_gallery">Gallery: {{imgObj?.title}}</span></div>
+          <div class="user-name">
+            <div class="img-container">
+              <img [src]="imgObj?.author_id?.picture_url ? imgObj?.author_id?.picture_url : 'assets/img/user-icon.svg'"
+                   onerror="this.src='assets/img/user-icon.svg'"/>
+            </div>
+            <span class="title">{{imgObj?.author_id?.name}}</span>
+          </div>
+        </div>
+        <div class="comments-container">
+          <div class="d-flex justify-content-between">
+            <div class="comments-title">Comments, Q&A</div>
+            <div class="read-all-comment text-center" *ngIf="!equalComments"
+                 [style.display]="total_comments && total_comments  > 3 ? 'block' : 'none'">
+              <a appCheckLoginClick href="javascript:void(0);" (ngClick)="readAllComment()">All Comment</a>
+            </div>
+          </div>
+          <ng-container *ngIf="commentList && commentList.length > 0">
+            <div *ngFor="let comment of commentList;let i = index">
+              <div class="user-title-info">
+                <div class="user-title">
+                  <a [routerLink]="['/user/'+comment?.user_id?.username]">
+                    <img
+                      [src]="comment?.user_id?.picture_url ? comment?.user_id?.picture_url : 'assets/img/user-icon.svg'"
+                      onerror="this.src='assets/img/user-icon.svg'"/>
+                  </a>
+                  <div class="user-name">{{comment?.user_id?.name}}</div>
+                  <div class="user-data">
+                    {{comment?.exp_comment_time | date:'MMMM d, y'}} at {{comment?.exp_comment_time | date:'h:mm a'}}
+                  </div>
+                </div>
+                <div class="comment-action" *ngIf="currentUser">
+                  <img src="assets/img/grey-three-dot.svg"/>
+                  <ng-select class="mb-menu icon" *ngIf="currentUser?._id === comment?.user_id?._id" bindLabel="name"
+                             [items]="myCommentActionMenu" [closeOnSelect]="true" [searchable]="false"
+                             [(ngModel)]="commentAction"
+                             (change)="commentActionChange(commentAction.name, comment)"></ng-select>
+                  <ng-select class="mb-menu icon" *ngIf="currentUser?._id !== comment?.user_id?._id"
+                             [searchable]="false" (click)="updateCommentActionMenu(comment?.flagged_by)"
+                             [items]="commentActionMenu" [closeOnSelect]="true" bindLabel="name"
+                             [(ngModel)]="commentAction" (change)="commentActionChange(commentAction.name, comment)">
+                  </ng-select>
+                </div>
+              </div>
+              <div class="user-description-info">
+                {{comment?.comment}}
+                <div *ngIf="currentUser?._id !== comment?.user_id?._id" class="like-btn" appCheckLoginClick
+                     (ngClick)="likeComment(comment)">
+                  {{comment?.liked_by.indexOf(currentUser?._id) === -1 ? 'Likes' : 'Unlike'}} | {{comment.likes}}
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="currentUser">
+            <div class="comment-box">
+              <img [src]="currentUser?.picture_url" onerror="this.src='assets/img/user-icon.svg'"/>
+              <form [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+                <div>
+                  <div *ngIf="submitted && f.comment.errors" class="comment-validation">
+                    <div *ngIf="f.comment.errors.required">Please enter the comment.</div>
+                    <div *ngIf="f.comment.errors.pattern">Please enter valid comment.</div>
+                  </div>
+                  <textarea class="comment" type="text" formControlName="comment" placeholder="Enter comment here"
+                            [ngClass]="{ 'red-border': submitted && f.comment.errors && [f.comment.errors.required || f.comment.errors.pattern]}"
+                            row="5"></textarea>
+                </div>
+                <div class="buttons text-right">
+                  <button type="button" class="btn btn-cancel outline" (click)="resetForm()" value="Cancel">Cancel
+                  </button>
+                  <button type="submit" class="btn btn-submit" value="Submit">Submit</button>
+                </div>
+              </form>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="col4 col4_sm-12_xs-12 pr-0">
+        <div *ngIf="imgObj?.author_id && imgObj?.author_id?.role !== 'content_team'" class="image-details-box mT10">
+          <div class="box-details">
+            <div class="img-container">
+              <img [src]="imgObj?.author_id?.picture_url ? imgObj?.author_id?.picture_url : 'assets/img/user-icon.svg'"
+                   onerror="this.src='assets/img/user-icon.svg'"/>
+            </div>
+            <div>
+              <a class="title"
+                 [routerLink]="[imgObj?.author_id?.is_deleted ? '' : (proUserRoles.indexOf(imgObj?.author_id?.role) > -1 ? '/pro/user/' : '/user/')+imgObj?.author_id?.username]">
+                {{imgObj?.author_id?.name}}</a>
+              <ng-container *ngIf="proUserRoles.indexOf(imgObj?.author_id?.role) > -1">
+                <br/>
+                <app-rating [rate]="imgObj?.author_id.avgRatings" [readonly]="true"></app-rating>
+              </ng-container>
+            </div>
+            <div class="follow-btn mR10">
+              <button *ngIf="!imgObj?.author_id?.is_deleted" type="button"
+                      [class]="'btn btn-follow ' + (isFollowing && 'outline-follow')"
+                      appCheckLoginClick (ngClick)="followerFollowing(imgObj?.author_id?.email)">
+                <span>{{isFollowing ? 'Following' : 'Follow'}}</span>
+              </button>
+            </div>
+          </div>
+          <div class="description">
+            {{(imgObj?.author_id?.about_me?.length > 150 && !showMoreText) ? ((imgObj?.author_id?.about_me |
+            slice:0:150)
+            + '...') : imgObj?.author_id?.about_me}}
+            <a href="javascript:void(0);" *ngIf="imgObj?.author_id?.about_me?.length > 150"
+               (click)="showMoreText = !showMoreText">{{(!showMoreText) ? 'See more' : 'less'}}</a>
+          </div>
+        </div>
+        <div class="grid-images-header">Similar Images</div>
+        <div class="grid similar-images pt-0">
+          <ng-container *ngFor="let img of imageData">
+            <div class="col6 col6_sm-3_xs-6 p-2" *ngIf="img.picture_thumb_url">
+              <a [href]="'/image-gallery/'+img._id">
+                <div class="similar-image"
+                     [style.background-image]="'url('+(img.picture_thumb_url)+')'"></div>
+              </a>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

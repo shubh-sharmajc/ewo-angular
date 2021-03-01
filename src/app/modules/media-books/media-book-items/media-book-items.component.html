@@ -1,0 +1,162 @@
+<div class="mb-items bg-white border rounded" detect-scroll (onScroll)="scrollHandler($event)" [bottomOffset]="500">
+  <h5 class="text-primary text-center fs-px-20 font-weight-bold py-6 border-bottom border-primary mb-0"
+      *ngIf="proUserRoles.indexOf(currentUser?.role) > -1 && !router.url.includes('mb-sequence')">
+    <div class="row">
+      <div class="col-3">
+        <a class="float-left pl-9 text-dark font-weight-normal" href="javascript:void(0);"
+           [routerLink]="'/pro/manage-media/'+user?.username+'/mediabooks'">Back to Mediabooks</a>
+      </div>
+      <div class="col">{{mediaBookItems?.length ? 'View' : 'New'}} Mediabook</div>
+      <div class="col-3"></div>
+    </div>
+  </h5>
+  <h5 class="text-primary text-center fs-px-20 font-weight-bold py-6 border-bottom border-primary mb-0"
+      *ngIf="proUserRoles.indexOf(currentUser?.role) > -1 && router.url.includes('mb-sequence')">
+    <div class="row">
+      <div class="col-2">
+        <a class="float-left pl-10 text-dark font-weight-normal" href="javascript:void(0);"
+           [routerLink]="'/pro/manage-media/'+user?.username+'/mediabooks'">Back</a>
+      </div>
+      <div class="col">Setup cover image & slideshow</div>
+      <div class="col-2"></div>
+    </div>
+  </h5>
+  <div class="section">
+    <div class="mb-items-grid grid">
+      <div class="col5 col5_sm-12_xs-12 title py-0 mb-sm-2" *ngIf="mediaBookObj">
+        <div class="heading">
+          <span class="mediabook-header">MEDIABOOK: {{mediaBookObj?.name}}</span>
+          <span class="private text-999">
+            ({{mediaBookObj?.shared ? (mediaBookObj?.created_by?.first_name + ' ' + mediaBookObj?.created_by?.last_name) : (mediaBookObj?.private ? 'Private' : 'Public')}})
+          </span>
+          <div class="edit-media-book" (click)="updateMediaBook()"
+               *ngIf="mediaBookObj?.shared && mediaBookObj?.private && mediaBookObj?.sharingAccess?.access"></div>
+          <div class="edit-media-book" *ngIf="!mediaBookObj?.shared" (click)="updateMediaBook()"></div>
+        </div>
+      </div>
+      <div class="col7 col7_sm-12_xs-12 filter-by d-flex justify-content-lg-end py-0 mb-2"
+           *ngIf="mediaBookObj">
+        <div class="pb-0 actions"
+             *ngIf="mediaBookCreatorId == user?._id && !mediaBookObj?.default && !mediaBookObj?.private">
+          <div class="user">
+            <img class="user-icon"
+                 [src]="mediaBookObj?.shareCount ? 'assets/img/user.svg' : 'assets/img/user-disable.svg'"/>
+            <span class="user-sharing-count" *ngIf="mediaBookObj?.shareCount">
+              +{{mediaBookObj?.shareCount}}</span>
+          </div>
+          <button (click)="shareMediabook()" type="button"
+                  class="btn btn-cancel outline share-media-book">Share
+          </button>
+        </div>
+        <div class="d-flex align-items-center action-container">
+          <ng-select *ngIf="(mediaBookCreatorId == user?._id) && mediaBookObj"
+                     class="custom-green action-dd action z-index-500" [items]="actions" [closeOnSelect]="true"
+                     [searchable]="false" bindLabel="name" placeholder="Actions" [(ngModel)]="selectedAction"
+                     (change)="actionChange()">
+            <ng-template ng-option-tmp let-item="item">
+              <span>{{item.name}}</span>
+            </ng-template>
+          </ng-select>
+          <span class="filter-text text-right"> Filter By:</span>
+          <ng-select class="custom-grey action-dd show z-index-500" [items]="filterByArr" [closeOnSelect]="true"
+                     [searchable]="false" bindLabel="name" bindValue="value" placeholder="Show All"
+                     [(ngModel)]="selectedFilterBy" (change)="changeFilterBy()">
+          </ng-select>
+        </div>
+        <a class="float-right slideshow-link" [routerLink]="'/mediabook/slideshow/' + mediaBookId">
+            View Slideshow</a>
+        <div class="item-count text-666">
+          Displaying: {{mediaBookItems && mediaBookItems.length}}
+        </div>
+      </div>
+      <div class="description" *ngIf="mediaBookObj?.desc">{{mediaBookObj?.desc}}</div>
+      <div class="description" *ngIf="mediaBookObj && !mediaBookObj?.desc">
+        Enter a description of this Mediabook (optional)
+      </div>
+      <ng-container *ngIf="mediaBookItems && !mediaBookItems.length">
+        <div class="col12 col12_sm-12_xs-12 empty-mediabook">
+          <div class="header fs-px-24 text-999">This mediabook is empty.</div>
+          <div class="header fs-px-18 font-weight-normal pt-4">Please add images for visitors to view.</div>
+          <div class="sub-header fs-px-16"
+               *ngIf="mediaBookObj?.name !== 'Uploaded Items' && mediaBookObj?.name !== 'About Us'">
+            This is the default Mediabook when you use the Save button for any EWO media object.<br/>
+            Once Saved, you can curate the item in a Conversation or Share it with friends and family.
+          </div>
+          <div class="sub-header fs-px-16" *ngIf="mediaBookObj?.name === 'Uploaded Items'">
+            The ‘Uploaded items’ Mediabook is your default for any items<br/>you upload from your hard drive.
+          </div>
+          <div class="sub-header fs-px-16" *ngIf="mediaBookObj?.name === 'About Us'">
+            The cover image (first image in top left position of this Mediabook) will be<br/>
+            displayed in your profile, next to the Business Description.
+          </div>
+        </div>
+        <div *ngIf="mediaBookObj?.name !== 'Uploaded Items' && mediaBookObj?.name !== 'About Us'"
+             class="col12 col12_sm-12_xs-12 empty-mediabook">
+          <div class="header-green">Find Items to Save</div>
+          <div class="box-grid">
+            <a [routerLink]="['/']" class="box-item">
+              <div class="box-icon-text">
+                <i class="provider-icon"></i>
+                <div class="box-text">HOME</div>
+              </div>
+            </a>
+            <a [href]="WP_STORIES_LINK" class="box-item">
+              <div class="box-icon-text">
+                <i class="stories-icon"></i>
+                <div class="box-text">STORIES</div>
+              </div>
+            </a>
+            <a href="javascript:void(0);" [routerLink]="['/find-pros']" class="box-item">
+              <div class="box-icon-text">
+                <i class="provider-icon"></i>
+                <div class="box-text">FIND PROVIDERS</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </ng-container>
+      <div class="container px-2 mt-lg-5 mt-2">
+        <p class="mx-2 mb-0" *ngIf="mediaBookItems?.length">
+          <span class="text-666" *ngIf="mediaBookCreatorId === user?._id">
+            Drag and drop to sequence images. If a cover image is specified via the <strong>Actions</strong>
+            menu, it will be the first image below.</span>
+        </p>
+        <div class="container grid px-0" [attr.id]="'imageListId'">
+          <ng-container *ngFor="let mbi of mediaBookItems;let i = index">
+            <div class="listitemClass col3 col3_sm-6_xs-12 position-relative mb-image-container p-2"
+                 [style.z-index]="499-i" [attr.id]="'imageNo'+ i">
+              <a [href]="getRedirectURL(mbi)">
+                <img class="image" (click)="clickCount(mbi.ref_id)" [src]="mbi.image_url"/></a>
+              <label class="checkbox-container" *ngIf="(mediaBookCreatorId== user?._id ) && mediaBookItems?.length"
+                     (click)="$event.stopPropagation();" [style.display]="mbi.checked?'block':''">
+                <input type="checkbox" [(ngModel)]="mbi.checked" (change)="checkboxChange()"/>
+                <span class="checkmark"></span>
+              </label>
+              <div class="promotionName">
+                <a target="_blank">{{ getMediaBookItemType(mbi.type) | titlecase }}</a>
+              </div>
+              <a href="javascript:void(0);" class="staging" *ngIf="mbi?.status === 'Staging'"
+                 (click)="goToUploadMB('Upload')">Staging</a>
+              <div class="mediabook-info position-relative"
+                   [class.mb-20]="userRoles.indexOf(currentUser?.role) > -1 || (proUserRoles.indexOf(currentUser?.role > -1) && !router.url.includes('mb-sequence'))">
+                <div class="header d-flex">
+                  <div class="multi-truncate pr-2" *ngIf="mbi?.status !== 'Staging'" [title]="mbi?.header_title"
+                       [innerHtml]="sanitizer.bypassSecurityTrustHtml(mbi?.header)"></div>
+                  <div class="pr-2" *ngIf="mbi?.status === 'Staging'">
+                    <i>Please click on Staging above to finish labeling process.</i>
+                  </div>
+                  <a class="fs-px-14 font-weight-bold link-name" *ngIf="mbi?.link?.mediabook"
+                     [routerLink]="'/mediabook/slideshow/'+ mbi?.link?.mediabook">{{mbi?.link?.name}}</a>
+                </div>
+                <textarea class="input-field notes position-absolute" placeholder="Add a note" maxlength="500"
+                          [(ngModel)]="mbi.notes"
+                          *ngIf="userRoles.indexOf(currentUser?.role) > -1 || (proUserRoles.indexOf(currentUser?.role) > -1 && !router.url.includes('mb-sequence'))"
+                          (change)="changeItemNotes(mbi._id, mbi.notes)" style="resize: none;"></textarea>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

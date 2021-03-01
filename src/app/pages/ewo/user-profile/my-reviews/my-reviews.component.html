@@ -1,0 +1,112 @@
+<div class="container my-reviews t p-0" detect-scroll (onScroll)="scrollHandler($event)" [bottomOffset]="500">
+  <div class="row">
+    <div class="col-lg-3 col-md-4 col-sm-12">
+      <div class="bg-white border rounded">
+        <ul class="nav flex-column px-2 py-5">
+          <li class="nav-item">
+            <a class="nav-link" [href]="notfication_link">Notifications</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [href]="profileUrl+'/activity'">My Activity</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/user/'+currentUser?.username+'/my-reviews']"
+               [routerLinkActive]="['active']">My Reviews</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-9 col-md-8 col-sm-12 pl-lg-0 pl-md-0">
+      <div class="bg-white border rounded p-5">
+        <h1 class="fs-px-20 text-secondary py-5">MY REVIEWS</h1>
+        <div class="row mb-2">
+          <div class="col pt-2 d-flex flex-wrap justify-content-between align-items-end text-666 fs-px-14">
+            <div class="form-group" style="width: 200px;">
+              <label for="formGroupSortBy">Sort by:</label>
+              <select style="height: 30px;padding:0.175rem 0.5rem;" class="form-control" id="formGroupSortBy"
+                      [(ngModel)]="reviewParam.s" (change)="getMyReviews()">
+                <option [value]="rating.value" *ngFor="let rating of sortArr">{{rating.name}}</option>
+              </select>
+            </div>
+            <div class="form-group has-search" style="width: 400px;">
+              <span class="fa fa-search form-control-reviews text-color-a5a5a5 font-size-20"></span>
+              <input style="position: relative;text-indent: 1rem;height: 30px" type="text" class="form-control"
+                     placeholder="Search reviews" [(ngModel)]="searchInput" (ngModelChange)="searchOutput.next($event)">
+              <img class="search-icon" src="assets/img/search-mediabook.svg"/>
+            </div>
+          </div>
+        </div>
+        <hr class="mb-2 mt-0"/>
+        <ng-container *ngFor="let review of reviews; let i = index;">
+          <div class="row mb-5">
+            <div class="col-12">
+              <div class="row p-5 d-flex justify-content-between align-items-center">
+                <div class="text-secondary fs-px-16 font-weight-bold business-title mr-5">
+                  <a class="business-profile-link" [routerLink]="['/pro/user/'+ review?.business?.user?.username]" [queryParams]="{locId: review?.location?._id}">{{review?.business?.name?.name}}</a>
+                </div>
+                <div class="d-flex align-items-center mr-auto">
+                  <span class="mr-3">
+                    <app-rating [rate]="review.ratings" [readonly]="true"></app-rating>
+                  </span>
+                  <span class="text-secondary fs-px-16 font-weight-bold">{{review?.title}}</span>
+                </div>
+                <div class="text-666 fs-px-14 font-weight-normal">{{review?.created | date :'MMMM d, y'}}</div>
+              </div>
+              <div class="text-secondary line-break fs-px-16 lh-6 pl-1">{{review?.details}}</div>
+              <div class="mt-2 pl-1">
+                <a (click)="review.showCommentSection = !review.showCommentSection" href="javascript:void(0);"
+                   class="text-primary fs-px-14 mr-5 cursor-pointer">Comment | {{review?.comments.length}}</a>
+                <a (click)="editMyReviews(review)" class="text-primary fs-px-14 mr-5 cursor-pointer">Edit review</a>
+                <!-- <a (click)="FlagMyReviews(review._id)" class="text-primary fs-px-14 mr-5 cursor-pointer">Flag review</a> -->
+              </div>
+            </div>
+            <div *ngIf="review?.showCommentSection" class="col-12 pl-15 pt-4">
+              <form #commentForm="ngForm"
+                    (ngSubmit)="review.submitted = true;commentForm.form.valid && onCommentSubmit(review)">
+                <div class="row">
+                  <div class="col-md-12 col-sm-12">
+                    <div class="d-flex justify-content-between">
+                      <div class="fs-px-16 mb-1">Posting publicly as <a>{{currentUser?.name}}</a>
+                      </div>
+                      <div class="text-danger" *ngIf="review.submitted && (comment.invalid || comment.pristine)">
+                        <span *ngIf="comment.hasError('required')">Please enter the comment.</span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                  <textarea class="form-control fs-px-14" id="comments" name="comment" [(ngModel)]="review.comment"
+                            placeholder="Enter comment here" rows="5" #comment="ngModel" required
+                            [ngClass]="{'is-invalid':review.submitted && comment.hasError('required')}"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 col-sm-12 d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary mb-5">Submit</button>
+                  </div>
+                </div>
+              </form>
+              <div *ngFor="let comment of review?.comments; let i = index;" class="comments">
+                <div class="d-flex justify-content-between">
+                  <a class="font-weight-bold text-primary fs-px-16 pr-1">{{comment?.user?.name}}
+                    <span
+                      class="p-1 text-666 font-weight-normal fs-px-14">{{comment?.created | date :'MMMM d, y'}}</span></a>
+                  <span (click)="flagComment(review?._id, comment?._id)" class="text-primary fs-px-14 cursor-pointer"
+                        *ngIf="comment?.user?.username !== currentUser?.username">Flag comment</span>
+                </div>
+                <p class="text-secondary line-break py-3 fs-px-16 mb-0">{{comment?.comment}}</p>
+                <hr class="mb-4 mt-0" *ngIf="i !== review?.comments.length - 1"/>
+              </div>
+            </div>
+            <hr class="mb-4 mt-0" *ngIf="i !== review?.comments.length - 1"/>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="reviews && !reviews.length">
+          <div class="d-flex justify-content-center py-10">
+            <div class="text-secondary">No any reviews are available.</div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+

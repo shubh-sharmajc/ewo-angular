@@ -1,0 +1,29 @@
+<div class="complete-register-popup register-finished">
+  <div class="popup-header">
+    <div class="closeBtn"><a class="icon-close" href="javascript:void(0);" (click)="closeDialog()"></a></div>
+    <h4 class="popup-title text-green">Hello, {{name}}</h4>
+    <h5 class="popup-sub-title">Welcome to EWO </h5>
+  </div>
+  <div class="popup-body">
+    <div class="section m0 p0">
+      <div class="grid m-0" style="padding: 20px;">
+        <div class="col12 pb-0">
+          <p class="text-left">Click on the button below to navigate to the Profile page where you can customize your
+            profile and upload a recent photo. </p>
+        </div>
+        <div class="col12 text-center pb-0">
+          <button class="btn btn-submit" [routerLink]="['/user/'+ data?.user?.username +'/edit-profile']"
+                  (click)="closeDialog()"> Finish Registration
+          </button>
+        </div>
+        <div class="col12 text-center pb-0" style="padding:6px 20px;">
+          <p class="email-newsletter text-center">
+            <input type="checkbox" id="email-newsletter" name="email-newsletter" checked/>
+            You have been included in our email newsletter distribution list. <br/>You can opt out by unchecking the
+            checkbox on the left.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

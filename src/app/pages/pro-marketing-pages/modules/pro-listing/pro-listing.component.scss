@@ -1,0 +1,33 @@
+.listing {
+  .sub-title {
+    color: #2179AA;
+  }
+  .listing-img {
+    width: 100%;
+    height: 318px;
+    object-fit: cover;
+  }
+  .btn-register {
+    width: 281px;
+    height: 48px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    text-align: center;
+    letter-spacing: -0.4px;
+    line-height: 2rem;
+  }
+  @media screen and (max-width:991px) {
+    .btn-container{
+      width:100%;
+      text-align: center;
+      .btn-register{
+        margin-bottom:15px;
+      }
+    }
+    .col-lg-6.col-md-12 {
+        order: 1 !important;      
+    }
+  }
+}

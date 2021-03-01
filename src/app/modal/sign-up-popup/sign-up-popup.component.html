@@ -1,0 +1,65 @@
+<div class="signUp-banner">
+  <div class="signUp-popup">
+    <div class="signUp-Left hidesm">
+      <div class="formLogo">
+        <img src="assets/img/logo/ewo_150.png" alt="EWO">
+      </div>
+      <div class="logo-tagline">
+        Your wellness destination!
+      </div>
+      <a href="javascript:void(0);" class="btn btn-primary-outline" routerLink="/explore-features"
+         (click)="closeDialog()">
+        Explore All Our Features</a>
+    </div>
+    <div class="signUp-Form">
+      <div class="closeBtn"><a href="javascript:void(0);" class="icon-close" (click)="closeDialog()"></a></div>
+      <div class="signUpForm">
+        <div class="formTitile">New to EWO?
+          <span>Register Now!</span>
+        </div>
+        <form class="register-form" [formGroup]="registerForm" (ngSubmit)="onSubmitRegister()" autocomplete="off">
+          <div class="formDiv">
+            <div class="input">
+              <div *ngIf="submitted && f.email.errors" class="signUpForm-validation">
+                <div class="text-danger" *ngIf="f.email.errors.required">Enter a valid email address.</div>
+                <div class="text-danger" *ngIf="f.email.errors.email">Email must be a valid email address.</div>
+              </div>
+              <input
+                [ngClass]="{ 'red-border': submitted && f.email.errors && [f.email.errors.required || f.email.errors.email]}"
+                class="email-input" type="email" formControlName="email" name="Email" placeholder="Email"/>
+            </div>
+            <div class="btnBlock">
+              <button class="btn white btn--md bg--green full-btn cutomBtn">Sign up with Email</button>
+            </div>
+            <div class="or">
+              OR
+            </div>
+            <div class="ewoBtn">
+              <div class="grid">
+                <div class="col12 col12_sm-12_xs-12">
+                  <button type="button" class="btn  btn--md outline ewo_btn ss-btn fbutton" (click)="signUpWithFB()">
+                    <i></i>
+                    <span> Continue with Facebook </span>
+                    <!--<img src="assets/img/fb-image.png" alt="FB Profile Photo" class="fixed-right">-->
+                  </button>
+                </div>
+                <div class="col12 col12_sm-12_xs-12">
+                  <button type="button" class="btn btn--md outline ewo_btn ss-btn gbutton"
+                          (click)="signUpWithGoogle()">
+                    <i></i>
+                    Continue with Google
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="formNote">
+              By signing up, signing in or continuing, I agree to EWO’s
+              <a [href]="WP_LINK+'privacy-policy'" tabindex="4" target="_blank">Terms of use</a> &
+              <a [href]="WP_LINK+'privacy-policy'" tabindex="5" target="_blank">Privacy policy</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

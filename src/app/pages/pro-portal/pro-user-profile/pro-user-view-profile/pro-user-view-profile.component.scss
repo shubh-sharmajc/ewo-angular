@@ -1,0 +1,56 @@
+.pro-user-view-profile {
+  .mb-img {
+    height: 260px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: right;
+  }
+
+  p {
+    line-height: 23px;
+    font-family: Roboto;
+    font-style: normal;
+  }
+
+  p.para {
+    white-space: pre-line;
+    text-align: start;
+  }
+
+  .about-image {
+    height: 260px;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: right;
+  }
+
+  .btn-cover-photo {
+    position: absolute;
+    z-index: 1;
+    text-transform: none;
+    display: flex;
+    height: 38px;
+    border-radius: 0.3rem;
+    border: 0.5px solid #ffffff;
+    background: rgba(0, 0, 0, 0.4);
+    color: #fff;
+    align-items: center;
+    padding: 0 10px;
+    bottom: 24px;
+    left: calc(50% - 100px);
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    img {
+      margin-right: 5px;
+    }
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+  }
+}
+

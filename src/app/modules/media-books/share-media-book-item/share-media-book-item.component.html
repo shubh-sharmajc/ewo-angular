@@ -1,0 +1,27 @@
+<div class="share-mb-popup">
+  <div class="popup-header">
+    <h4 class="popup-title">Share Saved {{getMediaBookItemType(imgObjType)}}</h4>
+  </div>
+  <div class="popup-body">
+    <div class="section m0 p0">
+      <div class="grid">
+        <div class="col12_sm-12_xs-12">
+          <div class="input mT20">
+            <label class="content-label">Select one of the following:</label>
+            <div class="social-share">
+              <button (click)="facebook()" type="button" class="btn outline" value="Cancel">
+                <img class="mb2 mb9" src="assets/img/facebook.svg"/>Share</button>
+              <button (click)="tweet()" type="button" class="btn outline" value="Submit">
+                <img class="mb9" src="assets/img/twitter.svg"/>Tweet</button>
+              <button (click)="linkedIn()" type="button" class="btn outline" value="Submit">
+                <img class="mb10" src="assets/img/linkedin.svg"/>linkedIn</button>
+            </div>
+        </div>
+      </div>
+        <div class="col12_sm-12_xs-12 buttons">
+          <button type="button" class="btn btn-cancel" value="Cancel" (click)="closeDialog()">Cancel</button>
+        </div>
+    </div>
+  </div>
+</div>
+</div>

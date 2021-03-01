@@ -1,0 +1,66 @@
+.pro-user-review-profile {
+  .icon-star {
+    width: 20px;
+    height: 20px;
+  }
+
+  .icon-star-14 {
+    width: 14px;
+    height: 14px;
+  }
+
+  .user-icon {
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+  }
+
+  a {
+    color: #3AA757;
+
+    &:hover {
+      color: #3AA757;
+    }
+  }
+
+  .search-icon {
+    position: absolute;
+    top: 59px;
+    right: 394px;
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+  }
+
+  .comments {
+    p {
+      line-height: 22px;
+    }
+  }
+  @media only screen and (min-width: 768px) {
+    .rr-hint {
+      margin-left: -50px;
+    }
+  }
+  @media only screen and (max-width: 425px) {
+    .rr-btn {
+      width: 183px !important;
+      margin-top: 20px !important;
+    }
+  }
+  @media only screen and (max-width: 375px) and (min-width: 320px) {
+    .rr-btn {
+      width: 140px !important;
+      margin-top: 20px !important;
+    }
+  }
+  @media only screen and (max-width: 320px) {
+    .rr-btn {
+      width: 132px !important;
+      margin-top: 20px !important;
+    }
+  }
+}

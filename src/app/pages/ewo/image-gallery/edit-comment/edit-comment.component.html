@@ -1,0 +1,23 @@
+<div class="delete-popup">
+  <div class="popup-header">
+    <h4 class="popup-title">Edit comment</h4>
+  </div>
+  <div class="popup-body">
+    <div class="grid m0">
+      <div class="col12_sm-12_xs-12 text-center mt-4 pb-0">
+        <form [formGroup]="commentsForm" (ngSubmit)="onSubmit()" autocomplete="off">
+          <div class="input mT20">
+              <div class="comment" *ngIf="submitted && f.comment.errors && f.comment.errors.required">Please enter the comment.</div>
+              <div class="comment" *ngIf="submitted && f.comment.errors && f.comment.errors.pattern">Please enter valid comment.</div>
+            <textarea [ngClass]="{ 'red-border': submitted && f.comment.errors && [f.comment.errors.required || f.comment.errors.pattern]}"
+                      formControlName="comment" rows="6" cols="40" class="textarea-field"></textarea>
+          </div>
+          <div class="col12_sm-12_xs-12 text-center mt-4 pb-0">
+            <button type="button" class="btn btn-cancel outline" value="Cancel" (click)="closeDialog(false)">Cancel</button>
+            <button type="submit" class="btn btn-submit" value="Submit">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

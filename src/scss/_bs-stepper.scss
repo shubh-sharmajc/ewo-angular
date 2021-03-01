@@ -1,0 +1,127 @@
+@import 'variables';
+
+.sign-up-bs-stepper {
+  .bs-stepper-header {
+    .step {
+      .step-trigger {
+        display: flex;
+        flex-direction: column;
+        padding: 20px 5px;
+        .bs-stepper-circle {
+          border-radius: 5px;
+          width: 24px;
+          height: 24px;
+          padding: .3em 0;
+          line-height: 1em;
+          background-color: #CCCCCC;
+        }
+        .bs-stepper-label {
+          color: #CCCCCC;
+        }
+      }
+    }
+    .step.active {
+      .step-trigger {
+        .bs-stepper-circle {
+          background-color: $primary;
+          border-style: double;
+          line-height: 0.6em;
+        }
+        .bs-stepper-label {
+          color: $secondary;
+        }
+      }
+    }
+    .step.step-progress {
+      .step-trigger {
+        .bs-stepper-circle {
+          background-color: $primary;
+          border-style: hidden;
+          line-height: 1em;
+        }
+        .bs-stepper-label {
+          color: $secondary;
+        }
+      }
+    }
+  }
+  .bs-stepper-content {
+    .btn-hw {
+      width: 140px;
+      height: 40px;
+    }
+  }
+  .line {
+    min-height: 2px;
+    background-color: #CCCCCC;
+  }
+  .progress-line {
+    background: linear-gradient(to right, $primary 50%, #CCCCCC 50%);
+  }
+  .success-line {
+    background-color: $primary;
+  }
+}
+
+.email-auth-process {
+  .bs-stepper-header {
+    .step {
+      .step-trigger {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: 20px 0;
+        pointer-events: none;
+        .bs-stepper-circle {
+          border-radius: 100px;
+          width: 24px;
+          height: 24px;
+          padding: .3em 0;
+          line-height: 1em;
+          background: #cccccc url('/assets/img/check-mark.png') no-repeat 3px;
+        }
+        .bs-stepper-label {
+          font-weight: 400;
+          color: #999999;
+        }
+      }
+    }
+    .step.active {
+      .step-trigger {
+        padding: 20px 0;
+        .bs-stepper-circle {
+          border-style: none;
+          line-height: 16px;
+          background: $primary url('/assets/img/check-mark.png') no-repeat 3px;
+        }
+        .bs-stepper-label {
+          font-weight: 400;
+          color: $primary
+        }
+      }
+    }
+    .step.step-progress {
+      .step-trigger {
+        .bs-stepper-circle {
+          background: $primary url('/assets/img/check-mark.png') no-repeat 3px;
+          border-style: hidden;
+          line-height: 1em;
+        }
+        .bs-stepper-label {
+          font-weight: 400;
+          color: #999999;
+        }
+      }
+    }
+  }
+  .bs-stepper-text {
+    color: #999999;
+    margin-top: -15px;
+    padding-left: 2.3rem;
+  }
+  @media screen and (max-width: 425px) {
+    .bs-stepper-text {
+      padding-left: 0 !important;
+    }
+  }
+}

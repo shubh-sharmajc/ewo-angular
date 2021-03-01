@@ -1,0 +1,391 @@
+::ng-deep {
+  // Overlay
+  .overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+  }
+
+  .invalid-feedback {
+    font-size: 14px;
+    bottom: -20px;
+    color: #929292;
+  }
+
+  .header-container {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #333333;
+    margin-bottom: 10px;
+  }
+
+  .text-danger {
+    color: #dc3545;
+    font-size: 14px;
+  }
+
+  .red-border {
+    border: 1px solid #dc3545;
+  }
+
+  .popup-container {
+    position: relative;
+    background: #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 5px;
+    z-index: 1050;
+    height: 100%;
+    overflow-y: auto;
+
+    .popup-header {
+      border-bottom: 1px solid #3BA757;
+      text-align: center;
+      padding: 15px 30px;
+      position: relative;
+
+      .popup-title {
+        font-family: 'Roboto', sans-serif;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 18px;
+        color: #333333;
+        line-height: 21px;
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    .popup-body {
+      padding: 20px 50px 20px 50px;
+
+      .input {
+        .content-label {
+          font-family: 'Roboto', sans-serif;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 15px;
+          color: #666666;
+          display: block;
+          line-height: 158.47%;
+          width: 100%;
+          margin-bottom: 5px;
+        }
+
+        .messages {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .import {
+          float: right;
+          font-size: 14px;
+          color: #666;
+          margin-top: 5px;
+        }
+
+        input {
+          height: 40px;
+          background: #FFFFFF;
+          border: 1px solid #CCCCCC;
+          border-radius: 5px;
+          font-family: 'Roboto', sans-serif;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 14px;
+          color: #333333;
+          text-indent: 0;
+
+          ::-moz-placeholder {
+            color: #999999;
+          }
+
+          ::-webkit-placeholder {
+            color: #999999;
+          }
+
+          :-moz-placeholder {
+            color: #999999;
+          }
+
+          &:disabled {
+            background: #EFEFEF;
+            pointer-events: none;
+          }
+        }
+      }
+
+      .image {
+        position: absolute;
+        top: 8px;
+        right: 18px;
+        background-image: url('/assets/img/down-arrow.svg');
+        background-repeat: no-repeat;
+        background-size: 11px auto;
+        background-position: right;
+        margin-right: 5px;
+      }
+
+      .position-relative {
+        position: relative;
+      }
+
+      .user-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        overflow-y: auto;
+        width: 100%;
+        .empty-msg {
+          font-family: Roboto;
+          font-style: normal;
+          font-weight: 400;
+          font-size: 14px;
+          color: #333333;
+        }
+      }
+
+      .height {
+        height: 110px !important;
+      }
+
+      .minHeight {
+        height: 190px;
+      }
+
+      .current-invitees {
+        font-size: 14px;
+        color: #333333;
+        padding: 20px 0px;
+      }
+
+      .currently-shared {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      table {
+        width: 100%;
+
+        tr {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 15px;
+          td {
+            display: flex;
+            align-items: center;
+
+            .user-img {
+              width: 20px;
+              height: 20px;
+              margin-right: 5px;
+              border-radius: 99%;
+              border: 1px solid #ccc;
+            }
+
+            .user_name {
+              font-size: 14px;
+              color: #333333;
+              margin-left: 5px;
+              text-transform: capitalize;
+            }
+          }
+        }
+
+      }
+
+      .user {
+        display: flex;
+        flex-direction: row;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        color: #333333;
+        cursor: pointer;
+        margin-bottom: 5px;
+      }
+
+      .remove-user {
+        margin-left: 10px;
+        img {
+          width: 10px;
+        }
+      }
+
+      .mt-15 {
+        margin-top: 15px;
+      }
+
+      .input-message {
+        float: right;
+        color: #3AA757;
+        font-size: 14px;
+        font-family: Roboto, serif;
+        font-style: normal;
+      }
+
+      .btn {
+        padding: 10px;
+        min-width: 100px;
+        display: inline-block;
+        height: 40px;
+        text-align: center;
+        border-radius: 5px;
+        font-family: 'Roboto', sans-serif;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        text-transform: capitalize;
+        color: #fff;
+        line-height: 10px;
+
+        &.btn-submit, &.btn-cancel {
+          background: #3BA757;
+          height: 30px;
+          line-height: 10px;
+          border: 1px solid #3BA757;
+
+          &:hover {
+            background: #fff;
+            color: #3BA757;
+            border: 1px solid #3BA757;
+          }
+
+          &.outline {
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 10px;
+            background: #fff;
+            color: #3BA757;
+            min-width: 100px;
+            border: 1px solid #3BA757;
+            font-family: 'Roboto', sans-serif;
+            height: 30px;
+
+            &:hover {
+              color: #fff;
+              background: #3BA757;
+              order: 1px solid #3BA757;
+            }
+          }
+        }
+
+        &.btn-cancel {
+          margin-right: 10px;
+        }
+      }
+
+      .textarea-field {
+        transition: all .3s;
+        height: 10rem;
+        border-radius: 7px;
+        border: 1px solid #d2d5d8;
+        font-size: 16px;
+        width: 100%;
+        text-indent: 0;
+        padding: 1rem 1rem 2rem 1rem;
+        position: relative;
+        color: #999999;
+      }
+    }
+
+    .switch-container {
+      margin: 15px 0;
+      display: flex;
+
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 36px;
+        height: 20px;
+        margin-right: 5px;
+
+        input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+
+        input:checked + .slider {
+          color: #3AA757;
+          border: 1px solid #3AA757;
+
+          &:before {
+            background-color: #3AA757;
+          }
+        }
+
+        input:focus + .slider {
+          box-shadow: 0 0 1px #3AA757;
+        }
+
+        input:checked + .slider:before {
+          -webkit-transform: translateX(16px);
+          -ms-transform: translateX(16px);
+          transform: translateX(16px);
+        }
+
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #fff;
+          -webkit-transition: .4s;
+          transition: .4s;
+          border: 1px solid #CCCCCC;
+
+          &:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 1px;
+            bottom: 1px;
+            background-color: #CCCCCC;
+            transition: .4s;
+          }
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+          border-radius: 34px;
+        }
+
+        .slider.round:before {
+          border-radius: 50%;
+        }
+      }
+    }
+
+    .msg {
+      color: #999999;
+      width: 100%;
+      padding: 5px 0;
+      font-size: 16px !important;
+    }
+
+    .buttons {
+      padding: 20px 0;
+    }
+  }
+
+  @media screen and (max-width: 350px) {
+    .popup-container {
+      .btn {
+        min-width: 90px !important;
+      }
+    }
+  }
+
+}

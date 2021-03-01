@@ -1,0 +1,12 @@
+@import '../../../../scss/variables';
+
+.write-a-review-popup {
+  .modal-header {
+    border-bottom: 1px solid $primary;
+  }
+
+  .modal-footer {
+    border: none;
+  }
+}
+

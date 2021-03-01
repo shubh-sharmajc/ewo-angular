@@ -1,0 +1,63 @@
+<form class="bg-white request-reviews" [formGroup]="requestReviewsForm" (ngSubmit)="saveRR()">
+  <h5 class="text-center text-primary border-bottom border-primary py-5 mb-0">Request reviews</h5>
+  <div class="row m-0">
+    <div class="col p-10">
+      <div class="row">
+        <div class="col-md-7 col-sm-12">
+          <div class="form-group">
+            <h5 class="text-secondary fs-px-16 mb-0">
+              Reach out to past customers to request reviews <span class="text-999 font-weight-normal fs-px-14">(optional)</span>
+            </h5>
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-12">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-7">
+          <div class="form-group mb-8">
+            <label class="text-666" for="enterEmailAddressesToSendRequests">Enter email addresses</label>
+            <textarea class="form-control fs-px-14 resize-none" id="enterEmailAddressesToSendRequests"
+                      formControlName="emails" rows="5" (focus)="submitted = false" (blur)="submitted = true"
+                      (keyup)="trimWhiteSpace(f?.emails?.value);resetBtnName()"
+                      [ngClass]="{'is-invalid':submitted && f?.emails?.errors && f?.emails?.errors?.emailsValidator}"
+                      placeholder="Enter email addresses separated by commas. You can also import from your gmail contacts using the link alongside."></textarea>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-5">
+          <div style="pointer-events: none" class="text-666 fs-px-14 mt-7">
+            <a href="javascript:void(0);" class="font-weight-bold text-666" (click)="getMails()">Click here</a>
+            (Future feature) to import Gmail contacts
+          </div>
+          <div class="text-danger fs-px-14 pt-10"
+               *ngIf="submitted && f?.emails?.errors && f?.emails?.errors?.emailsValidator">
+            Invalid format: Email addresses must be <br/> correctly formatted and separated by commas
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-7">
+          <div class="form-group">
+            <label class="text-666" for="message">Message</label>
+            <textarea class="form-control fs-px-14 resize-none outgoing-msg" id="message"
+                      formControlName="message" rows="5" (keyup)="resetBtnName()"></textarea>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-5"></div>
+      </div>
+      <div class="row pt-10">
+        <div class="d-flex justify-content-end col-md-12 col-sm-12 text-right">
+          <div class="btn bg--grey--gray mr-5 btn-hw text-white lh-7 disabled" *ngIf="requestReviewsForm.pristine">
+            Cancel
+          </div>
+          <button type="button" class="btn btn-outline-primary mr-5 btn-hw" *ngIf="!requestReviewsForm.pristine"
+                  (click)="updateForm();">Cancel
+          </button>
+          <button type="submit" class="btn btn-primary btn-hw" [disabled]="f?.btnName?.value !== 'Send'">
+            {{f?.btnName?.value}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

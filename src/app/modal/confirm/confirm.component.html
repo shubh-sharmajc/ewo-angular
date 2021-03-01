@@ -1,0 +1,28 @@
+<div class="confirm-popup">
+  <div class="popup-header">
+    <h4 class="popup-title">
+      <div class="row m-0 align-items-center">
+        <div class="col-3 p-0">
+          <img class="logo" src="assets/img/logo/ewo_150.png"/>
+        </div>
+        <div class="col-6 align-items-center fs-px-20 font-weight-bold text-primary">
+          {{data?.title ? data?.title : 'Confirm'}}
+        </div>
+        <div class="col"></div>
+      </div>
+    </h4>
+  </div>
+  <div class="popup-body">
+    <div class="grid m0">
+      <div class="col12_sm-12_xs-12 text-center mT20 pb-0">
+        <p>{{data?.message}}</p>
+      </div>
+      <div class="col12_sm-12_xs-12 text-center mT20">
+        <button type="button" class="btn btn-cancel outline" value="Cancel" (click)="closeDialog(false)">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-submit" value="Submit" (click)="closeDialog(true)">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>

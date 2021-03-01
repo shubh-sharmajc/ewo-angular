@@ -1,0 +1,11 @@
+@import '../../../../scss/variables';
+
+.contact-us-popup {
+  .modal-header {
+    border-bottom: 1px solid $primary;
+  }
+
+  .modal-footer {
+    border: none;
+  }
+}

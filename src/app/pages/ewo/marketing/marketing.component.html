@@ -1,0 +1,180 @@
+<section class="main_content">
+  <div class="banner"
+       [style.background-image]="'url(' + (efData?.banner_image_url ? efData?.banner_image_url : '') + ')'">
+    <div class="container">
+      <div class="banner_content">
+        <h1>{{efData?.banner_text_line_1}}</h1>
+        <p>{{efData?.banner_text_line_2}}</p>
+        <h4>{{efData?.banner_text_line_3}}</h4>
+        <a href="javascript:void(0);" class="btn greenBtn regulr_btn" (click)="signUpDialogService.openModal(true)">
+          Get Started</a>
+      </div>
+    </div>
+  </div>
+  <div class="health_wellness section_pd">
+    <div class="container">
+      <div class="custom_tab">
+        <ul class="tabs">
+          <ng-container *ngFor="let tab of efData?.tabs;let i = index">
+            <li [attr.class]="!i ? 'active' : ''" [attr.rel]="'tab' + (i+1)">
+              <span class="num">0{{i+1}}</span> <span> {{tab.title}} </span>
+            </li>
+          </ng-container>
+        </ul>
+        <div class="tab_container">
+          <ng-container *ngFor="let tab of efData?.tabs;let i = index">
+            <h3 [attr.class]="!i ? 'd_active tab_drawer_heading' : 'tab_drawer_heading'"
+                [attr.rel]="'tab' + (i+1)">Tab {{i+1}}</h3>
+            <div [attr.id]="'tab' + (i+1)" class="tab_content" [innerHtml]="tab.content"></div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="facilites_block section_pd pT0">
+    <div class="sec_title mB50">
+      <h4>How ewo Facilitates wellness</h4>
+    </div>
+    <div class="container">
+      <div class="grid">
+        <div class="col4 col4_sm-12_xs-12">
+          <div class="card h-100">
+            <div class="img_wrap">
+              <div class="img_bg">
+                <div class="img"
+                     [style.background-image]="'url(' + (efData?.facilities_topic1_img ? efData?.facilities_topic1_img : '')+ ')'"></div>
+              </div>
+            </div>
+            <div class="content_wrap">
+              <h4>{{efData?.facilities_topic1_title}}</h4>
+              <p>{{efData?.facilities_topic1_body}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col4 col4_sm-12_xs-12">
+          <div class="card h-100">
+            <div class="img_wrap">
+              <div class="img_bg">
+                <div class="img"
+                     [style.background-image]="'url(' + (efData?.facilities_topic2_img ? efData?.facilities_topic2_img : '')+ ')'"></div>
+              </div>
+            </div>
+            <div class="content_wrap">
+              <h4>{{efData?.facilities_topic2_title}}</h4>
+              <p>{{efData?.facilities_topic2_body}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col4 col4_sm-12_xs-12">
+          <div class="card h-100">
+            <div class="img_wrap">
+              <div class="img_bg">
+                <div class="img"
+                     [style.background-image]="'url(' + (efData?.facilities_topic3_img ? efData?.facilities_topic3_img : '') + ')'"></div>
+              </div>
+            </div>
+            <div class="content_wrap">
+              <h4>{{efData?.facilities_topic3_title}}</h4>
+              <p>{{efData?.facilities_topic3_body}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="grid txt-center">
+        <div class="col12 col12_sm-12_xs-12">
+          <a href="javascript:void(0);" class="btn greenBtn regulr_btn mT40"
+             (click)="signUpDialogService.openModal(true)">
+            Get Started</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="categories_bl section_pd pT0">
+    <div class="container">
+      <div class="sec_title mB40">
+        <h4>Categories Of Wellness</h4>
+      </div>
+      <div class="gridoff_box">
+        <div class="grid">
+          <ng-container *ngFor="let item of catWellnessArr;">
+            <div class="col2 col2_sm-2_xs-12">
+              <div class="card">
+                <div class="img_wrap">
+                  <div class="img_bg brownbg">
+                    <div class="img"
+                         [style.background-image]="'url('+ (item.img ? item.img : '') +')'"></div>
+                  </div>
+                </div>
+                <div class="content_wrap">
+                  <h4>{{item.name}}</h4>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ourcontent section_pd pT0">
+    <div class="container">
+      <div class="sec_title mB50">
+        <h4>Our Content, Community & Providers </h4>
+      </div>
+      <div class="gridoff_box">
+        <div class="grid mB50">
+          <div class="col6 col6_sm-12_xs-12">
+            <div class="content_wrap">
+              <h4>{{efData?.our_content_topic1_title}}</h4>
+              <p>{{efData?.our_content_topic1_body}}</p>
+            </div>
+          </div>
+          <div class="col6 col6_sm-12_xs-12">
+            <div class="img_wrap"
+                 [style.background-image]="'url('+ (efData?.our_content_topic1_img ? efData?.our_content_topic1_img : '') +')'"></div>
+          </div>
+        </div>
+
+        <div class="grid mB50">
+          <div class="col6 col6_sm-12_xs-12 order2">
+            <div class="img_wrap"
+                 [style.background-image]="'url('+ (efData?.our_content_topic2_img ? efData?.our_content_topic2_img : '') +')'"></div>
+          </div>
+          <div class="col6 col6_sm-12_xs-12">
+            <div class="content_wrap">
+              <h4>{{efData?.our_content_topic2_title}}</h4>
+              <p>{{efData?.our_content_topic2_body}}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid mB50">
+          <div class="col6 col6_sm-12_xs-12">
+            <div class="content_wrap">
+              <h4>{{efData?.our_content_topic3_title}}</h4>
+              <p>{{efData?.our_content_topic3_body}}</p>
+            </div>
+          </div>
+          <div class="col6 col6_sm-12_xs-12">
+            <div class="img_wrap"
+                 [style.background-image]="'url('+ (efData?.our_content_topic3_img ? efData?.our_content_topic3_img : '') +')'"></div>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="col6 col6_sm-12_xs-12 order2">
+            <div class="img_wrap"
+                 [style.background-image]="'url('+ (efData?.our_content_topic4_img ? efData?.our_content_topic4_img : '')+')'"></div>
+          </div>
+          <div class="col6 col6_sm-12_xs-12">
+            <div class="content_wrap">
+              <h4>{{efData?.our_content_topic4_title}}</h4>
+              <p>{{efData?.our_content_topic4_body}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

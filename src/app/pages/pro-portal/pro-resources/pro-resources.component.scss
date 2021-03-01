@@ -1,0 +1,196 @@
+@import '../../../../scss/variables';
+
+.pro-resources {
+  .account-banner {
+    height: 379px;
+
+    .resource-header {
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 300;
+      color: #FFFFFF;
+      font-size: 36px;
+      line-height: 50px;
+      max-width: 600px;
+    }
+  }
+
+  .position-relative {
+    position: relative;
+  }
+
+  .buttons {
+    right: 0;
+    top: 300px;
+    position: absolute;
+    width: 97%;
+    height: calc(100% - 30vw);
+    bottom: 0;
+    a {
+      height: 40px;
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 27px;
+      text-align: center;
+    }
+  }
+
+  .border-radius {
+    border-radius: 5px;
+  }
+
+  .pro-user-grid {
+    .card {
+      border: none;
+
+      .card-img-top {
+        img {
+          -o-object-fit: cover;
+          object-fit: cover;
+          width: 100%;
+          max-width: 100%;
+          height: 100%;
+          min-height: 237px;
+          max-height: 237px;
+        }
+      }
+
+      .card-body {
+        min-height: 117px;
+        padding-left: 0 !important;
+      }
+    }
+  }
+
+  .carousel {
+    color: white;
+    .content {
+      display: flex;
+
+      .item {
+        width: 100%;
+        display: block;
+        opacity: 0;
+
+        &.fade_animation {
+          transition: opacity 0.295s linear
+        }
+
+        &.fade_animation_0 {
+          transition: opacity 0.295s linear;
+        }
+
+        &.visible {
+          opacity: 1;
+        }
+
+        &:last-child,
+        &:first-child {
+          opacity: 0;
+        }
+
+        &.visible_important {
+          opacity: 1;
+        }
+
+        .img {
+          width: 100%;
+          display: block;
+          background-size: cover;
+          background-position: center;
+          height: 100%;
+          padding-bottom: 50%;
+        }
+      }
+    }
+
+    .ball {
+      width: 15px;
+      height: 15px;
+      display: block !important;
+      border-radius: 50%;
+      background: black;
+      opacity: 0.5;
+
+      &.visible {
+        opacity: 1;
+        background: $primary;
+      }
+    }
+
+    .progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: #ff5252;
+    }
+  }
+
+  .multi-truncate {
+    display: block;
+    /* Fallback for non-webkit */
+    display: -webkit-box;
+    max-width: 100%;
+    height: 48px;
+
+    font-size: 14px;
+    line-height: 1;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    /* autoprefixer: off */
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  @media screen and (max-width: 767px) {
+    .container.mt-28.px-3 {
+      margin-top: 3rem !important;
+    }
+    .account-banner {
+      height: calc(379px + 7vw);
+    }
+    .buttons {
+      justify-content: center !important;
+      margin-right: 0 !important;
+      width: 100%;
+      top: calc(300px + 8vw);
+      a {
+        width: 281px;
+        height: 48px;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        text-align: center;
+        letter-spacing: -0.4px;
+        line-height: 2rem;
+      }
+    }
+    .card-img-top {
+      text-align: center;
+      img {
+        width: 93.49%
+      }
+    }
+    .pro-user-grid {
+      .card {
+        .card-body {
+          padding-left: calc(0.3em + 2vw) !important;
+        }
+      }
+    }
+
+  }
+  @media screen and (max-width: 650px) {
+    .account-banner {
+      height: 379px;
+    }
+    .buttons {
+      top: 300px;
+    }
+  }
+}

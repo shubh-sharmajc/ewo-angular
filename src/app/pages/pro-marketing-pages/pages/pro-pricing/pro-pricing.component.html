@@ -1,0 +1,55 @@
+<div class="container pro-pricing">
+  <div class="mt-20">
+    <div class="row mx-0">
+      <div class="col-md-12 text-center">
+        <p class="main-head text-center"> Choose a plan which meets your business needs</p>
+      </div>
+    </div>
+    <div class="row mx-0">
+      <div class="col d-flex justify-content-center">
+        <div class="form-check form-check-inline mr-lg-5">
+          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                 [value]="ANNUAL" [(ngModel)]="payment"/>
+          <label class="form-check-label fs-px-18 position-relative annual-payment font-weight-bold" for="inlineRadio1"
+                 [class.text-666]="payment !== ANNUAL">Annual payment</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                 [value]="MONTHLY" [(ngModel)]="payment"/>
+          <label class="form-check-label fs-px-18 font-weight-bold" for="inlineRadio2"
+                 [class.text-666]="payment !== MONTHLY">Monthly payments</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-24 h-50 mx-0">
+    <ng-container *ngFor="let plan of plans;let i = index">
+      <div class="col-md-3 mb-4">
+        <div class="card" [class.border-primary]="currentPlanId === plan?._id">
+          <div class="card-header bg-white">
+            <p class="text-center text-secondary fs-px-20 font-weight-bold pt-2">{{plan?.name}}</p>
+            <p class="text-center text-secondary fs-px-40 font-weight-bold">{{this.calculatePlanPrice(plan)}}</p>
+          </div>
+          <div class="card-body">
+            <p class="text-center mb-0">{{plan?.details}}</p>
+            <ul class="list-group p-2">
+              <ng-container *ngFor="let feature of plan?.features;">
+                <li class="list-group-item border-0 pb-0">{{feature}}</li>
+              </ng-container>
+            </ul>
+          </div>
+          <div class="card-footer bg-white d-flex align-items-center justify-content-center border-top-0 pb-10">
+            <div class="btn bg--grey--gray mr-5 btn-hw lh-7 font-weight-bold disabled"
+                 *ngIf="currentPlanId === plan?._id">
+              Current Plan
+            </div>
+            <button class="btn btn-primary btn-hw" (click)="selectProUserPlanID(plan)"
+                    *ngIf="currentPlanId !== plan?._id">
+              Select Plan
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

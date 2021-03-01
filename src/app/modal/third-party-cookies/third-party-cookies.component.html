@@ -1,0 +1,21 @@
+<div class="third-party-cookies-popup">
+  <div class="popup-header">
+    <h4 class="popup-title">
+      <img class="logo" src="assets/img/logo/ewo_150.png">
+      <span>Enabling Third-Party Cookies</span>
+    </h4>
+  </div>
+  <div class="popup-body">
+    <div class="grid m0">
+      <div class="col12_sm-12_xs-12 mT20">
+        <p>We use cookies to validate your authentication. To continue with our service, please follow the instructions
+          below to enable your third-party cookies:</p>
+        <p [innerHtml]="sanitizer.bypassSecurityTrustHtml(data?.info)"></p>
+        <p><b>Note:</b> Above instructions based on <b>{{data?.browser}} {{data?.version}}</b> browser.</p>
+      </div>
+      <div class="col12_sm-12_xs-12 text-center mT20">
+        <button type="button" class="btn btn-submit" (click)="closeDialog()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="account-downgrade-modal">
+  <div class="modal-header">
+    <h4 class="modal-title w-100">
+      <div class="row m-0 align-items-center">
+        <div class="col-3">
+          <img class="logo" src="assets/img/logo/ewo_150.png">
+        </div>
+        <div class="col-6">
+          <div class="col align-items-center fs-px-20 font-weight-bold text-primary text-center">
+            Warning: Account downgrade
+          </div>
+        </div>
+        <div class="col-3"></div>
+      </div>
+    </h4>
+  </div>
+  <div class="modal-body px-10">
+    <div class="row">
+      <div class="col-12">
+        <p class="text-secondary fs-px-16 mt-5 text-center px-10">
+          Downgrading from Premium to Basic will remove locations and staff, leaving only the profile page. Mediabooks
+          are not affected.
+        </p>
+        <p class="text-secondary fs-px-16 mt-5 text-center">Please confirm you want to proceed.</p>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer d-flex justify-content-center pb-10">
+    <button type="button" class="btn btn-outline-primary btn-hw" (click)="onCancel()">Cancel</button>
+    <button type="button" class="btn btn-primary btn-hw" (click)="onConfirm()">Continue</button>
+  </div>
+</div>

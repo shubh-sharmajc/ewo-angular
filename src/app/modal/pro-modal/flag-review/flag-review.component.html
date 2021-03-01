@@ -1,0 +1,44 @@
+<form [formGroup]="flagForm" (ngSubmit)="onFlagSubmit()">
+<div class="flag-review-popup">
+  <div class="modal-header d-flex justify-content-center">
+    <div class="modal-title pull-left">
+      <span class="text-secondary font-weight-normal fs-px-16">Reason for flagging</span>
+    </div>
+  </div>
+  <div class="modal-body px-10">
+    <div class="row pt-2">
+      <div class="col-md-4 col-sm-12">
+        <div class="form-check d-flex align-items-center">
+          <input class="form-check-input" type="radio" formControlName="flag_rsn" name="flag_rsn"
+                 id="exampleRadios1" value="Spam" [checked]="true">
+          <label class="form-check-label mt-1" for="exampleRadios1">Spam</label>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-12">
+        <div class="form-check d-flex align-items-center">
+          <input class="form-check-input" type="radio" formControlName="flag_rsn" name="flag_rsn" id="exampleRadios2" value="Offensive">
+          <label class="form-check-label mt-1" for="exampleRadios2">Offensive</label>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-12">
+        <div class="form-check d-flex align-items-center">
+          <input class="form-check-input" type="radio" formControlName="flag_rsn" name="flag_rsn" id="exampleRadios3" value="Other">
+          <label class="form-check-label mt-2" for="exampleRadios3">Other</label>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="f['flag_rsn'].value === 'Other'" class="row">
+      <div class="col-md-12 col-sm-12 pt-10">
+        <div class="form-group">
+          <textarea class="form-control fs-px-14 resize-none" formControlName="flag_note" maxlength="120"
+                    placeholder="Reasons for flagging" rows="3" style="height: 100px"></textarea>
+          <div class="d-flex justify-content-end pt-1 text-999 fs-px-14"> {{120 - f['flag_note'].value.length}} remaining</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer d-flex justify-content-end pb-10">
+    <button type="submit" class="btn btn-primary btn-hw" (click)="bsModalRef.hide()">Submit</button>
+  </div>
+</div>
+</form>

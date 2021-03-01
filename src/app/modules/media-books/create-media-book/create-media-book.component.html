@@ -1,0 +1,50 @@
+<div class="create-mb-popup">
+  <div class="popup-header">
+    <h4 class="popup-title">{{data && data._id ? 'Edit' : 'New'}} Mediabook</h4>
+  </div>
+  <div class="popup-body">
+    <div class="section m0 p0">
+      <form [formGroup]="mediaBookForm" (ngSubmit)="onSubmit()" autocomplete="off">
+        <div class="input mT20">
+          <label class="content-label"><span>Title (required)</span>
+            <div class="text-danger" *ngIf="submitted && f.name.errors && [f.name.errors.required || f.name.errors.pattern]">Please enter the title.</div>
+          </label>
+          <input [ngClass]="{ 'red-border': submitted && f.name.errors && [f.name.errors.required || f.name.errors.pattern]}"
+                 minlength="1" maxlength="50" type="text" formControlName="name" (keydown)="errMsg=''"
+                 placeholder="Name your Mediabook" *ngIf="!isDefault"/>
+          <div class="input-value" *ngIf="isDefault">{{f['name'].value}}</div>
+          <div class="messages">
+            <div *ngIf="!isDefault" class="limitChars">{{50 - f['name'].value.length}} remaining</div>
+          </div>
+        </div>
+        <div class="input mT20">
+          <label class="content-label">Description (optional)</label>
+          <textarea formControlName="desc" rows="6" cols="40" class="textarea-field" minlength="1"
+                    maxlength="152" placeholder="Enter reasons for creation. This note is visible to users visiting a public Mediabook"
+                    style="resize: none;"></textarea>
+          <div class="messages">
+            <div class="limitChars">{{152 - f['desc'].value.length}} remaining</div>
+          </div>
+        </div>
+        <div class="input mT20">
+          <div class="checkbox rememberDiv" tabindex="1">
+            <input type="radio" [checked]="data && data._id ? data.private : true" class="checkbox__input" id="private" name="private" [value]="true"
+                   formControlName="private">
+            <label [ngClass]="{'disabled': (isDefault && !isAboutUs) || isShared}" for="private" class="checkbox__label text">
+              <span [ngClass]="{'disabled-check': (isDefault && !isAboutUs) || isShared}" class="checkbox__button"></span>Private</label>
+          </div>
+          <div class="checkbox rememberDiv" tabindex="1">
+            <input type="radio" class="checkbox__input" id="public" name="private" [value]="false" formControlName="private">
+            <label [ngClass]="{'disabled': (isDefault && !isAboutUs) || isShared}" for="public" class="checkbox__label text">
+              <span [ngClass]="{'disabled-check': (isDefault && !isAboutUs) || isShared}" class="checkbox__button"></span>Public
+            </label>
+          </div>
+        </div>
+        <div class="col12_sm-12_xs-12 buttons text-right">
+          <button type="button" class="btn btn-cancel outline" value="Cancel" (click)="closeDialog()">Cancel</button>
+          <button type="submit" class="btn btn-submit" value="Submit">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

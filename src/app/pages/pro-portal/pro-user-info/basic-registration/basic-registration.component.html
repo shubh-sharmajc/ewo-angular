@@ -1,0 +1,463 @@
+<div class="basic-registration bg-white" [ngClass]="{'border rounded': newUser}">
+  <h5 class="text-center text-primary border-bottom border-primary py-5 mb-0">
+    <span *ngIf="!addLocation">{{editUser ? 'Edit' : ''}} Basic registration</span>
+    <span *ngIf="addLocation">Register new location</span>
+  </h5>
+  <div class="row m-0">
+    <div class="col" [class.p-10]="newUser" [ngClass]="{'px-10 pb-10': (editUser || addLocation)}">
+      <ng-container *ngIf="newUser">
+        <form [formGroup]="lcForm" (ngSubmit)="onLCSubmit()" autocomplete="off">
+          <div class="row">
+            <div class="col-12">
+              <h1 class="text-primary mb-5 fs-px-20">Create your login credentials</h1>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-7 col-sm-12">
+              <div class="form-group mb-8">
+                <label class="text-666 d-flex justify-content-between" for="businessEmail">
+                  <span>Business email address <span class="text-999 font-weight-normal">(required)</span></span>
+                  <span class="text-danger" *ngIf="lcSubmitted && lcF.email.errors && lcF.email.errors.required">Please
+                    enter email.</span>
+                  <span class="text-danger"
+                    *ngIf="lcF.email.dirty && lcF.email.errors && [lcF.email.errors.email || lcF.email.errors.pattern]">
+                    Please enter valid email address.
+                  </span>
+                </label>
+                <div *ngIf="brF?.email_verify?.value || emailResponse === 'success'"
+                  class="form-control fs-px-14 disabled-input" readonly>
+                  {{lcF['email'].value ? lcF['email'].value : ''}}
+                </div>
+                <input *ngIf="!brF?.email_verify?.value && emailResponse !== 'success'" type="email"
+                  class="form-control fs-px-14" id="businessEmail" formControlName="email" required
+                  [ngClass]="{'is-invalid':lcSubmitted && lcF.email.errors && [lcF.email.errors.required || lcF.email.errors.email]}"
+                  (change)="checkUserEmailExist(lcF.email.value)" />
+              </div>
+              <div class="position-relative">
+                <div class="form-group mb-8">
+                  <label class="text-666 d-flex justify-content-between" for="enterPassword">
+                    <span>Enter Password <span class="text-999 font-weight-normal">(required)</span></span>
+                    <span class="text-danger"
+                      *ngIf="lcF.password.dirty && lcF.password.errors && lcF.password.errors.required">
+                      Please enter password.
+                    </span>
+                    <span class="text-danger"
+                      *ngIf="lcF.password.dirty && lcF.password.errors && lcF.password.errors.pattern">
+                      Please enter valid password.
+                    </span>
+                  </label>
+                  <div *ngIf="brF?.email_verify?.value || emailResponse === 'success'"
+                    class="form-control fs-px-14 disabled-input lh-7" readonly>
+                    ******
+                  </div>
+                  <input *ngIf="!brF?.email_verify?.value && emailResponse !== 'success'" type="password"
+                    class="form-control fs-px-14" id="enterPassword" formControlName="password"
+                    [ngClass]="{'is-invalid':lcF.password.dirty && lcF.password.errors && [lcF.password.errors.required || lcF.password.errors.pattern]}"
+                    required />
+                </div>
+                <div class="tooltips-container">
+                  <div class="tooltips-head">Password Guidelines</div>
+                  <div class="tooltips-text">Select a password with six or more characters. Include at least one
+                    uppercase and one lowercase character, one integer and one special character.
+                  </div>
+                </div>
+              </div>
+              <div class="form-group mb-10">
+                <label class="text-666 d-flex justify-content-between" for="reEnterPassword">
+                  <span>Re-enter Password <span class="text-999 font-weight-normal">(required)</span></span>
+                  <span class="text-danger"
+                    *ngIf="lcF.confirm_password.dirty && lcF.confirm_password.errors && lcF.confirm_password.errors.required">
+                    Please re-enter password.
+                  </span>
+                  <span class="text-danger"
+                    *ngIf="lcF.confirm_password.dirty && lcF.confirm_password.errors && lcF.confirm_password.errors.mustMatch">
+                    Passwords entered do not match.
+                  </span>
+                </label>
+                <div *ngIf="brF?.email_verify?.value || emailResponse === 'success'"
+                  class="form-control fs-px-14 disabled-input lh-7" readonly>******
+                </div>
+                <input *ngIf="!brF?.email_verify?.value && emailResponse !== 'success'" type="password"
+                  class="form-control fs-px-14" id="reEnterPassword" placeholder=""
+                  [ngClass]="{'is-invalid':lcF.confirm_password.dirty && lcF.confirm_password.errors && [lcF.confirm_password.errors.required || lcF.confirm_password.errors.pattern]}"
+                  formControlName="confirm_password" required />
+              </div>
+            </div>
+            <div class="col-md-5 col-sm-12"></div>
+          </div>
+          <div class="row" *ngIf="!brF?.email_verify?.value">
+            <div class="col-md-7 col-sm-12 mb-10">
+              <re-captcha formControlName="captcha"></re-captcha>
+            </div>
+          </div>
+          <div *ngIf="brF?.email_verify?.value" class="btn btn-hw form-control disabled-input lh-7" readonly>Send email
+          </div>
+          <button *ngIf="!brF?.email_verify?.value && emailResponse !== 'success'" type="submit"
+            class="btn btn-primary btn-hw">Send email
+          </button>
+          <button *ngIf="!brF?.email_verify?.value && emailResponse === 'success'" type="button" (click)="resendEmail()"
+            class="btn btn-primary btn-hw">Resend email
+          </button>
+        </form>
+        <div id="email-auth-stepper" class="vertical bs-stepper email-auth-process">
+          <div id="email-auth-stepper-header" class="bs-stepper-header">
+            <div [ngClass]="{'active' : brF?.email_verify?.value || emailResponse === 'success'}" class="step"
+              data-target="#email123">
+              <button class="step-trigger">
+                <span class="bs-stepper-circle"></span>
+                <span class="bs-stepper-label fs-px-16">Email {{isEmailResend ? 'resent' : 'sent'}}</span>
+              </button>
+            </div>
+            <div [ngClass]="{'active' : brF?.email_verify?.value || emailResponse === 'success'}" class="step"
+              data-target="#password">
+              <button class="step-trigger">
+                <span class="bs-stepper-circle"></span>
+                <span class="bs-stepper-label fs-px-16">Waiting for email authentication.</span>
+              </button>
+              <div class="bs-stepper-text fs-px-12 text-align-email">
+                Please find the email we just sent you (either in your Inbox or your Junk folder) and click on the link
+                inside to complete authentication. The link expires in 1 hour. If it expires, or if you cannot find the
+                email, you can request a Resend using the button above.
+              </div>
+            </div>
+            <div [ngClass]="{'active' : brF?.email_verify?.value}" class="step" data-target="#validate">
+              <button class="step-trigger">
+                <span class="bs-stepper-circle"></span>
+                <span class="bs-stepper-label fs-px-16">Email address authenticated</span>
+              </button>
+              <div class="bs-stepper-text fs-px-12 text-align-email">
+                You can close the previous browser tab.
+              </div>
+            </div>
+          </div>
+          <div class="bs-stepper-content">
+            <form>
+              <div id="email123" class="content">
+              </div>
+              <div id="password" class="content">
+              </div>
+              <div id="validate" class="content text-center">
+              </div>
+            </form>
+          </div>
+        </div>
+      </ng-container>
+      <div class="text-primary fs-px-20 mt-9 mb-5 font-weight-bold">
+        <span *ngIf="!addLocation">{{editUser ? 'Edit' : 'Add'}} your business information</span>
+        <span *ngIf="addLocation">Business information</span>
+      </div>
+      <form [formGroup]="brForm" (ngSubmit)="saveBR()" autocomplete="off">
+        <div class="row">
+          <div class="col-md-7 col-sm-12">
+            <div class="form-group mb-4" formGroupName="name">
+              <label class="text-666 d-flex justify-content-between" for="businessName">
+                <span>Business name <span *ngIf="newUser" class="text-999 font-weight-normal">(required)</span></span>
+              </label>
+              <div *ngIf="!brF?.email_verify?.value" class="form-control fs-px-14 disabled-input" readonly>Business
+                name
+              </div>
+              <input #businessName *ngIf="brF?.email_verify?.value && newUser"
+                [ngClass]="{'is-invalid':(brSubmitted && (bName?.get('name')?.errors?.required || bName?.get('name')?.errors?.cannotContainSpace))}"
+                type="text" class="form-control fs-px-14" id="businessName" formControlName="name" autocomplete="off"
+                typeaheadOptionField="name" [typeahead]="businessNames" [typeaheadAsync]="true" typeaheadWaitMs="500"
+                [maxLength]="40" [typeaheadMinLength]="0" [typeaheadScrollable]="true"
+                placeholder="Start typing and select your business if displayed"
+                (typeaheadOnSelect)="onBusinessNameSelect($event)" (keyup)="updateBusinessName();resetBtnName();"
+                (change)="checkBusinessName()" />
+              <div *ngIf="brF?.email_verify?.value && (editUser || addLocation)" class="form-control fs-px-14" readonly>
+                {{business?.name?.name}}
+              </div>
+              <div *ngIf="newUser" class="d-flex justify-content-end pt-1 text-999 fs-px-14">
+                {{40 - brF.name.value.name.length}} remaining
+              </div>
+            </div>
+          </div>
+          <div class="col-md-5 col-sm-12">
+            <p *ngIf="newUser" class="text-999 fs-px-14 mt-md-4" [class.lh-7]="newUser"
+              [class.lh-5]="(editUser || addLocation)">
+              Enter the business name used in your state registration.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-7 col-sm-12">
+            <div class="form-group mb-8" formGroupName="category">
+              <label class="text-666" [attr.for]="'category'">Business category</label>
+              <div *ngIf="!brF?.email_verify?.value" class="form-control fs-px-14 disabled-input" readonly>
+                Business category
+              </div>
+              <input *ngIf="brF?.email_verify?.value && newUser" type="text" class="form-control fs-px-14"
+                [attr.id]="'category'" formControlName="name" placeholder="Start typing your business category here"
+                typeaheadOptionField="name" [typeahead]="businessCategory" [typeaheadAsync]="true" typeaheadWaitMs="500"
+                [typeaheadMinLength]="0" [typeaheadScrollable]="true"
+                (typeaheadOnSelect)="onBusinessCategorySelect($event)"
+                (keyup)="updateBusinessCatName();resetBtnName();" />
+              <input *ngIf="brF?.email_verify?.value && editUser" type="text"
+                class="form-control fs-px-14" [attr.id]="'category'" formControlName="name"
+                placeholder="Start typing your business category here" typeaheadOptionField="name"
+                [typeahead]="businessCategory" [typeaheadAsync]="true" typeaheadWaitMs="500" [typeaheadMinLength]="0"
+                [typeaheadScrollable]="true" (typeaheadOnSelect)="onBusinessCategorySelect($event)"
+                (keyup)="updateBusinessCatName();resetBtnName();" />
+<!--               <div *ngIf="brF?.email_verify?.value && (editUser || addLocation)" class="form-control fs-px-14" readonly>
+                {{business?.category?.name}}
+              </div>
+ -->            </div>
+          </div>
+          <div class="col-md-5 col-sm-12"></div>
+        </div>
+        <div class="row">
+          <div class="col-md-7 col-sm-12 lh-6">
+            <div class="form-group mb-0">
+              <label class="text-666">
+                Business type
+                <span class="fs-px-14 text-999">(Choose the type which best describes your business)</span>
+              </label>
+              <div class="row" formArrayName="types">
+                <ng-container *ngFor="let bt of bTypes.controls;let i = index">
+                  <div class="col-md-6 col-sm-12">
+                    <div class="form-check py-2" *ngIf="!addLocation">
+                      <input *ngIf="!brF?.email_verify?.value" type="checkbox" class="form-check-input" disabled />
+                      <input *ngIf="brF?.email_verify?.value && businessTypes[i]?.name !== 'Service provider'"
+                        type="checkbox" class="form-check-input" disabled />
+                      <input *ngIf="brF?.email_verify?.value && businessTypes[i]?.name === 'Service provider'"
+                        type="checkbox" class="form-check-input" [formControlName]="i" [id]="businessTypes[i]?.name"
+                        (change)="autoSave();resetBtnName();" />
+                      <label [for]="businessTypes[i]?.name"
+                        class="form-check-label fs-px-14 text-666">{{businessTypes[i]?.name}}</label>
+                    </div>
+                    <div class="form-check py-2" *ngIf="addLocation">
+                      <input type="checkbox" class="form-check-input" [checked]="bt.value" disabled />
+                      <label [for]="businessTypes[i]?.name"
+                        class="form-check-label fs-px-14 text-666">{{businessTypes[i]?.name}}</label>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-5 col-sm-12"></div>
+        </div>
+        <div class="text-primary fs-px-20 mt-9 mb-5 font-weight-bold">
+          <span *ngIf="!addLocation">{{editUser ? 'Edit' : 'Add'}} your contact information</span>
+          <span *ngIf="addLocation">Add new contact information</span>
+        </div>
+        <div class="row">
+          <div class="col-md-7 col-sm-12">
+            <div class="form-group mb-8">
+              <label class="w-100 d-flex justify-content-between text-666" for="address">
+                <span>Street address <span class="text-999 font-weight-normal">(required)</span></span>
+                <div class="form-check lh-6">
+                  <input *ngIf="!brF?.email_verify?.value" type="checkbox" class="form-check-input" disabled>
+                  <input *ngIf="brF?.email_verify?.value" type="checkbox" class="form-check-input"
+                    formControlName="doNotDisplay" id="doNotDisplay" (change)="autoSave();resetBtnName();">
+                  <label class="form-check-label fs-px-14 text-666" for="doNotDisplay">Do not display</label>
+                </div>
+              </label>
+              <div *ngIf="!brF?.email_verify?.value" class="form-control fs-px-14 disabled-input" readonly>
+                Address line 1
+              </div>
+              <input *ngIf="brF?.email_verify?.value" type="text" class="form-control fs-px-14" id="address"
+                [ngClass]="{'is-invalid':brSubmitted && brF.address.errors && [brF.address.errors.required || brF.address.errors.cannotContainSpace]}"
+                formControlName="address" placeholder="Address line 1" (change)="autoSave()"
+                (keyup)="resetBtnName();" />
+            </div>
+          </div>
+          <div class="col-md-5 col-sm-12"></div>
+        </div>
+        <div class="row">
+          <div class="col-md-7 col-sm-12">
+            <div class="form-group mb-8">
+              <label class="text-666" for="addressLine2">
+                Suite, Unit, Building etc. <span class="text-999 font-weight-normal">(optional)</span></label>
+              <div *ngIf="!brF?.email_verify?.value" class="form-control fs-px-14 disabled-input" readonly>
+                Address line 2
+              </div>
+              <input *ngIf="brF?.email_verify?.value" type="text" class="form-control fs-px-14" id="addressLine2"
+                formControlName="address2" placeholder="Address line 2" (change)="autoSave()"
+                (keyup)="resetBtnName();" />
+            </div>
+          </div>
+          <div class="col-md-5 col-sm-12"></div>
+        </div>
+        <div class="row">
+          <div class="col-md-7 col-sm-12">
+            <div class="row">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group mb-4">
+                  <label class="text-666 d-flex justify-content-between">
+                    <span>Country <span class="text-999 font-weight-normal">(required)</span></span>
+                  </label>
+                  <div class="form-control fs-px-14 disabled-input" readonly>United States</div>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group mb-8">
+                  <label class="text-666 d-flex flex-column justify-content-between" for="state">
+                    <span>State <span class="text-999 font-weight-normal">(required)</span></span>
+                  </label>
+                  <div *ngIf="!brF?.email_verify?.value" class="form-control fs-px-14 disabled-input disabled-input"
+                    readonly>Choose state
+                  </div>
+                  <select
+                    [ngClass]="{'is-invalid dropdown':brSubmitted &&  brF.state.errors && [brF.state.errors.required ||  brF.state.errors.cannotContainSpace]}"
+                    *ngIf="brF?.email_verify?.value" formControlName="state" name="state"
+                    class="form-control text-secondary fs-px-14" id="state" (change)="autoSave();resetBtnName();">
+                    <option value="">Choose state</option>
+                    <option *ngFor="let state of statesArr" [value]="state.name">{{state.name}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-5 col-sm-12"></div>
+        </div>
+        <div class="row">
+          <div class="col-md-7 col-sm-12">
+            <div class="row">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group mb-8">
+                  <label class="text-666 d-flex justify-content-between" for="city">
+                    <span>City <span class="text-999 font-weight-normal">(required)</span></span>
+                  </label>
+                  <div *ngIf="!brF?.email_verify?.value" class="form-control fs-px-14 disabled-input" readonly>City
+                  </div>
+                  <input
+                    [ngClass]="{'is-invalid':brSubmitted &&  brF.city.errors && [brF.city.errors.required || brF.city.errors.cannotContainSpace]}"
+                    *ngIf="brF?.email_verify?.value" type="text" class="form-control fs-px-14" id="city"
+                    formControlName="city" placeholder="City" (change)="autoSave()" (keyup)="resetBtnName();" />
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group mb-4">
+                  <label class="text-666 d-flex justify-content-between" for="zip">
+                    <span>Zip code <span class="text-999 font-weight-normal">(required)</span></span>
+                  </label>
+                  <div *ngIf="!brF?.email_verify?.value" class="form-control fs-px-14 disabled-input" readonly>
+                    Zip code
+                  </div>
+                  <input
+                    [ngClass]="{'is-invalid':brSubmitted &&  brF.zip.errors && [brF.zip.errors.required || brF.zip.errors.cannotContainSpace || brF.zip.errors.pattern]}"
+                    *ngIf="brF?.email_verify?.value" type="text" class="form-control fs-px-14" id="zip"
+                    formControlName="zip" placeholder="Zip code" (change)="autoSave()" (keyup)="resetBtnName();" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-5 col-sm-12">
+            <p class="text-999 fs-px-14 mt-md-4 lh-5">You can add more locations from your Account tab later.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-7 col-sm-12">
+            <div class="row">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group mb-4">
+                  <label class="text-666">
+                    <span>Phone number <span class="text-999 font-weight-normal">(required)</span></span>
+                  </label>
+                  <div class="form-control fs-px-14 disabled-input" readonly>United States (+1)</div>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group mt-md-2" [class.mb-4]="newUser">
+                  <label class="text-666 d-flex justify-content-end" style="height: 11px">
+                  </label>
+                  <div *ngIf="!brF?.email_verify?.value" class="form-control fs-px-14 disabled-input" readonly>
+                    000 000 0000
+                  </div>
+                  <input [ngClass]="{'is-invalid':brSubmitted && brF?.phone?.errors?.required}" formControlName="phone"
+                    *ngIf="brF?.email_verify?.value" type="text" mask="(000) 000 0000" (change)="autoSave()"
+                    class="form-control fs-px-14" placeholder="(000) 000 0000">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-5 col-sm-12"></div>
+        </div>
+        <div class="text-primary fs-px-20 mt-9 mb-5 font-weight-bold">
+          {{newUser ? 'Add your website' : 'Your website'}}
+        </div>
+        <div class="row">
+          <div class="col-md-7 col-sm-12">
+            <div class="form-group mb-0">
+              <label class="text-666 d-flex justify-content-between" for="website">
+                <span>Website URL (optional).<span class="text-999 font-weight-normal"> e.g:
+                    https://www.ewo360.com</span></span>
+              </label>
+              <div *ngIf="!brF?.email_verify?.value" class="form-control fs-px-14 disabled-input" readonly>
+                https://www.
+              </div>
+              <input *ngIf="brF?.email_verify?.value && !addLocation" type="text" class="form-control fs-px-14"
+                id="website" [ngClass]="{'is-invalid': brF?.website?.errors?.pattern}" formControlName="website"
+                placeholder="https://www." (keyup)="linkPreview();autoSave();resetBtnName();" (focus)="setLinkPrefix()"
+                maxlength="70">
+              <div class="form-control fs-px-14 disabled-input" *ngIf="addLocation" readonly>
+                {{proUser?.business?.link ? proUser?.business?.link : 'https://www.'}}
+              </div>
+              <div class="d-flex justify-content-end pt-1 text-999 fs-px-14">
+                {{70 - brF['website'].value.length}} remaining
+              </div>
+            </div>
+          </div>
+          <div class="col-md-5 col-sm-12 adjustment"></div>
+        </div>
+        <div class="row">
+          <div class="pr-0 col-sm-12 col-md-12 my-5">
+            <div class="box-container">
+              <img [src]="website && website.images ? website?.images[0] : 'assets/img/link-preview-bg.svg'"
+                class="image-box" />
+              <span style="vertical-align: top" class="text-999 fs-px-14 lh-5 ml-2">If your site image is not displayed,
+                please check
+                the URL entered.</span>
+            </div>
+
+            <div *ngIf="brF?.website?.value?.length && website && website?.title"
+              class="image-boxing px-2 py-2 fs-px-14">
+              {{website?.title}}
+            </div>
+            <div *ngIf="!brF?.website?.value?.length" class="image-boxing px-2 py-2 fs-px-14">Title of website</div>
+          </div>
+        </div>
+        <ng-container *ngIf="editUser || addLocation">
+          <div class="row justify-content-end pt-10">
+            <div class="col-md-12 col-sm-12 text-right">
+              <div class="btn bg--grey--gray mr-5 btn-hw text-white lh-7 disabled" *ngIf="brForm.pristine">Cancel</div>
+              <button type="button" class="btn btn-outline-primary mr-5 btn-hw" *ngIf="!brForm.pristine"
+                (click)="updateBusinessRegistrationForm();updateBusinessTypesFA();">Cancel
+              </button>
+              <div class="btn bg--grey--gray btn-hw text-white lh-7 disabled" *ngIf="brF?.btnName?.value !== 'Save'">
+                {{brF?.btnName?.value}}
+              </div>
+              <button type="submit" class="btn btn-primary btn-hw" *ngIf="brF?.btnName?.value === 'Save'">
+                {{brF?.btnName?.value}}
+              </button>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="newUser">
+          <div class="row pt-10 d-flex justify-content-end">
+            <div class="col-md-12 col-sm-12 text-right">
+              <div *ngIf="brF?.email_verify?.value && brSubmitted && !brForm.valid" class="fs-px-14 mr-5 text-red mb-5">
+                If a button is unresponsive. please check fields above. A<br />red border signals a problem with the
+                data
+                in that field.
+              </div>
+              <div>
+                <button type="button" class="btn btn-outline-primary mr-5 btn-hw" [disabled]="!brF?.email_verify?.value"
+                  (click)="brF?.email_verify?.value && pauseEvent()">Pause
+                </button>
+                <button type="button" [disabled]="!brF?.email_verify?.value" class="btn btn-primary btn-hw"
+                  (click)="brF?.email_verify?.value && nextEvent()">Next
+                </button>
+              </div>
+              <div class="justify-content-end text-999 fs-px-14 pt-4" style="margin-right: -13px">
+                Buttons will be enabled once email is authenticated.
+                <a [href]="WP_LINK+'help-for-business'" class="text-primary font-weight-bold">Click here</a>
+                if you don't receive an email after 3 tries.
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </form>
+    </div>
+  </div>
+</div>

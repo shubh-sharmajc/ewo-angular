@@ -1,0 +1,97 @@
+<div class="cover-photo-popup">
+  <div class="popup-header">
+    <h2 class="heading-title mb-0">CHOOSE A COVER PHOTO</h2>
+    <div class="closeBtn">
+      <a class="icon-close" href="javascript:void(0);" (click)="closeDialog()"></a>
+    </div>
+  </div>
+  <div class="popup-body">
+    <div class="tabs-container">
+      <ul class="tabs">
+        <li (click)="showUpdatePhotoView = true"><a [attr.class]="showUpdatePhotoView && 'active'">Upload Photo</a></li>
+        <li (click)="showUpdatePhotoView = false"><a [attr.class]="!showUpdatePhotoView && 'active'">EWO Gallery</a>
+        </li>
+      </ul>
+    </div>
+    <ng-container *ngIf="progress">
+      <div class="section bordered-container" style="height: calc(100% - 160px)">
+        <div class="h-100 w-100 d-flex flex-column justify-content-center align-items-center px-4">
+          <h1 class="fs-px-24 font-weight-normal">Uploading</h1>
+          <progressbar [value]="progress" class="img-upload-progress"></progressbar>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="showUpdatePhotoView">
+      <div class="section bordered-container file-upload-container d-flex justify-content-center align-items-center"
+           appDragAndDrop (files)="filesDropped($event)" (click)="getCoverImage()" *ngIf="!progress">
+        <div *ngIf="!showImage">
+          <div class="section-text text-center">
+            You can personalize the cover photo with your own image. If you don't have one handy, please select an
+            option from the "EWO Gallery" tab above.
+          </div>
+          <div class="plus-icon">
+            <div class="plus"></div>
+            <input style="visibility: hidden" type="file" (change)="changeCoverImage($event)" id="getCoverImageFile"
+                   name="image" accept="image/*"/>
+          </div>
+          <div class="message-info">
+            <div class="section-sub-text">Click the '+' above or drag and drop an image here to upload.</div>
+            <div class="section-sub-text fs-px-16 text-center">
+              <span>Optimal image dimensions: <span class="fs-px-14">1536 X 768</span>.
+              Image must be PNG or JPG and can be upto 8MB max size. You can crop the image after uploading it.</span>
+            </div>
+          </div>
+        </div>
+        <div class="image" *ngIf="showImage">
+          <image-cropper
+            [imageChangedEvent]="coverImageChangedEvent"
+            [imageFile]="dragImageFile"
+            [imageURL]="imageURL"
+            [maintainAspectRatio]="true"
+            [aspectRatio]="16/3"
+            [format]="'jpeg'"
+            [imageQuality]="100"
+            [cropperMinWidth]="1210"
+            [cropperMinHeight]="226"
+            (imageCropped)="imageCropped($event)"
+            (imageLoaded)="imageLoaded()"
+            (cropperReady)="cropperReady()"
+            (loadImageFailed)="loadImageFailed()"></image-cropper>
+        </div>
+      </div>
+      <div class="msg text-center" *ngIf="showImage">
+        Drag image to reposition
+      </div>
+      <div class="msg" *ngIf="errMsg">
+        <small>Please select the image file.</small>
+      </div>
+      <div class="col8_sm-8_xs-12 text-right mT30 p0">
+        <button class="btn btn-cancel outline" (click)="this.closeDialog()">Cancel</button>
+        <button (click)="!progress && getCoverCroppedImage()" class="btn btn-submit" [disabled]="progress">Crop & Save
+        </button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!showUpdatePhotoView">
+      <div class="section bordered-container cover-img-container" *ngIf="!progress">
+        <div class="grid m-0">
+          <ng-container *ngFor="let img of ewoGalleryArr;let i = index">
+            <div class="col6_sm-6_xs-12 p-2">
+              <img class="cover-img" [src]="img.path"/>
+              <label class="checkbox-container" (click)="$event.stopPropagation();">
+                <input type="checkbox" [name]="'cover'+i" (change)="selectImage(i)" [(ngModel)]="img.isSelect"/>
+                <span class="checkmark"></span>
+              </label>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="msg" *ngIf="errMsg">
+        <small>Please select the image file.</small>
+      </div>
+      <div class="col8_sm-8_xs-12 text-right mT30 p0">
+        <button class="btn btn-cancel outline" (click)="this.closeDialog()">Cancel</button>
+        <button (click)="!progress && readFileFromImg()" class="btn btn-submit" [disabled]="progress">Save</button>
+      </div>
+    </ng-container>
+  </div>
+</div>

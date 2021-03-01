@@ -1,0 +1,34 @@
+<div class="pause-registration-popup">
+  <div class="modal-header d-flex justify-content-center">
+    <h4 class="modal-title pull-left">
+      <span class="text-secondary fs-px-18">Email address in use for EWO {{role?.includes('pro') ? 'Pro' : 'user'}} account</span>
+    </h4>
+  </div>
+  <div class="modal-body px-10">
+    <div class="row">
+      <div class="col-12">
+        <p class="text-secondary text-center fs-px-16 lh-6">
+          <ng-container *ngIf="role?.includes('pro')">
+            This email address already exists in our Pro database. Please log in. <br/>If you have forgotten your password,
+            you can also reset it.
+          </ng-container>
+          <ng-container *ngIf="!role?.includes('pro')">
+            This email address was found in our user database and cannot be used for a Pro account. <br/>Please use a
+            different email address to create a Pro account.
+          </ng-container>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer d-flex justify-content-center pb-10">
+    <ng-container *ngIf="role?.includes('pro')">
+      <button type="button" class="btn btn-outline-primary btn-hw" (click)="bsModalRef.hide()">Cancel</button>
+      <button type="button" class="btn btn-primary btn-hw" (click)="bsModalRef.hide()" [routerLink]="'/signin'">
+        Log in
+      </button>
+    </ng-container>
+    <ng-container *ngIf="!role?.includes('pro')">
+      <button type="button" class="btn btn-primary btn-hw" (click)="bsModalRef.hide()">Close</button>
+    </ng-container>
+  </div>
+</div>

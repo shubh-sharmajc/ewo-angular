@@ -1,0 +1,186 @@
+<div class="container pro-user-view-profile">
+  <div class="row bg--white border rounded py-6 px-3">
+    <div class="col-12">
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+          <div class="pb-2">
+            <h6 class="text-secondary fs-px-16 m-0">
+              <div *ngIf="business?.tagline" class="py-1">
+                <span class="fs-px-24 font-weight-light">{{business?.tagline}}</span>
+                <span *ngIf="user?.username === currentUser?.username"> | </span>
+                <a [routerLink]="['/pro/account/business-profile']"
+                   [queryParams]="{locId: locationId}"
+                   *ngIf="user?.username === currentUser?.username" class="text-primary fs-px-16"> Edit section</a>
+              </div>
+            </h6>
+          </div>
+        </div>
+        <div class="col-md-8 col-sm-12">
+          <ng-container *ngIf="location?.description">
+            <h6 *ngIf="location?.description" class="py-1">Business Description
+              <span *ngIf="user?.username === currentUser?.username"> | </span>
+              <a [routerLink]="['/pro/account/business-profile']"
+                 [queryParams]="{locId: locationId}"
+                 *ngIf="user?.username === currentUser?.username"
+                 class="text-primary fs-px-16">Edit section</a></h6>
+            <p class="para">{{location?.description}}</p>
+          </ng-container>
+        </div>
+        <div class="col-md-4 col-sm-12 center">
+          <div *ngIf="user?.username === currentUser?.username" class="rounded about-image position-relative mb-1"
+               [matTooltip]="instructions" [matTooltipDisabled]="(proUserRoles.indexOf(currentUser.role) === -1)"
+               [ngStyle]="{'background-image': 'url(\'' + (coverImage) + '\')','background-size': 'cover', 'background-repeat': 'no-repeat'}"
+               [matTooltipClass]="'about-mat-tooltip'" (click)="navigateToAboutUs()">
+            <!-- <button class="btn btn-cover-photo"  ><img src="assets/img/camera.svg">Change photo or video</button> -->
+          </div>
+          <div *ngIf="user?.username !== currentUser?.username" class="rounded about-image position-relative mb-1"
+               [ngStyle]="{'background-image': 'url(\'' + (coverImage) + '\')','background-size': 'cover', 'background-repeat': 'no-repeat'}">
+            <!-- <button class="btn btn-cover-photo"  ><img src="assets/img/camera.svg">Change photo or video</button> -->
+          </div>
+          <a class="fs-px-16 font-weight-bold" href="javascript:void(0);"
+             *ngIf="user?.role === 'pro-premium' && this.aboutUs" (click)="navigateToAboutUs()">View staff bios</a>
+        </div>
+        <div class="col-md-12 col-sm-12 d-flex justify-content-center border border-right-0 border-left-0 mt-10"
+             *ngIf="!isReadMore">
+          <a href="javascript:void(0)" class="font-weight-bold p-2 text-primary fs-px-16" (click)="readMore()">
+            Read More</a>
+        </div>
+        <div *ngIf="isReadMore" class="col-md-12 col-sm-12">
+          <ng-container *ngIf="business?.testimonials && business?.testimonials.length">
+            <h6 class="py-2 m-0">Testimonials
+              <span *ngIf="user?.username === currentUser?.username"> | </span>
+              <a [routerLink]="['/pro/account/testimonials']"
+                 [queryParams]="{locId: locationId}"
+                 *ngIf="user?.username === currentUser?.username"
+                 class="text-primary fs-px-16"> Edit section</a></h6>
+            <div class="fs-px-14 text-666 lh-6 mb-5" *ngFor="let testimonial of business?.testimonials;">
+              <ng-container *ngIf="testimonial?.testimonial">
+                <span>&quot;{{testimonial?.testimonial}}&quot;</span>
+                <span class="fs-px-12 text-999" style="float: right;">
+                  <span *ngIf="testimonial?.provider">{{testimonial.provider}}, </span>
+                  <span *ngIf="testimonial?.relationship">{{testimonial.relationship}}<span class="mx-2">|</span></span>
+                <span *ngIf="testimonial?.provided_at">
+                  {{testimonial.provided_at | date:'MMMM, y'}}</span>
+                </span>
+              </ng-container>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="location?.services">
+            <h6 class="py-2 m-0">Services
+              <span *ngIf="user?.username === currentUser?.username"> | </span>
+              <a [routerLink]="['/pro/account/business-profile']"
+                 [queryParams]="{locId: locationId}"
+                 *ngIf="user?.username === currentUser?.username"
+                 class="text-primary fs-px-16"> Edit section</a></h6>
+            <p class="text-secondary fs-px-16 para">{{location?.services}}</p>
+          </ng-container>
+
+          <ng-container *ngIf="location?.diff_services">
+            <h6 class="py-2 m-0"> What’s different about our services
+              <span *ngIf="user?.username === currentUser?.username"> | </span>
+              <a [routerLink]="['/pro/account/business-profile']"
+                 [queryParams]="{locId: locationId}"
+                 *ngIf="user?.username === currentUser?.username"
+                 class="text-primary fs-px-16"> Edit section</a></h6>
+            <p class="text-secondary fs-px-16 para">{{location?.diff_services}}</p>
+          </ng-container>
+
+          <ng-container *ngIf="location?.solutions">
+            <h6 class="py-2 m-0">Conditions treated
+              <span *ngIf="user?.username === currentUser?.username"> | </span>
+              <a [routerLink]="['/pro/account/business-profile']"
+                 [queryParams]="{locId: locationId}"
+                 *ngIf="user?.username === currentUser?.username"
+                 class="text-primary fs-px-16"> Edit section</a></h6>
+            <p class="text-secondary fs-px-16 para">{{location?.solutions}}</p>
+          </ng-container>
+
+          <ng-container *ngIf="location?.history">
+            <h6 class="py-2 m-0">Business History
+              <span *ngIf="user?.username === currentUser?.username"> | </span>
+              <a [routerLink]="['/pro/account/business-profile']"
+                 [queryParams]="{locId: locationId}"
+                 *ngIf="user?.username === currentUser?.username"
+                 class="text-primary fs-px-16"> Edit section</a></h6>
+            <p class="text-secondary fs-px-16 para">{{location?.history }}</p>
+          </ng-container>
+
+          <ng-container *ngIf="business?.education">
+            <h6 class="py-2 m-0">Education
+              <span *ngIf="user?.username === currentUser?.username"> | </span>
+              <span *ngIf="user?.username === currentUser?.username"
+                    class="cursor-pointer text-primary fs-px-16"> Edit section</span>
+            </h6>
+            <p class="text-secondary fs-px-16">{{business?.education}}</p>
+          </ng-container>
+
+          <ng-container *ngIf="business?.professionalAffilations">
+            <h6 class="py-2 m-0">Professional Affiliations
+              <span *ngIf="user?.username === currentUser?.username"> | </span>
+              <span *ngIf="user?.username === currentUser?.username"
+                    class="cursor-pointer text-primary fs-px-16">Edit section</span>
+            </h6>
+            <p class="text-secondary fs-px-16">{{business?.professionalAffilations}}</p>
+          </ng-container>
+
+          <ng-container *ngIf="business?.recognitions && business?.recognitions.length">
+            <h6 class="py-2 m-0">Public recognitions
+              <span *ngIf="user?.username === currentUser?.username"> | </span>
+              <a [routerLink]="['/pro/account/recognitions']"
+                 [queryParams]="{locId: locationId}"
+                 *ngIf="user?.username === currentUser?.username"
+                 class="text-primary fs-px-16"> Edit section</a></h6>
+            <div *ngFor="let recognition of business?.recognitions;let i = index">
+              <div class="text-secondary fs-px-16 lh-5">{{recognition?.tagline}}</div>
+              <div class="text-secondary fs-px-16 lh-5">{{recognition?.org}}</div>
+            </div>
+          </ng-container>
+        </div>
+        <div class="col-md-12 col-sm-12 d-flex justify-content-center border border-right-0 border-left-0 mt-10"
+             *ngIf="isReadMore">
+          <a href="javascript:void(0)" class="font-weight-bold p-2 text-primary fs-px-16" (click)="readMore()">
+            Read Less</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row bg--white border rounded mt-4 py-6 px-3">
+    <div class="col-12">
+      <h5 class="py-2 font-weight-bold">MEDIABOOKS</h5>
+      <div class="row">
+        <ng-container *ngFor="let mbl of mediaBookList | slice:0:6;">
+          <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 mb-5">
+            <a
+              [routerLink]="['/pro/'+(user?.username === currentUser?.username ? 'manage-media': 'user')+'/'+user?.username+'/mediabooks/'+mbl._id+'/items']">
+              <div class="mb-img rounded-top"
+                   [ngStyle]="{'background-image': 'url(\'' + (mbl.image_url ? mbl.image_url : getImgForEmptyMB(mbl?.name)) + '\')'}">
+              </div>
+            </a>
+            <div class="border rounded-bottom p-2">
+              <div class="pb-4 font-weight-bold" [title]="mbl.name">
+                {{mbl?.default ? mbl?.name + ' (Default)' : mbl?.name}}
+              </div>
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="text-999 fs-px-16">{{mbl.saved_items ? mbl.saved_items : 0}} item(s)</div>
+                <div class="text-999 fs-px-16">
+                  <span *ngIf="mbl.shared">{{mbl?.created_by?.first_name + ' ' + mbl?.created_by?.last_name}}</span>
+                  <span *ngIf="!mbl.shared">{{mbl.private ? 'Private' : 'Public'}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <div class="col" *ngIf="mediaBookList && !mediaBookList.length">
+          <h6 class="text-center fs-px-32 py-30 px-50 text-666">This pro has not yet created any public Mediabooks.</h6>
+        </div>
+      </div>
+      <div class="col-md-12 col-sm-12 d-flex justify-content-center border border-right-0 border-left-0"
+           *ngIf="mediaBookList && mediaBookList.length">
+        <a
+          [routerLink]="['/pro/'+(user?.username === currentUser?.username ? 'manage-media': 'user')+'/'+user?.username+'/mediabooks']"
+          class="font-weight-bold p-2 text-primary fs-px-16">View all</a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+@import '../../../../scss/variables';
+
+.account-downgrade-modal {
+  .modal-header {
+    border-bottom: 2px solid $primary;
+  }
+
+  .modal-footer {
+    border: none;
+  }
+}

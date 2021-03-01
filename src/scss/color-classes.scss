@@ -1,0 +1,45 @@
+@import 'variables';
+
+.text-666 {
+  color: $gray-666 !important;
+}
+
+.text-999 {
+  color: $gray-999 !important;
+}
+.text-red {
+  color: $red !important;
+}
+
+.text-fff {
+  color: $white !important;
+}
+
+.text-000 {
+  color: $black !important;
+}
+
+.text-blue {
+  color: #2179AA;
+}
+
+.bg-skyblue {
+  background: $skyblue;
+}
+
+.bg-darkblue {
+  background: $darkblue;
+}
+
+typeahead-container {
+  button {
+    font-size: 14px;
+    font-family: Roboto;
+  }
+
+  .dropdown-item.active {
+    background: $bg-gray;
+    color: $secondary;
+  }
+}
+

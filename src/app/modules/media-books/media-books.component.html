@@ -1,0 +1,66 @@
+<div class="mediabook">
+  <div class="col12 col12_sm-12_xs-12 pB0">
+    <div class="section bg-white">
+      <h5 class="text-primary text-center fs-px-20 font-weight-bold py-6 border-bottom border-primary mb-0"
+          *ngIf="proUserRoles.indexOf(currentUser?.role) > -1">
+        Mediabooks Home</h5>
+      <div class="mediabook-grid-header">
+        <div class="title">MEDIABOOKS <span>{{mediaBookList && mediaBookList.length}}</span></div>
+        <div class="right-container" *ngIf="user?.username === currentUser?.username">
+          <div class="search-dd-container">
+            <div class="search-container input">
+              <img src="assets/img/search-mediabook.svg"/>
+              <input type="text" placeholder="Search Mediabooks" [(ngModel)]="searchInput"
+                     (ngModelChange)="searchOutput.next($event)"/>
+            </div>
+            <ng-select style="padding-top: 1px" class="custom-grey action-dd border-none z-index-500"
+                       [items]="searchMediabook"
+                       [closeOnSelect]="true" bindLabel="name" [searchable]="false" [(ngModel)]="selectedSearchAction"
+                       [clearable]="false" placeholder="All mediabooks" (change)="searchMenuChange()">
+            </ng-select>
+          </div>
+          <ng-select style="padding-top: 1px" class="custom-green mb-action action-dd z-index-500" [items]="actions"
+                     [closeOnSelect]="true"
+                     [searchable]="false" [clearable]="false" bindLabel="name" placeholder="Actions"
+                     [(ngModel)]="selectAction" (change)="actionChange(selectAction.name)">
+          </ng-select>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="content col12 col12_sm-12_xs-12">Manage your private, public and shared content.</div>
+      </div>
+      <div class="container grid" detect-scroll (onScroll)="scrollHandler($event)" [bottomOffset]="500">
+        <ng-container *ngFor="let mbl of mediaBookList;let i = index">
+          <div class="position-relative image-container col3 col3_sm-6_xs-12 p-2" [style.z-index]="499-i"
+               [style.height]="mbl?.shared ? '361px' : '425px'">
+            <a
+              [routerLink]="[(proUserRoles.indexOf(currentUser?.role) > -1 ? '/pro/manage-media/' : '/user/')+user?.username+'/mediabooks/'+mbl._id+'/items']">
+              <div class="image"
+                   [ngStyle]="{'background-image': 'url(\'' + (mbl.image_url ? mbl.image_url : getImgForEmptyMB(mbl?.name)) + '\')'}"></div>
+              <label class="checkbox-container" (click)="$event.stopPropagation();"
+                     *ngIf="user?.username === currentUser?.username" [style.display]="mbl.checked?'block':''">
+                <input type="checkbox" [(ngModel)]="mbl.checked" (change)="checkboxChange()"/>
+                <span class="checkmark"></span>
+              </label>
+              <div class="mediabook-info">
+                <div class="header" [title]="mbl.name">{{mbl.default ? mbl.name + ' (Default)' : mbl.name}}</div>
+                <div class="sub-info">
+                  <div>{{mbl.saved_items ? mbl.saved_items : 0}} item(s)</div>
+                  <div>{{mbl.shared ? (mbl?.created_by?.first_name + ' ' + mbl?.created_by?.last_name) : (mbl.private ?
+                    'Private' : 'Public')}}
+                  </div>
+                </div>
+              </div>
+            </a>
+            <textarea [ngClass]="{'visiblity': mbl.shared}" class="input-field notes" placeholder="Notes"
+                      maxlength="500" [(ngModel)]="mbl.notes" *ngIf="user?.username === currentUser?.username"
+                      (change)="changeMediabookNotes(mbl._id, mbl.notes)" style="resize: none;"></textarea>
+          </div>
+        </ng-container>
+        <h1 class="msg" *ngIf="mediaBookList && !mediaBookList.length">
+          This user has not yet created any public Mediabooks.
+        </h1>
+      </div>
+    </div>
+  </div>
+</div>

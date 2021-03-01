@@ -1,0 +1,11 @@
+$sizes: 50;
+
+@mixin font-size-pixel-classes {
+  @for $i from 1 through $sizes {
+    .fs-px-#{$i} {
+      font-size: $i + px !important;
+    }
+  }
+}
+
+@include font-size-pixel-classes;

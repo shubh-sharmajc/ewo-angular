@@ -1,0 +1,103 @@
+<div class="popup-container">
+  <div class="popup-header">
+    <h4 class="popup-title">Share your Mediabook with friends...</h4>
+  </div>
+  <div class="popup-body">
+    <div class="section m0 p0">
+      <div class="input mT20">
+        <label class="content-label">Enter email addresses or user IDs separated by commas</label>
+        <ng-select [ngClass]="{'red-border' : showError || showEmailError}" class="custom-grey" [items]="items$ | async"
+                   bindLabel="name" [clearSearchOnAdd]="true" [loading]="usersLoading" [closeOnSelect]="true"
+                   [typeahead]="input$" [(ngModel)]="selectedUser"
+                   (change)="changeUser()">
+          <ng-template ng-label-tmp let-item="item">
+            <div class="user-option">
+              <img class="user-img" height="15" width="15" [src]="item.picture_url"
+                   onerror="this.src = 'assets/img/user.svg'"/>
+              <span>{{item.name}}</span>
+            </div>
+          </ng-template>
+          <ng-template ng-option-tmp let-item="item" let-index="index">
+            <div class="user-option" (click)="changeUser()">
+              <img class="user-img" height="15" width="15" [src]="item.picture_url"
+                   onerror="this.src = 'assets/img/user.svg'"/>
+              <span>{{item.name}}</span>
+            </div>
+          </ng-template>
+        </ng-select>
+        <div [ngClass]="{'messages' : showError || showEmailError}">
+          <div *ngIf="showError || showEmailError" class="text-danger">You have already shared medibook with this user
+          </div>
+          <a href="javascript:void(0);" class="import" (click)="getMails()">Import Gmail contacts (Future feature)</a>
+        </div>
+      </div>
+      <div *ngIf="sharingUserArr.length || emailSharesArr.length" class="col6 col6_sm-6_xs-6 current-invitees">
+        <span>Current invitees</span>
+      </div>
+
+      <div [ngClass]="{'height' : sharingUserArr.length === 2}" class="user-container minHeight grid m0">
+        <table>
+          <tr class="data-item" *ngFor="let su of sharingUserArr;let i = index">
+            <td>
+              <img class="user-img" [src]="su?.picture_url ? su?.picture_url : 'assets/img/user.svg'"
+                   onerror="this.src = 'assets/img/user.svg'"/>
+              <div class="user_name">
+                {{su?.name}}
+                {{!su?.is_deleted && !su?.status ? '(Deactivated)' : ''}}
+                {{su?.is_deleted ? '(Deleted)' : ''}}
+              </div>
+            </td>
+            <td>
+              <ng-select class="custom-grey action-dd share" [items]="whoHasAccessArr" [closeOnSelect]="true"
+                         [searchable]="false"
+                         [clearable]="false" bindLabel="name" bindValue="value" placeholder="Access permission"
+                         [(ngModel)]="su.access" *ngIf="data?.shared && data?.private && data?.sharingAccess?.access">
+              </ng-select>
+              <ng-select class="custom-grey action-dd share" [items]="whoHasAccessArr" [closeOnSelect]="true"
+                         [searchable]="false"
+                         [clearable]="false" bindLabel="name" bindValue="value" placeholder="Access permission"
+                         [(ngModel)]="su.access" *ngIf="!data?.shared">
+              </ng-select>
+              <a href="javascript:void(0);" class="remove-user" (click)="removeUser(i)"
+                 *ngIf="data?.shared && data?.private && data?.sharingAccess?.access">
+                <img [src]="'assets/img/close.svg'"/></a>
+              <a href="javascript:void(0);" class="remove-user" (click)="removeUser(i)"
+                 *ngIf="!data?.shared">
+                <img [src]="'assets/img/close.svg'"/></a>
+            </td>
+          </tr>
+          <ng-container *ngFor="let su of emailSharesArr;let j = index">
+            <tr class="data-item">
+              <td style="width: 190px;">
+                <img class="user-img" [src]="su?.picture_url ? su?.picture_url : 'assets/img/user.svg'"
+                     onerror="this.src = 'assets/img/user.svg'"/>
+                <div class="user_name text-truncate" [title]="su?.email">{{su?.email}}</div>
+              </td>
+              <td>
+                <div class="ng-select custom-grey action-dd share">
+                  <div class="ng-select-container ng-has-value">
+                    <div class="ng-value-container">
+                      <div class="ng-value ng-star-inserted">
+                        <span class="ng-value-label ng-star-inserted">Can View</span></div>
+                    </div>
+                    <span class="ng-arrow-wrapper"><span class="ng-arrow"></span></span>
+                  </div>
+                </div>
+                <a href="javascript:void(0);" class="remove-user" (click)="removeUserEmail(j)">
+                  <img [src]="'assets/img/close.svg'"/></a>
+              </td>
+            </tr>
+          </ng-container>
+        </table>
+        <div class="col12 col12_sm-12_xs-12 p0 text-center currently-shared"
+             *ngIf="!sharingUserArr.length && !emailSharesArr.length">
+          <small class="empty-msg">Currently not shared.</small>
+        </div>
+      </div>
+    </div>
+    <div class="col12_sm-12_xs-12 buttons text-right mT10">
+      <button type="button" class="btn btn-cancel outline" value="Cancel" (click)="closeDialog()">Cancel</button>
+      <button type="button" class="btn btn-submit" value="Submit" (click)="save()">Save</button>
+    </div>
+  </div>
+</div>

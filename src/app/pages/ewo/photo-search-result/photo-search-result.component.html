@@ -1,0 +1,95 @@
+<section class="main_content">
+  <div class="container">
+    <div class="recent_search">
+      <h1 class="page-title main_cat_title">{{ (imageCounter!=0)?imageCounter:'' }} Search {{
+        imageCounter>1?'Results':'Result' }} for <span> <i>{{ searchStr }}</i> in Photos</span></h1>
+      <div class="grid" *ngIf="(imageList && imageList.length > 0);else noRecordFound">
+        <ng-container *ngFor="let images of imageList;let i = index">
+          <div *ngFor="let rec of images.data;let i = index"
+               [ngClass]="{'col12': (rec.is_banner),'col12_sm-12_xs-12':(rec.is_banner),'col4':(!rec.is_banner),'col4_sm-6_xs-12':(!rec.is_banner)}">
+            <div class="productblock">
+              <div
+                [ngClass]="{'productImg': true,'promotionAdd':(rec.is_promotion),'full-banner-height':(rec.is_banner)}"
+                [style.background-image]="sanitizeImage(rec.picture_thumb_url)"
+                inViewport
+                [inViewportOptions]="{ partial: false, threshold: [0, 1] }"
+                (inViewportAction)="highlightTile($event,rec._id)"
+                [routerLink]="['/image-gallery/'+rec._id]" (click)="countClick(rec._id)">
+                <div class="promotionName" *ngIf="rec.promotion_title">
+                  <a href="{{rec?.label_link}}" target="_blank"
+                     (click)="stopModalBox($event)">{{ rec.promotion_title | titlecase }}</a>
+                </div>
+                <div class="hoverPanel">
+
+                  <ul class="panelIcon">
+                    <li appCheckLoginClick (ngClick)="shareViaEmail($event, rec)">
+                      <img src="assets/img/email.svg"> <span class="panelText">Email</span></li>
+                    <li appCheckLoginClick (ngClick)="savePhoto($event, rec)">
+                      <img src="assets/img/plus.svg"> <span class="panelText">Save</span></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="productDetail">
+                <div class="grid">
+                  <div class="col12 col12_sm-12_xs-12 pB0">
+                    <div class="productInfo">
+                      <div class="title">{{rec?.subject ? rec?.subject : rec?.title}}</div>
+                      <span class="description" *ngIf="rec?.description"
+                            [innerHtml]="sanitizer.bypassSecurityTrustHtml((rec?.description?.length > 90 ? (rec?.description | slice:0:90) : rec?.description))"></span>
+                      <ng-container  *ngIf="rec?.description.length > 90">
+                        <span>... </span>
+                        <a class="see-more" href="javascript:void(0);"
+                           [routerLink]="['/image-gallery/'+rec?._id]">see more</a>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="cardInfo">
+                  <div class="grid">
+                    <div class="col12 col12_sm-12_xs-12 pB0">
+                      <div class="accessTime accessTime2">
+                        <ul>
+                          <li class="list-story">
+                            <ng-container *ngIf="rec?.used_stories[0]; else noStory">
+                              <a [href]="WP_STORIES_LINK+rec?.used_stories[0].story_url"><i
+                                class="zmdi zmdi-bookmark green"></i></a>
+                            </ng-container>
+                            <ng-template #noStory>
+                              <i class="zmdi zmdi-bookmark"></i>
+                            </ng-template>
+                          </li>
+                          <li class="list" style="margin-left: auto;"
+                              [ngStyle]="rec.subject!='' && {'cursor': 'pointer'}"
+                              [routerLink]="['/image-gallery/'+rec._id]">
+                            <img src="assets/img/comments.svg" class="zmdi zmdi-comment-alt"/>
+                            <span>{{ rec?.total_comment }}</span>
+                          </li>
+                          <li class="list">
+                            <i class="zmdi zmdi-thumb-up"
+                               [class.green]="!!rec?.exp_like"
+                               [class.disabled]="disable"
+                               appCheckLoginClick (ngClick)="toggleLike($event, rec)">
+                              <span>{{ rec?.total_like }}</span></i>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <ng-template #noRecordFound>
+        <div class="noRecordFound">
+          <p class="result-not-found font18 mb20 mt20">No results were found in this category. </p>
+          <h4 class="noRecordFound">Things to try</h4>
+          <p class="result-not-found">Please search in a different category or try different keywords. </p>
+          <p class="result-not-found">To see trending searches, just place your cursor in the top search box.</p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</section>

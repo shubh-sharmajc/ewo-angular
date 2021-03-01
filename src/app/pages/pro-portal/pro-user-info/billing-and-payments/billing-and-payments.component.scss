@@ -1,0 +1,22 @@
+@import '../../../../../scss/variables';
+
+.billing-and-payments {
+  .pay-info-container {
+    line-height: 1.4rem !important;
+  }
+  .btn-hw {
+    min-width: 243px;
+    height: 40px;
+  }
+
+  .card-img {
+    position: absolute;
+    top: 5px;
+    left: 333px;
+
+    img {
+      height: 24px;
+      width: 24px;
+    }
+  }
+}

@@ -1,0 +1,237 @@
+<ng-container *ngIf="currentUser">
+  <div class="container px-3">
+    <section class="hero-banner"
+             [ngStyle]="{'background': 'linear-gradient(180deg, rgba(196, 196, 196, 0) 0%, rgba(0, 0, 0, 0.8) 105.61%), url(\'' + (awsbucketUrl+'ewob/ewob_'+bannerId+'.jpg') + '\')'}">
+      <div class="grid welcome-container">
+        <div class="inner-hero-banner-text">
+          <h1 style="margin-left: 30px" *ngIf="proUserRoles.indexOf(currentUser?.role) === - 1">
+            <span>{{homeData.post_login_welcome_msg_heading}} </span>
+            <span>{{currentUser?.first_name}}!</span>
+          </h1>
+
+          <h1 style="margin-left: 30px" *ngIf="proUserRoles.indexOf(currentUser?.role) > - 1">
+            <span>{{homeData.post_login_welcome_msg_heading}} </span>
+            <span>{{business?.name?.name}}!</span>
+          </h1>
+          <p style="margin-left: 30px" class="mb-0 fs-px-18">{{homeData.post_login_welcome_msg_1}}</p>
+          <p style="margin-left: 30px" class="mb-0 fs-px-18">{{homeData.post_login_welcome_msg_2}}</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</ng-container> 
+<ng-container *ngIf="!currentUser">
+   <section class="hero-banner"
+           [ngStyle]="{'background': 'linear-gradient(180deg, rgba(196, 196, 196, 0) 0%, rgba(0, 0, 0, 0.8) 105.61%), url(\'' + (awsbucketUrl+'ewob/ewob_'+bannerId+'.jpg') + '\')'}">
+    <div class="container">
+      <div class="grid">
+        <div class="col8 col8_sm-7_xs-12">
+          <div class="hero-banner-text vhcenter left">
+            <div>
+              <span>{{homeData.banner_text_line_1}}<br>
+              {{homeData.banner_text_line_2}}<br>
+                {{homeData.banner_text_line_3}}</span>
+              <a class="btn btn-primary-outline bg--white mT30" routerLink="/explore-features">
+                Explore All Our Features</a>
+            </div>
+          </div>
+        </div>
+        <div class="col4 col4_sm-5_xs-12">
+          <div class="sign-Up-Form">
+            <div class="signUpForm">
+              <div class="formTitile">New to EWO?
+                <span>Register Now!</span>
+              </div>
+              <form class="register-form" [formGroup]="registerForm" (ngSubmit)="onSubmitRegister()" autocomplete="off">
+                <div class="formDiv">
+                  <div class="input">
+                    <div *ngIf="submitted && f.email.errors" class="signup-validation">
+                      <div class="text-danger" *ngIf="f.email.errors.required">Email is required.</div>
+                      <div class="text-danger" *ngIf="f.email.errors.email">Email must be a valid email address.</div>
+                    </div>
+                    <input
+                      [ngClass]="{ 'red-border': submitted && f.email.errors && [f.email.errors.required || f.email.errors.email]}"
+                      class="email-input" type="email" formControlName="email" name="Email" placeholder="Email"/>
+                  </div>
+                  <div class="btnBlock">
+                    <button type="submit" class="btn white btn--md bg--green full-btn cutomBtn">
+                      Sign up with Email
+                    </button>
+                  </div>
+                  <div class="or">
+                    OR
+                  </div>
+                  <div class="ewoBtn">
+                    <div class="grid">
+                      <div class="col12 col12_sm-12_xs-12">
+                        <button type="button" class="btn  btn--md outline ewo_btn ss-btn fbutton"
+                                (click)="signUpWithFB()">
+                          <i></i>
+                          <span> Continue with Facebook </span>
+                          <!--<img src="assets/img/fb-image.png" alt="FB Profile Photo" class="fixed-right">-->
+                        </button>
+                      </div>
+                      <div class="col12 col12_sm-12_xs-12">
+                        <button type="button" class="btn  btn--md outline ewo_btn ss-btn gbutton"
+                                (click)="signUpWithGoogle()">
+                          <i></i>
+                          Continue with Google
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="formNote">
+                    By signing up, signing in or continuing, I agree to EWO’s
+                    <a [href]="WP_LINK+'privacy-policy'" tabindex="4" target="_blank">Terms of use</a> &
+                    <a [href]="WP_LINK+'privacy-policy'" tabindex="5" target="_blank">Privacy policy</a>
+                  </div>
+                </div>
+              </form>
+              <div class="signNote"> Or <a href="javascript:" routerLink="/signin"> click here </a> to Sign in</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="welcomeText">
+    <div class="container">
+      <div class="register-button"><button class="btn white btn--md bg--green cutomBtn btn-width250 mt-1" (click)="signUpDialogService.openModal(true)">Register now</button></div>
+      <div class="inner-container">
+        <div class="welcome-text">
+          <h4 class="sub-header sub-header--sm uppercase text-center"> Welcome to EWO  </h4>
+            <p class="text-center pt-0">Your Wellness Destination</p>
+         
+          <p class="mb-0" >{{homeData.welcome_p1}} {{homeData.welcome_p2}}</p>
+
+          <p class="pt-0" ></p>
+        </div>
+        <div class="serviceBlock">
+          <div class="grid">
+            <div class="col4 col4_sm-4_xs-12">
+              <div class="serviceBox">
+                <div class="serviceIcon">
+                  <!-- <i class="study-book"></i> -->
+                  <img class="img-box" src="assets/img/home1.png">
+                </div>
+                <h2 class="sub-header sub-header--sm uppercase">{{homeData.service_h1}}</h2>
+                <p>{{homeData.service_p1}}</p>
+              </div>
+            </div>
+            <div class="col4 col4_sm-4_xs-12">
+              <div class="serviceBox">
+                <div class="serviceIcon">
+                  <!-- <i class="community-based"></i> -->
+                  <img class="img-box" src="assets/img/home1.png">
+                </div>
+                <h2 class="sub-header sub-header--sm uppercase">{{homeData.service_h2}}</h2>
+                <p>{{homeData.service_p2}}</p>
+              </div>
+            </div>
+
+            <div class="col4 col4_sm-4_xs-12">
+              <div class="serviceBox">
+                <div class="serviceIcon">
+                  <!-- <i class="business-team-goal"></i> -->
+                  <img class="img-box" src="assets/img/home1.png">
+                </div>
+                <h2 class="sub-header sub-header--sm uppercase">{{homeData.service_h3}}</h2>
+                <p>{{homeData.service_p3}}</p>
+              </div>
+            </div>
+
+            <div class="btnBlock text-center full-btn mT18">
+              <!-- <a href="javascript:void(0);" class="btn white btn--md bg--green cutomBtn btn-width250 mr-sm-4 mt-1"
+                 [routerLink]="'/growth'">Pros Enter Here</a> -->
+              <button class="btn white btn--md bg--green cutomBtn btn-width250 mt-1"
+                      (click)="signUpDialogService.openModal(true)">Get Started
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-container>
+<section class="productSec">
+  <div *ngIf="imageList" class="container">
+    <div class="grid px-2">
+      <ng-container *ngFor="let images of imageList;let i = index">
+        <div *ngFor="let rec of images.data;let i = index" class="p-2"
+             [ngClass]="{'col12': (rec.is_banner),'col12_sm-12_xs-12':(rec.is_banner),'col4':(!rec.is_banner),'col4_sm-6_xs-12':(!rec.is_banner)}">
+          <div class="productblock">
+            <div [ngClass]="{'productImg': true,'promotionAdd':(rec.is_promotion),'full-banner-height':(rec.is_banner)}"
+                 [style.background-image]="sanitizeImage(rec.picture_thumb_url)"
+                 inViewport
+                 [inViewportOptions]="{ partial: false, threshold: [0, 1] }"
+                 (inViewportAction)="highlightTile($event,rec._id)"
+                 [routerLink]="['/image-gallery/'+rec._id]" (click)="countClick(rec._id)">
+              <div class="promotionName" *ngIf="rec.promotion_title">
+                <a href="{{rec?.label_link}}" target="_blank"
+                   (click)="stopModalBox($event)">{{ rec.promotion_title | titlecase }}</a>
+              </div>
+              <div class="hoverPanel">
+
+                <ul class="panelIcon">
+                  <li appCheckLoginClick (ngClick)="shareViaEmail($event, rec)"><img src="assets/img/email.svg">
+                    <span class="panelText">Email</span>
+                  </li>
+                  <li appCheckLoginClick (ngClick)="savePhoto($event, rec)"><img src="assets/img/plus.svg">
+                    <span class="panelText">Save</span></li>
+                </ul>
+              </div>
+            </div>
+            <div class="productDetail">
+              <div class="grid">
+                <div class="col12 col12_sm-12_xs-12 pB0">
+                  <div class="productInfo">
+                    <div class="title">{{rec?.subject ? rec?.subject : rec?.title}}</div>
+                    <span class="description" *ngIf="rec?.description"
+                          [innerHtml]="sanitizer.bypassSecurityTrustHtml((rec?.description?.length > 90 ? (rec?.description | slice:0:90) : rec?.description))"></span>
+                    <ng-container  *ngIf="rec?.description.length > 90">
+                      <span>... </span>
+                      <a class="see-more" href="javascript:void(0);"
+                         [routerLink]="['/image-gallery/'+rec?._id]">see more</a>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+
+              <div class="cardInfo">
+                <div class="grid">
+                  <div class="col12 col12_sm-12_xs-12 pB0">
+                    <div class="accessTime accessTime2">
+                      <ul>
+                        <li class="list-story">
+                          <ng-container *ngIf="rec?.used_stories[0]; else noStory">
+                            <a [href]="WP_STORIES_LINK+rec?.used_stories[0].story_url"><i
+                              class="zmdi zmdi-bookmark green"></i></a>
+                          </ng-container>
+                          <ng-template #noStory>
+                            <i class="zmdi zmdi-bookmark"></i>
+                          </ng-template>
+                        </li>
+                        <li class="list d-flex align-items-center" style="margin-left: auto; margin-top: 2px;"
+                            [ngStyle]="rec.subject!='' && {'cursor': 'pointer'}" [routerLink]="['/image-gallery/'+rec._id]">
+                          <img src="assets/img/comments.svg" class="zmdi zmdi-comment-alt"/>
+                          <span>{{ rec?.total_comment }}</span>
+                        </li>
+                        <li class="list">
+                          <i class="zmdi zmdi-thumb-up"
+                             [class.green]="!!rec?.exp_like"
+                             [class.disabled]="disable"
+                             appCheckLoginClick (ngClick)="toggleLike( $event, rec)">
+                            <span style="margin-bottom: 3px;">{{ rec?.total_like }}</span></i>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</section>

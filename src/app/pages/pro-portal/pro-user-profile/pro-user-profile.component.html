@@ -1,0 +1,185 @@
+<div class="container mt-28 mb-10 pro-user-profile">
+  <div class="row user-profile-container mx-0"
+       [ngStyle]="{'background': 'linear-gradient(180deg, rgba(196, 196, 196, 0) 0%, rgba(0, 0, 0, 0.8) 105.61%), url(\'' + (user && user?.cover_picture_url && !user.cover_picture_url.includes('noImage') ? (user?.cover_picture_url|imageExists: 'assets/img/cover-img-gallery/6.jpg'|async) : 'assets/img/cover-img-gallery/6.jpg') + '\')'}">
+    <div class="col-lg-3 col-md-3 col-sm-6 col-5">
+      <div class="avatar position-absolute"
+           [ngStyle]="{'background-image': 'url(\'' + (user && user?.picture_url ? user?.picture_url : 'assets/img/avatar.jpg') + '\')'}">
+        <label class="avatar-hint"
+               *ngIf="username === currentUser?.username && !router.url.includes('mediabooks') && !router.url.includes('review')">
+          <input #avatar type="file" name="image" accept="image/*" onclick="this.value = null;"
+                 (change)="changeProfile($event)"/>
+          <img src="assets/img/camera.svg">
+          <div class="text-center">
+            <p class="mb-2">Change profile photo</p>
+            <p class="fs-px-14 mb-0">Photo must be between 250KB to 4MB.</p>
+          </div>
+        </label>
+      </div>
+    </div>
+    <div class="col-lg-9 col-md-9 col-sm-6 col-7 username-container">
+      <div class="row">
+        <div class="col d-flex justify-content-between align-items-center">
+          <ng-container *ngIf="user?.username === currentUser?.username">
+            <select class="custom-select mr-sm-2 loc-selection fs-px-14" [(ngModel)]="selectedLoc"
+                    (change)="locationChange()">
+              <option *ngFor="let obj of bLocation" [ngValue]="obj">
+                {{obj?.location?.name + (obj?.is_default ? ' (Master Account)' : '')}}
+              </option>
+            </select>
+            <ng-container *ngIf="!router.url.includes('mediabooks') && !router.url.includes('review')">
+              <a href="javascript:void(0);" class="mr-2 btn btn-primary btn-publish fs-px-14"
+                 (click)="publishProfile()" *ngIf="!business?.is_published">Publish profile</a>
+              <a href="javascript:void(0);" class="mr-2 btn btn-primary btn-publish fs-px-14"
+                 [routerLink]="['/pro/account/basic-registration']" [queryParams]="{locId: locationId}"
+                 *ngIf="business?.is_published">Edit profile</a>
+              <div *ngIf="business?.is_published" class="fs-px-12 text-fff">Profile is public</div>
+              <button class="btn btn-cover-photo ml-auto fs-px-14" (click)="changeCoverPhoto()">
+                <img src="assets/img/camera.svg">
+                Change cover photo
+              </button>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+      <div class="row" [attr.class]="user?.username === currentUser?.username ? 'mt-5' : 'mt-12'">
+        <div class="col">
+          <div class="user-details">
+            <h1 class="user-name m-0 pb-1" *ngIf="business?.name?.name">{{business?.name?.name}}</h1>
+            <h1 class="col-lg-12 col-md-9 col-sm-9 col-9 user-location p-0" *ngIf="location?.locFormat1">
+              {{location?.locFormat1}}</h1>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="d-flex justify-content-end"
+               *ngIf="!router.url.includes('mediabooks') && !router.url.includes('review')">
+            <div class="d-flex align-items-center">
+              <a href="javascript:void(0);" class="text-white d-flex align-items-center" *ngIf="!location?.phone?.num">
+                <img class="mr-2" src="assets/img/phone.svg"/><span>Phone</span>
+              </a>
+              <a [href]="'tel:'+location?.phone?.num" class="text-white mr-5 d-flex align-items-center"
+                 *ngIf="location?.phone?.num">
+                <img class="mr-2" src="assets/img/phone.svg"/>
+                <span>{{location?.phone?.num  | mask: '(000) 000 0000'}}</span>
+              </a>
+              <a class="text-white mr-5 d-flex align-items-center" [href]="business?.link" [target]="'_blank'"
+                 *ngIf="business?.link"><img class="mr-2" src="assets/img/web.svg"/><span>Web</span></a>
+            </div>
+            <button (click)="contactUs()" type="button" class="btn btn-primary message"
+                    *ngIf="username !== currentUser?.username">Message
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row border border-top-0 rounded mx-0">
+    <div class="col-lg-3 col-md-12 col-sm-12 bg-white"></div>
+    <div class="col-lg-9 col-md-12 col-sm-12 bg-white profile">
+      <ul class="nav pb-0">
+        <li class="nav-item">
+          <a class="nav-link pt-md-5 pb-md-3 py-lg-3" [routerLink]="['/pro/user/'+username]"
+             [queryParams]="{locId: locationId}"
+             [class.active]="(router.url.split('?')[0] === '/pro/user/'+username) || router.url.includes('/edit-profile')">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link pt-md-5 pb-md-3 py-lg-3" [routerLink]="['/pro/user/'+username+'/review']"
+             [queryParams]="{locId: locationId}"
+             [class.active]="(router.url.split('?')[0] === '/pro/user/'+username+'/review')">Reviews</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link pt-md-5 pb-md-3 py-lg-3" *ngIf="currentUser?.username !== username"
+             [routerLink]="['/pro/user/'+username+'/mediabooks']" [routerLinkActive]="['active']">Mediabooks</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link pt-md-5 pb-md-3 py-lg-3" [href]="profileUrl+'/chats'"
+             *ngIf="currentUser?.username === username">Messages</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link pt-md-5 pb-md-3 py-lg-3" [href]="profileUrl+'/activity'">Community</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-md-12 col-sm-12" *ngIf="this.toggleLeftSideInfo()" [class.col-lg-3]="this.toggleLeftSideInfo()">
+      <div class="bg--white border rounded py-6 px-3">
+        <div class="d-flex align-items-center justify-content-center">
+          <app-rating [rate]="avgRatings" [readonly]="true"></app-rating>
+          <div class="text-center ml-3">{{totRatings}} Ratings</div>
+        </div>
+        <div class="text-center"
+             *ngIf="currentUser?.username !== username && userRoles.indexOf(currentUser?.role) > -1">
+          <button (click)="writeReview()" type="button" class="btn bs-stepper-btn max-width btn-primary mt-5">
+            Write a Review
+          </button>
+        </div>
+      </div>
+      <div class="bg--white border rounded py-6 px-3 my-5">
+        <div class="text-center followers-following" [class.mb-5]="currentUser?.username === username">
+          <a [href]="profileUrl+'/followers'" class="text-secondary">
+            Followers {{ffData && (ffData.follower === 0 ? 0 : ffData.follower | shortNumber)}}
+          </a>
+          <span class="span-pipe">  |  </span>
+          <a [href]="profileUrl+'/following'" class="text-secondary">
+            Following {{ffData && (ffData.following === 0 ? 0 : ffData.following | shortNumber)}}
+          </a>
+        </div>
+        <div *ngIf="currentUser?.username !== username" class="text-center">
+          <button type="button" class="btn bs-stepper-btn btn-primary text-center my-5 mr-5"
+                  [ngClass]="ffData?.isFollowing && ' btn-follow outline'" (click)="followerFollowing()">
+            <span>{{!ffData?.isFollowing ? 'Follow' : 'Following'}}</span>
+          </button>
+          <button type="button" class="btn bs-stepper-btn btn-primary text-center my-5"
+                  (click)="saveProToMB()">Save
+          </button>
+        </div>
+        <div class="d-flex justify-content-center">
+          <ng-container *ngFor="let sl of location?.social_links">
+            <a *ngIf="sl?.link" [href]="sl?.link" target="_blank">
+              <img class="icon px-1" [src]="'assets/img/'+sl.name.toLowerCase()+'.svg'"/>
+            </a>
+          </ng-container>
+        </div>
+      </div>
+      <div class="bg--white border rounded py-6 px-3 awards">
+        <h5 class="py-2 m-0 pl-2 font-weight-bold">Awards</h5>
+        <div class="awards-container">
+          <div class="award">&nbsp;</div>
+          <div class="award"></div>
+          <div class="award">&nbsp;</div>
+          <div class="award">&nbsp;</div>
+          <div class="award">&nbsp;</div>
+          <div class="award">&nbsp;</div>
+        </div>
+      </div>
+      <div class="bg--white border rounded py-6 px-3 my-5">
+        <div>
+          <div *ngIf="location?.license" class="font-weight-bold fs-px-16 p-1">License Number</div>
+          <div *ngIf="location?.license" class="text-666 p-1 pb-2">{{location && location?.license}}</div>
+          <div *ngIf="location?.address && location?.address2 && location?.city"
+               class="font-weight-bold fs-px-16 p-1">Contact
+          </div>
+          <div *ngIf="location?.locFormat2" class="text-666 p-1 pb-2">
+            {{location?.locFormat2}}<span *ngIf="location?.locFormat3">, </span></div>
+          <div *ngIf="location?.locFormat3" class="text-666 p-1 pb-2">{{location?.locFormat3}}</div>
+          <div *ngIf="business?.launch" class="font-weight-bold fs-px-16 p-1">Date Launched</div>
+          <div *ngIf="business?.launch" class="text-666 p-1 pb-2">{{business?.launch}}</div>
+          <!--<div class="font-weight-bold fs-px-16 p-1">Staff at this location</div>
+          <div class="text-666 p-1 pb-2">10 - 20</div>-->
+          <div *ngIf="location?.price_range.from && location?.price_range.to"
+               class="font-weight-bold fs-px-16 p-1">Typical price range
+          </div>
+          <div *ngIf="location?.price_range.from && location?.price_range.to" class="text-666 p-1 pb-2">
+            {{location?.price_range?.from | currency:'USD'}} - {{location?.price_range?.to | currency:'USD'}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12 col-sm-12" [ngClass]="{'col-lg-9 pl-lg-0': this.toggleLeftSideInfo()}">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+

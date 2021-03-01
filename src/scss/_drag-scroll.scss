@@ -1,0 +1,21 @@
+.find-pros {
+  drag-scroll {
+    .drag-scroll-content {
+      overflow: hidden !important;
+    }
+    .card {
+      img {
+        width: 162px;
+        height: 116px;
+      }
+
+      .card-body {
+        padding: 0.7rem !important;
+
+        p {
+          text-align: center;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+<div class="alert-popup">
+  <div class="popup-header">
+    <h4 class="popup-title">
+      <div class="row m-0 align-items-center">
+        <div class="col-3">
+          <img class="logo" src="assets/img/logo/ewo_150.png">
+        </div>
+        <div class="col-6">
+          <div *ngIf="!data.heading" class="col align-items-center font-weight-bold fs-px-20 text-primary">Alert</div>
+          <div *ngIf="data.heading" class="col align-items-center fs-px-16 text-primary">{{data.heading}}</div>
+        </div>
+        <div class="col-3"></div>
+      </div>
+    </h4>
+  </div>
+  <div class="popup-body">
+    <div class="grid m0">
+      <div class="col12_sm-12_xs-12 text-center py-8">
+        <p class="text-666 fs-px-16 mb-0" [ngClass]="{'change-cover' : data.message.includes('8MB')}"
+           [innerHtml]="sanitizer.bypassSecurityTrustHtml(data && data.message)"></p>
+      </div>
+      <div class="col12_sm-12_xs-12 text-center">
+        <button type="button" class="btn btn-submit" (click)="closeDialog(true)">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

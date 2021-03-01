@@ -1,0 +1,77 @@
+<footer [ngClass]="{'footerFix': showFooter}">
+  <div class="container">
+    <div class="footer-container">
+      <div class="grid">
+        <div class="col3 col3_sm-3_xs-5">
+          <a href="javascript:void(0);" class="footer-logo">
+            <img src="assets/img/logo/ewo_150.png">
+          </a>
+          <div class="copy">© {{year}} ewo</div>
+        </div>
+        <div class="col3 col3_sm-3_xs-7">
+          <div class="footerLink">
+            <h6 class="mb-0 fs-px-15"><b>Company</b></h6>
+            <ul>
+              <li><a [href]="WP_LINK+'about-us'" target="_blank"> About Us</a></li>
+              <li><a [href]="WP_LINK+'news-reports'" target="_blank"> News reports</a></li>
+              <li><a [href]="WP_LINK+'press'" target="_blank"> Press </a></li>
+              <li><a [href]="WP_LINK+'careers'"> Careers </a></li>
+              <li><a [href]="WP_LINK+'privacy-policy'" target="_blank">Terms & Privacy</a></li>
+              <li><a href="javascript:void(0);"> Mobile Apps</a></li>
+              <li><a href="javascript:void(0);"> Copyright & Trademarks</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col3 col3_sm-3_xs-5">
+          <div class="footerLink">
+            <h6 class="mb-0 fs-px-15"><b>Get Help</b></h6>
+            <ul>
+              <li><a href="javascript:void(0);"> Support </a></li>
+              <li><a [href]="WP_LINK+'help'"> Help </a></li>
+              <!-- <li><a [href]="WP_LINK+'help-for-users'"> Help for Users </a></li>
+              <li><a [href]="WP_LINK+'help-for-business'"> Help for Business </a></li> -->
+              <li><a [href]="WP_LINK+'contact-us'"> Contact Us </a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col3 col3_sm-3_xs-7">
+          <div class="footerLink">
+            <h6 class="mb-0 fs-px-15"><b>Connect With Us</b></h6>
+            <ul class="social1-connect">
+              <li>
+                <a href="javascript:void(0);">
+                  <span class="social1_icon"><img src="assets/img/blog.svg"></span> Blog
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0);">
+                  <span class="social1_icon"><img src="assets/img/ewo_t.svg"></span> Twitter
+                </a>
+              </li>
+              <li class="fb_pd">
+                <a href="javascript:void(0);">
+                  <span class="social1_icon"><img src="assets/img/ewo_f.svg"></span>Facebook </a>
+              </li>
+              <li class="fb_pd">
+                <a href="javascript:void(0);">
+                  <span class="social1_icon"><img src="assets/img/ewo_y.svg"></span>YouTube
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="copy desktopshow">© 2019 ewo</div> -->
+    </div>
+  </div>
+</footer>
+<div class="showFooter active1 fadeInRight animated1" id="showFooter" (click)="showFooter = !showFooter"
+     *ngIf="showFooterBtn && showBtn">
+  <img src="assets/img/bottom-arrow.png" alt="" *ngIf="!showFooter;else closeIcon">
+  <ng-template #closeIcon>
+    <i class="zmdi zmdi-close zmdi-hc-3x"></i>
+  </ng-template>
+</div>
+<div class="goTop " id="backToTop" *ngIf="showBtn">
+  <a href="javascript:void(0);"><img src="assets/img/top-arrow.png" alt=""></a>
+</div>

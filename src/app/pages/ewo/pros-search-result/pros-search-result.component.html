@@ -1,0 +1,74 @@
+<section class="main_content pros-search-result">
+  <div class="container">
+    <div class="recent_search users-search">
+      <div class="page-title">
+        <div class="text-secondary pb-5 fs-px-30">
+          Search for {{ qp?.searchString }} ({{proMetaData?.total ? proMetaData?.total : 0}})
+        </div>
+      </div>
+      <ng-container *ngFor="let data of proData;let i = index">
+        <hr class="my-5"/>
+        <div class="row">
+          <div class="col-lg-8 col-md-8 col-md-12 col-sm-12 col-12">
+            <div class="row">
+              <div class="col-lg-8 col-md-8 col-md-12 col-sm-12 col-12">
+                <div class="text-secondary fs-px-20 font-weight-bold">{{data?.name?.name}}</div>
+                <div class="d-flex align-items-center">
+                  <div class="pr-5">
+                    <app-rating [rate]="data.location.ratings" [readonly]="true"></app-rating>
+                  </div>
+                  <span>{{data?.location?.review_count}} Reviews</span>
+                </div>
+                <p class="text-666 text-justify fs-px-14 lh-5 mr-10">{{data?.location?.description}}</p>
+              </div>
+              <div class="col-lg-4 col-md-4 col-md-12 col-sm-12 col-12 pt-10">
+                <p class="text-secondary fs-px-14 font-weight-bold">Contact info</p>
+                <p class="text-666 fs-px-14 lh-5" *ngIf="data?.location?.address">
+                  {{getLocInfo(data?.location)?.address}}</p>
+                <p class="text-666 fs-px-14 lh-5" *ngIf="data?.location?.address1">
+                  {{getLocInfo(data?.location)?.address1}}</p>
+                <p class="text-666 fs-px-14 lh-5">{{data?.location?.phone?.num | mask: '(000) 000 0000'}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-8 col-md-8 col-md-12 col-sm-12 col-12">
+                <a class="btn btn-primary btn-hw lh-7" [routerLink]="['/pro/user/'+ data?.user?.username]"
+                   [queryParams]="{locId: data?.location?._id}">View Profile</a>
+              </div>
+              <div class="col-lg-4 col-md-4 col-md-12 col-sm-12 col-12">
+                <button (click)="contact()" type="text" class="btn btn-primary btn-hw">Message</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-md-12 col-sm-12 col-12 pt-10">
+            <ngx-hm-carousel name="carousel" class="mediabook-item-carousel">
+              <section ngx-hm-carousel-container class="content">
+                <article *ngFor="let img of carousel;let i = index" class="item cursor-pointer visible_important"
+                         ngx-hm-carousel-item>
+                  <div><img class="image" [src]="img.path"/></div>
+                </article>
+              </section>
+              <ng-template #carouselPrev>
+                <div class="click-area">
+                  <img style="width: 25px!important;" src="assets/img/left1-arrow.svg">
+                </div>
+              </ng-template>
+              <ng-template #carouselNext>
+                <div class="click-area">
+                  <img style="width: 25px!important;" src="assets/img/right-arrow.svg">
+                </div>
+              </ng-template>
+            </ngx-hm-carousel>
+            <!--<div class="fs-px-16 text-666 my-2">Work & play: vacation in leavenworth</div>-->
+          </div>
+        </div>
+      </ng-container>
+      <div class="noRecordFound" *ngIf="loaded && proData && !proData.length">
+        <p class="result-not-found font18 mb20 mt20">No results were found in this category. </p>
+        <h4 class="noRecordFound">Things to try</h4>
+        <p class="result-not-found">Please search in a different category or try different keywords. </p>
+        <p class="result-not-found">To see trending searches, just place your cursor in the top search box.</p>
+      </div>
+    </div>
+  </div>
+</section>

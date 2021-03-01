@@ -1,0 +1,32 @@
+{
+	"/api/*": {
+		"target": "http://localhost:8900/",
+		"secure": false,
+		"pathRewrite": {
+			"^/api": ""
+		}
+	},
+	"/stories/*": {
+		"target": "http://localhost",
+		"secure": false,
+		"changeOrigin": true
+	},
+	"/conversations/*": {
+		"target": "http://localhost:4567/",
+		"secure": false,
+		"pathRewrite": {
+			"^/conversations": ""
+		},
+		"changeOrigin": true
+	},
+	"/assets/*": {
+		"target": "http://localhost:4567/",
+		"secure": false,
+		"changeOrigin": false
+	},
+	"/manifest.json": {
+		"target": "http://localhost:4567/",
+		"secure": false,
+		"changeOrigin": true
+	}
+}

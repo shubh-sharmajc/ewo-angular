@@ -1,0 +1,167 @@
+<div class="container pro-user-review-profile bg-white" detect-scroll (onScroll)="scrollHandler($event)"
+     [bottomOffset]="500">
+  <div class="row border rounded">
+    <div class="col-12 h-100 px-5 py-8">
+      <div class="col d-flex flex-wrap">
+        <div class="col-md-3 text-uppercase font-weight-bold font-size-18">Reviews {{totRatings}}</div>
+        <div class="col-md-5">
+          <ul class="list-inline rating-progress-list text-color-a5a5a5 font-size-12" *ngIf="reviewPercentage">
+            <li class="d-flex w-100">
+              <div class="text-right text-666 mr-2" style="width:100px"></div>
+              <div class="w-100">
+                <a href="javascript:void(0);" *ngIf="!business?.is_published"
+                   class="btn bg--grey--gray w-100 rr-btn rr-btn text-white disabled fs-px-14">
+                  Request Reviews
+                </a>
+                <a href="javascript:void(0);" class="btn btn-primary fs-px-14 text-white w-100 rr-btn"
+                   [routerLink]="['/pro/account/request-reviews']" [queryParams]="{locId: locationId}"
+                   *ngIf="business?.is_published">
+                  Request Reviews
+                </a>
+              </div>
+              <div class="text-666" style="width:60px"></div>
+            </li>
+          </ul>
+        </div>
+        <div
+          class="col-md-4 fs-px-12 d-flex align-items-end rr-hint justify-content-center justify-content-sm-start text-666">
+          Enabled if profile is published
+        </div>
+      </div>
+      <div class="col pt-4 d-flex flex-wrap">
+        <div class="col-md-3 mb-5">
+          <div class="d-flex font-weight-bold font-size-12 mb-3">{{avgRatings | number : '1.2-2'}} out of 5 stars</div>
+          <app-rating [rate]="avgRatings" [readonly]="true" [fontSize]="'2rem'"></app-rating>
+        </div>
+        <div class="col-md-5 mb-5">
+          <ul class="list-inline rating-progress-list text-color-a5a5a5 font-size-12" *ngIf="reviewPercentage">
+            <ng-container *ngFor="let item of reviewPercentage">
+              <li class="d-flex w-100 mb-3">
+                <div class="text-right text-666 mr-2" style="width:100px">
+                  {{item.name}} stars
+                </div>
+                <div style="background-color: #fff; border-radius:0" class="progress border mr-2">
+                  <div class="progress-bar bg-warning" role="progressbar" [style.width]="item.value+'%'"
+                       aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="text-666" style="width:50px">{{item.value | number:'1.0-0'}}%</div>
+              </li>
+            </ng-container>
+          </ul>
+        </div>
+        <div class="col-md-4 mb-5" *ngIf="keywordPercentage">
+          <ng-container *ngFor="let item of keywordPercentage">
+            <div class="skill-content mb-5 fs-px-14 d-flex">
+              <div class="text-setting text-666 text-left" style="width: calc(100% - 50px);"> {{item.name}}</div>
+              <div class="text-666" style="width: 50px;">{{item.value | number:'1.0-0'}}%</div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="col pt-4 d-flex flex-wrap justify-content-between align-items-end text-color-a5a5a5 font-size-12">
+        <div class="form-group" style="width: 200px;">
+          <label for="formGroupSortBy">Sort by:</label>
+          <select style="height: 30px;padding:0.175rem 0.5rem;" class="form-control" id="formGroupSortBy"
+                  [(ngModel)]="reviewParam.s" (change)="listReviews()">
+            <option [value]="rating.value" *ngFor="let rating of sortArr">{{rating.name}}</option>
+          </select>
+        </div>
+        <div class="form-group has-search" style="width: 400px;">
+          <span class="fa fa-search form-control-reviews text-color-a5a5a5 font-size-20"></span>
+          <input style="position: relative;text-indent: 1rem;height: 30px" type="text" class="form-control"
+                 placeholder="Search reviews" [(ngModel)]="searchInput" (ngModelChange)="searchOutput.next($event)">
+          <img class="search-icon" src="assets/img/search-mediabook.svg"/>
+        </div>
+      </div>
+      <ng-container *ngFor="let review of reviews; let i = index;">
+        <div class="col pt-4 mt-4 d-flex border-top text-color-a5a5a5"></div>
+        <div class="col pt-4 d-flex flex-column text-color-a5a5a5">
+          <div class="user-content d-flex align-items-center">
+            <div class="user-icon">
+              <img
+                [src]="review && review?.user?.picture_url ? review?.user?.picture_url : '/assets/img/user-icon.svg'"/>
+            </div>
+            <div class="user-name-details d-flex flex-column px-2">
+              <a class="font-weight-bold text-secondary"
+                 [routerLink]="(proUserRoles.indexOf(review?.user?.role) > - 1  ? '/pro' : '')+'/user/'+review?.user?.username">{{review?.user?.name}}</a>
+              <div *ngIf="review?.user?.city && review?.user?.state"
+                   class="fs-px-14 text-999 pt-2">{{review?.user?.city + ', ' + review?.user?.state}}
+              </div>
+            </div>
+          </div>
+          <div class="user-content-details py-2 d-flex">
+            <div class="fs-px-14 text-666">
+              Verified Customer<span *ngIf="review?.created"> | {{review?.created | date:'MMMM d, y'}}</span>
+            </div>
+          </div>
+          <div class="user-rating-and-comment d-flex align-items-center">
+            <div class="user-rating-details pr-4">
+              <app-rating [rate]="review.ratings" [readonly]="true"></app-rating>
+            </div>
+            <div class="title-of-comment px-2 text-color-495057 font-weight-bold">{{review?.title}}</div>
+          </div>
+          <div style="line-height: 23px;" class="user-comment py-2 text-justify line-break">
+            {{review?.details}}
+          </div>
+          <div class="user-comment-button py-2 ">
+            <a (click)="review.showCommentSection = !review.showCommentSection" href="javascript:void(0);"
+               class="comment-buttons">
+              Comment | {{review?.comments.length}} </a>
+            <a *ngIf="currentUser?.username !== user?.username" (click)="flagReview(review?._id)"
+               href="javascript:void(0);"
+               class="pl-7 comment-buttons">Flag review </a>
+          </div>
+        </div>
+        <div *ngIf="review?.showCommentSection" class="col pl-15 pt-4">
+          <form #commentForm="ngForm"
+                (ngSubmit)="review.submitted = true;commentForm.form.valid && onCommentSubmit(review)">
+            <div class="row">
+              <div class="col-md-12 col-sm-12">
+                <div class="d-flex justify-content-between">
+                  <div class="fs-px-16 mb-1">Posting publicly as <a
+                    [routerLink]="(proUserRoles.indexOf(user?.role) > - 1  ? '/pro' : '')+'/user/'+user?.username">{{user?.name}}</a>
+                  </div>
+                  <div class="text-danger" *ngIf="review.submitted && (comment.invalid || comment.pristine)">
+                    <span *ngIf="comment.hasError('required')">Please enter the comment.</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <textarea class="form-control fs-px-14" id="comments" name="comment" [(ngModel)]="review.comment"
+                            placeholder="Enter comment here" rows="5" #comment="ngModel" required
+                            [ngClass]="{'is-invalid':review.submitted && comment.hasError('required')}"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 col-sm-12 d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary mb-5">Submit</button>
+              </div>
+            </div>
+          </form>
+          <div *ngFor="let comment of review?.comments; let i = index;" class="comments">
+            <div class="d-flex justify-content-between">
+              <a class="font-weight-bold text-primary fs-px-16 pr-1"
+                 [routerLink]="(proUserRoles.indexOf(comment?.user?.role) > - 1  ? '/pro' : '')+'/user/'+comment?.user?.username">{{comment?.user?.name}}
+                <span
+                  class="p-1 text-666 font-weight-normal fs-px-14">{{comment.created | date :'MMMM d, y'}}</span></a>
+              <span (click)="flagComment(review?._id, comment._id)" class="text-primary fs-px-14 cursor-pointer"
+                    *ngIf="comment?.user?.username !== user?.username">Flag comment</span>
+            </div>
+            <p class="text-secondary line-break py-3 fs-px-16 mb-0">{{comment?.comment}}</p>
+            <hr class="mb-4 mt-0" *ngIf="i !== review?.comments.length - 1"/>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="reviews && !reviews.length">
+        <div class="text-center justify-content-center py-10">
+          <div class="text-secondary">
+            <h3 class="font-weight-bold text-999">No reviews have been posted.</h3>
+          </div>
+          <div class="text-secondary">
+            <h6 class="font-weight-bold text-999">Use the Request Reviews button to contact prior customers.</h6>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

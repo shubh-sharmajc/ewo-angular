@@ -1,0 +1,239 @@
+/* You can add global styles to this file, and also import other style files */
+@import "scss/variables";
+@import "~bootstrap/scss/bootstrap";
+@import "~cookieconsent/build/cookieconsent.min";
+@import "~bs-stepper/dist/css/bs-stepper.min.css";
+@import "scss/grid";
+@import "scss/style";
+@import "scss/custom";
+@import "scss/mediabook-item-carousel";
+@import "scss/img-gallery-carousel";
+@import "scss/ng-select";
+@import "scss/spacing";
+@import "scss/bs-stepper";
+@import "scss/color-classes";
+@import "scss/font-size";
+@import "scss/ling-height";
+@import "scss/tabset";
+@import "scss/drag-scroll";
+@import "scss/about-mat-tooltip";
+
+.z-index-500 {
+  z-index: 500;
+}
+
+.z-index-1 {
+  z-index: 1;
+}
+
+.cc-revoke.cc-bottom {
+  background: rgba(169, 169, 169, 0.8);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 0 5px #333;
+}
+
+@media screen and (max-width: 737px) {
+  .cc-revoke.cc-bottom {
+    left: calc(50% - 100px);
+  }
+
+  .cookie-message {
+    display: block !important;
+
+    .cc-desc {
+      font-size: 13px;
+      line-height: 1em;
+      text-align: left;
+    }
+  }
+}
+
+.checkbox-container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: -4px;
+    height: 20px;
+    width: 20px;
+    background-color: rgba(0, 0, 0, 0.25);
+    border: 1px solid #ffffff;
+    box-sizing: border-box;
+    border-radius: 2px;
+  }
+
+  /* On mouse-over, add a grey background color */
+  &:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+
+  /* When the checkbox is checked, add a blue background */
+  input:checked ~ .checkmark {
+    background-color: #3aa757;
+  }
+
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+  /* Show the checkmark when checked */
+  input:checked ~ .checkmark:after {
+    display: block;
+  }
+
+  /* Style the checkmark/indicator */
+  .checkmark:after {
+    left: 6px;
+    top: 1px;
+    width: 7px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+}
+
+.resize-none {
+  resize: none !important;
+}
+
+.resize-vertical {
+  resize: vertical !important;
+}
+
+// own-style//
+// ng-select style//
+.upper-section .ng-select.custom-grey .ng-select-container {
+  border: transparent;
+  background-color: transparent;
+}
+.upper-section .ng-select {
+  width: 250px;
+}
+.upper-section .ng-select-container .ng-value-container .ng-placeholder {
+  color: #fff !important;
+  font-size: 24px !important;
+}
+.upper-section .ng-select.custom-grey .ng-dropdown-panel {
+  border-radius: 5px;
+}
+.upper-section .ng-select.custom-grey .ng-select-container:hover {
+  background-color: transparent !important;
+}
+.upper-section .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+.upper-section .ng-select.custom-grey .ng-select-container:hover .ng-placeholder {
+  color: #ffffff !important;
+}
+.upper-section .ng-value-container {
+  background: url("assets/img/ng-select-down-arrow.png") no-repeat right !important;
+  // background-size: 15px!important;
+}
+.upper-section .ng-select.custom-grey .ng-select-container .ng-value-label {
+  color: #ffffff !important;
+  font-size: 24px;
+}
+.upper-section .ng-select .ng-select-container:hover {
+  box-shadow: none;
+}
+// ng-select style End//
+// social-media-search search style Start
+.social-media-search {
+  width: 100%;
+  max-width: 170px;
+  margin: 0 0 0 auto;
+  .ng-select-container {
+    border-radius: 5px;
+    border: 1px solid #3aa757;
+    font-weight: 500;
+  }
+  .ng-select .ng-select-container .ng-value-container .ng-placeholder {
+    color: #3aa757;
+    font-size: 14px;
+    top: 2px;
+  }
+  .ng-select.social-media-dd.ng-select-multiple .ng-select-container {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  .ng-select-opened .ng-select-container {
+    border-bottom-left-radius: 0px!important;
+    border-bottom-right-radius: 0px!important;
+  }
+  .ng-dropdown-panel.ng-select-bottom {
+    border-top: 1px solid #3aa757 !important;
+  }
+  .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+    font-size: 14px;
+    color: #333333;
+    padding: 15px 10px;
+  }
+  .ng-select.ng-select-opened > .ng-select-container .ng-arrow {
+    transform: rotate(225deg);
+  }
+  .ng-select .ng-arrow-wrapper .ng-arrow {
+    border: solid #3aa757;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 4px;
+    transform: rotate(45deg);
+  }
+  .ng-select .ng-arrow-wrapper {
+    right: 9px;
+  }
+  .ng-select .ng-has-value .ng-placeholder {
+    display: block;
+  }
+  .ng-select.social-media-dd.ng-select-multiple .ng-select-container .ng-value-container .ng-value {
+    display: none;
+  }
+  .ng-select .ng-clear-wrapper {
+    display: none;
+  }
+  .ng-select .ng-select-container .ng-value-container .ng-input > input {
+    caret-color: white;
+  }
+}
+// social-media-search search style End//
+@media only screen and (max-width: 768px) {
+  .searchForm-main h4 {
+    font-size: 20px;
+  }
+  .searchForm-main {
+    width: 100%;
+    margin: 0 auto 33px;
+  }
+  .upper-section .ng-select {
+    width: 158px;
+  }
+  .upper-section .ng-select-container .ng-value-container .ng-placeholder,
+  .upper-section .ng-select.custom-grey .ng-select-container .ng-value-label {
+    font-size: 14px !important;
+  }
+}

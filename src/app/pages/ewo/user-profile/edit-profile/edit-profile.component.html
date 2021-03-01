@@ -1,0 +1,248 @@
+  <div class="edit-profile-page grid mT10">
+  <div class="col3 col3_sm-3_xs-12 pB0">
+    <div class="section">
+      <h2 class="mb-0 heading-title">EDIT PROFILE</h2>
+      <div class="side-nav">
+        <ul>
+          <li (click)="broadcaster.showMyInfoView(true)">
+            <a [attr.class]="showMyInfoView && 'active'" href="javascript:void(0);">My Info</a>
+          </li>
+          <li (click)="broadcaster.showMyInfoView(false)">
+            <a [attr.class]="!showMyInfoView && 'active'" href="javascript:void(0);">Change Password</a>
+          </li>
+          <li><a [href]="profileUrl+'/settings'">Conversation Settings</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col9 col9_sm-9_xs-12 pB0">
+    <div class="section" *ngIf="showMyInfoView">
+      <h1 class="mb-0 heading-title">MY INFO</h1>
+      <div class="container">
+        <div class="formTitle">
+          <b>My Account Info</b>
+        </div>
+        <form [formGroup]="profileInfoForm" (ngSubmit)="onSubmit()" autocomplete="off">
+          <div class="formDiv pb-0">
+            <div class="input">
+              <label class="text-grey">Username</label>
+              <div class="input-value">{{f['username'].value ? f['username'].value : ''}}</div>
+            </div>
+            <div class="input">
+              <label class="text-grey">Email</label>
+              <div class="input-value">{{f['email'].value ? f['email'].value : ''}}</div>
+            </div>
+            <hr/>
+          </div>
+          <div class="formTitle">
+            <b>My Profile Info</b>
+          </div>
+          <div class="formDiv">
+            <div class="input">
+              <label class="content-label" style="margin-top: 0"><span>First name (required, visible to registered users)</span>
+                <div class="text-danger"
+                     *ngIf="submitted && f.first_name.errors && [f.first_name.errors.required || f.first_name.errors.pattern]">
+                  Please enter first name.
+                </div>
+              </label>
+              <input
+                [ngClass]="{'red-border':submitted && f.first_name.errors && [ f.first_name.errors.required || f.first_name.errors.pattern]}"
+                type="text" formControlName="first_name" class="input-field" placeholder="First name">
+            </div>
+            <div class="input">
+              <label class="content-label"><span>Last name (required, not visible to registered users)</span>
+                <div class="text-danger"
+                     *ngIf="submitted && f.last_name.errors && [f.last_name.errors.required || f.last_name.errors.pattern]">
+                  Please enter last name.
+                </div>
+              </label>
+              <input
+                [ngClass]="{'red-border':submitted && f.last_name.errors && [ f.last_name.errors.required || f.last_name.errors.pattern]}"
+                type="text" formControlName="last_name" class="input-field" placeholder="Last name">
+            </div>
+            <div class="input m0">
+              <label class="content-label">
+                <span>Gender (required)</span>
+                <div class="text-danger" *ngIf="submitted && f.gender.errors && f.gender.errors.required">
+                  Please select gender.
+                </div>
+              </label>
+            </div>
+            <div class="input gender-input"
+                 [ngClass]="{'gender-red-border':submitted && f.gender.errors && f.gender.errors.required}">
+              <div class="checkbox rememberDiv" tabindex="1">
+                <input type="radio" class="checkbox__input" id="male" name="gender" value=1
+                       formControlName="gender">
+                <label for="male" class="checkbox__label text">
+                  <span class="checkbox__button"></span>Male
+                </label>
+              </div>
+              <div class="checkbox rememberDiv" tabindex="2">
+                <input type="radio" class="checkbox__input" id="female" name="gender" value=2
+                       formControlName="gender">
+                <label for="female" class="checkbox__label text">
+                  <span class="checkbox__button"></span>Female
+                </label>
+              </div>
+              <div class="checkbox rememberDiv" tabindex="3">
+                <input type="radio" class="checkbox__input" id="other" name="gender" value=3
+                       formControlName="gender">
+                <label for="other" class="checkbox__label text">
+                  <span class="checkbox__button"></span>Other
+                </label>
+              </div>
+            </div>
+            <div class="input">
+              <label class="content-label mt-15">
+                <span>Age (required)</span>
+                <div class="text-danger" *ngIf="submitted && f.age.errors && f.age.errors.required">
+                  Please select age.
+                </div>
+              </label>
+              <select class="input-field" formControlName="age" name="age"
+                      [ngClass]="{'red-border':submitted && f.age.errors && f.age.errors.required}">
+                <option value="">Select age</option>
+                <option [value]="age.value" *ngFor="let age of ages">{{age.value}}</option>
+              </select>
+            </div>
+            <div class="input">
+              <label class="content-label mt-15">Occupation</label>
+              <input type="text" formControlName="occupation" class="input-field" placeholder="Occupation">
+            </div>
+            <div class="input">
+              <label class="content-label mt-15">
+                <span>City (required)</span>
+                <div class="text-danger" *ngIf="submitted && f.city.errors &&
+                [f.city.errors.required || f.city.errors.pattern]">
+                  Please enter city.
+                </div>
+              </label>
+              <input type="text" formControlName="city" class="input-field" placeholder="City" name="city"
+                     [ngClass]="{'red-border':submitted && f.city.errors && [ f.city.errors.required || f.city.errors.pattern]}"/>
+            </div>
+            <div class="input">
+              <label class="content-label mt-15">
+                <span>Country (required)</span>
+                <div class="text-danger" *ngIf="submitted && f.country.errors && f.country.errors.required">
+                  Please select country.
+                </div>
+              </label>
+              <div class="form-control fs-px-14" readonly>United States</div>
+            </div>
+            <div class="input">
+              <label class="content-label mt-15">
+                <span>State (required)</span>
+                <div class="text-danger" *ngIf="submitted && f.state.errors && f.state.errors.required">
+                  Please select state.
+                </div>
+              </label>
+              <select class="input-field" formControlName="state" name="state"
+                      [ngClass]="{'red-border':submitted && f.state.errors && f.state.errors.required}">
+                <option value="">Select state</option>
+                <option *ngFor="let state of statesArr" [value]="state.name">{{state.name}}</option>
+              </select>
+            </div>
+            <div class="input">
+              <label class="content-label mt-15">
+                <span>About me (required)</span>
+                <div class="text-danger" *ngIf="submitted && f.about_me.errors && f.about_me.errors.required">
+                  Please enter about yourself.
+                </div>
+                <div class="text-danger"
+                     *ngIf="submitted && f.about_me.errors && f.about_me.errors.cannotContainSpace && !f.about_me.errors.required">
+                  Please enter valid content.
+                </div>
+              </label>
+              <textarea #aboutMe id="aboutMe" formControlName="about_me" rows="6" cols="50" class="textarea-field"
+                        maxlength="2000" placeholder="Tell us more about yourself..." name="about_me"
+                        [class.red-border]="submitted && f.about_me.errors && [ f.about_me.errors.required || f.about_me.errors.pattern]"></textarea>
+              <span class="aboutCharacters"><span>{{ 2000 - aboutMe.value.length }} remaining</span></span>
+            </div>
+            <div class="input">
+              <label class="content-label mt-15">Interests/Hobbies (comma separated)</label>
+              <input #interestHobbies id="interestHobbies" type="text" maxlength="500"
+                     formControlName="hobbies" class="input-field" placeholder="Interest/Hobbies">
+              <span
+                class="interestCharacters"><span>{{ 500 - interestHobbies.value.length }} remaining</span></span>
+            </div>
+            <div class="button grid mT55 mB60">
+              <button *ngIf="profileInfoForm.invalid" type="button" class="btn btn-disabled outline">Cancel
+              </button>
+              <button *ngIf="!profileInfoForm.invalid" type="button" class="btn btn-cancel outline"
+                      [routerLink]="'/user/'+currentUser?.username">Cancel
+              </button>
+              <button type="submit" class="btn btn-submit">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="section" *ngIf="!showMyInfoView">
+      <h1 class="mb-0 heading-title">CHANGE PASSWORD</h1>
+      <div class="container">
+        <form [formGroup]="changePasswordForm" (ngSubmit)="onChangePasswordSubmit()" autocomplete="off">
+          <div class="formDiv">
+            <div class="input-password">
+              <label class="content-label"><span>Old Password (required)</span>
+                <div class="text-danger"
+                     *ngIf="changePasswordSubmitted && f1.oldPassword.errors && f1.oldPassword.errors.required">
+                  Enter a old password.
+                </div>
+              </label>
+              <input [ngClass]="{'red-border':changePasswordSubmitted && f1.oldPassword.errors && f1.oldPassword.errors.required}"
+                type="password" formControlName="oldPassword" class="input-field" placeholder="Old Password">
+            </div>
+            <div class="relative">
+              <div class="input-password">
+                <label class="content-label"><span>New Password (required)</span>
+                  <div class="text-danger" *ngIf="changePasswordSubmitted && f1.newPassword.dirty && f1.newPassword.errors && f1.newPassword.errors.required">
+                    Enter a new password.
+                  </div>
+                  <div class="text-danger" *ngIf="f1.newPassword.dirty && f1.newPassword.errors && f1.newPassword.errors.pattern">
+                    Entered new password must be valid as per guidelines.
+                  </div>
+                  <div class="text-danger" *ngIf="f1.newPassword.dirty && f1.newPassword.errors && f1.newPassword.errors.mustNotMatch">
+                    Your new password cannot be the same as your old password.
+                  </div>
+                </label>
+                <input [ngClass]="{'red-border':changePasswordSubmitted && f1.newPassword.errors && [f1.newPassword.errors.required || f1.newPassword.errors.pattern]}"
+                       type="password" formControlName="newPassword" class="input-field" placeholder="New Password">
+              </div>
+              <div class="tooltips-container">
+                <div class="tooltips-head">Password Guidelines</div>
+                <div class="tooltips-text">Select a password with six or more characters. Include at least one
+                  uppercase and one lowercase character, one integer and one special character.
+                </div>
+              </div>
+            </div>
+            <div class="input-password">
+              <label class="content-label"><span>Confirm Password (required)</span>
+                <div class="text-danger"
+                     *ngIf="changePasswordSubmitted && f1.confirmPassword.errors && f1.confirmPassword.errors.required">
+                  Enter a confirm password.
+                </div>
+                <div class="text-danger"
+                     *ngIf="changePasswordSubmitted && f1.confirmPassword.errors && f1.confirmPassword.errors.mustMatch">
+                  Passwords must match.
+                </div>
+              </label>
+              <input
+                [ngClass]="{'red-border':changePasswordSubmitted && f1.confirmPassword.errors && [f1.confirmPassword.errors.required || f1.confirmPassword.errors.mustMatch]}"
+                type="password" formControlName="confirmPassword" class="input-field"
+                placeholder="Confirm Password">
+            </div>
+            <div class="buttons grid mT30">
+              <div class="msg col6 col6_sm-6_xs-12"></div>
+              <div class="buttons btnBlock col6 col6_sm-6_xs-12">
+                <button type="button" class="btn btn-cancel outline" [routerLink]="'/user/'+currentUser?.username">
+                  Cancel
+                </button>
+                <button type="submit" class="btn btn-submit">Save</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

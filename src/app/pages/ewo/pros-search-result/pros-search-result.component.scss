@@ -1,0 +1,96 @@
+.pros-search-result {
+  .users-search .main-heading {
+    height: 35px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 17px;
+    text-align: left;
+    color: #333333;
+  }
+
+  .users-search .items-counts {
+    color: #666;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    height: 20px;
+    padding-bottom: 30px;
+    line-height: 17px;
+    text-align: left;
+  }
+
+  .users-search .user-image .profile-icon {
+    height: 50px;
+    width: 50px;
+  }
+  .user-details {
+    height: 60px;
+    display: block;
+    position: relative;
+    color: #333333;
+    &:hover {
+      color: #3BA757;
+    }
+  }
+
+  .user-details .user-image .rounded-circle {
+    height: 50px;
+    width: 50px;
+    border: 1px solid #ccc;
+    background-color: #c4c4c4;
+    background-size: contain;
+    z-index: 1;
+    position: relative;
+    border-radius: 50% !important;
+  }
+  .user-details .user-name {
+    position: absolute;
+    height: 50px;
+    width: 75%;
+    left: 60px;
+    top: 0;
+    padding-top: 1rem;
+    font-size: 16px;
+  }
+
+  .noRecordFound {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: normal;
+    font-weight: normal;
+    word-break: keep-all;
+    color: #333;
+  }
+  .noRecordFound p.result-not-found {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: normal;
+    font-weight: normal;
+    padding-top: 10px;
+    word-break: keep-all;
+    color: #333;
+  }
+  .noRecordFound p.result-not-found:first-child {
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  .noRecordFound p.result-not-found .font18 {
+    font-size: 18px !important;
+  }
+  h4.noRecordFound {
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    line-height: normal;
+    font-weight: 500;
+    padding-top: 10px;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    word-break: keep-all;
+    color: #333;
+  }
+}
+

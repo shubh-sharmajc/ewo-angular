@@ -1,0 +1,130 @@
+<div class="social-media">
+  <form class="social-media bg-white" [formGroup]="socialMediaForm" (ngSubmit)="saveSMS()"
+    [ngClass]="{'border rounded': newUser}">
+    <h5 *ngIf="newUser" class="title text-primary py-5 mb-0">Social media</h5>
+    <h5 *ngIf="editUser" class="title text-primary py-5 mb-0">Edit social media
+      links</h5>
+    <div class="row m-0">
+      <div class="col p-10">
+        <div class="row">
+          <div class="col-lg-8 col-md-12 col-sm-12">
+            <h5 class="text-secondary fs-px-16 mb-8">
+              Add upto 3 social media accounts to your profile <span class="grey-color">(optional)</span>
+            </h5>
+            <div class="row">
+              <!--<div class="col-md-12" formArrayName="social_links" *ngFor="let item of smF?.controls; let i = index;">
+                <div class="form-group mb-8" [formGroupName]="i">
+                  <label class="text-666" [for]="item?.controls?.name?.value">
+                    Enter URL for {{item?.controls?.name?.value}}</label>
+                  <input [id]="item?.controls?.name?.value" formControlName="link" type="url"
+                    class="form-control input-height" placeholder="Select a social media account and paste the URL here"
+                    (change)="autoSave()" (keyup)="resetBtnName();" />
+                </div>
+              </div>
+               <div class="col-md-12" *ngIf="i === 0 && newUser">
+                <p class="fs-px-14 text-999 lh-5 pt-2">Enter URL for each social account and click Next at the bottom.
+                </p>
+              </div> -->
+              <div class="col-md-12">
+                <div class="form-group mb-8">
+                  <label class="text-666">
+                    Selection 1: Facebook</label>
+                  <span class="error-message">Social account entered must match field title</span>
+                  <input formControlName="link" type="url" class="form-control input-height"
+                    placeholder="Select a social media account and paste the URL here" />
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group mb-8">
+                  <label class="text-666">
+                    Selection 1: none</label>
+                  <input formControlName="link" type="url" class="form-control input-height"
+                    placeholder="Select a social media account and paste the URL here" />
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group mb-8">
+                  <label class="text-666">
+                    Selection 1: none</label>
+                  <input formControlName="link" type="url" class="form-control input-height"
+                    placeholder="Select a social media account and paste the URL here" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-12  col-sm-12">
+            <div class="social-media-search">
+              <ng-select [items]="socialLinkArr" [multiple]="true" bindLabel="name" [selectableGroup]="false"
+                [closeOnSelect]="false" bindValue="name" formControlName="selectedSL" (change)="slChangeEvent()"
+                placeholder="Select accounts" class="custom-green custom-green mb-action action-dd z-index-500 social-media-dd">
+                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                  <div class="checkbox-container">
+                    <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"
+                      [ngModelOptions]="{ standalone : true }" />
+                    <span class="checkmark"></span><span class="social-dropdown"> {{item.name}}</span>
+                    <img src={{item.src}} class="social-img" />
+                  </div>
+                </ng-template>
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <ng-container>
+          <div class="row pt-7">
+            <div class="col-xl-5 col-lg-4 col-md-12 ">
+              <p class="grey-color font-size-12">If you select any checkboxes, the URLs for those accounts must be added
+                before you can move further.
+              </p>
+            </div>
+            <div class="col-xl-7 col-lg-8 col-md-12 align-right">
+              <button (click)="pauseEvent()" type="button" class="btn btn-hw mb-2 btn-outline-primary mr-5">Pause</button>
+              <button type="button" class="btn btn-hw mb-2 btn-outline-primary mr-5" (click)="previousEvent()">Back
+              </button>
+              <button type="button" class="btn btn-hw mb-2 btn-primary lh-4" (click)="nextEvent()">Next</button>
+            </div>
+          </div>
+        </ng-container>
+        <!-- <ng-container *ngIf="editUser">
+          <div class="row pt-10">
+            <div class="col-md-5">
+              <p class="grey-color font-size-12">If you select any checkboxes, the URLs for those accounts must be added
+                before you
+                can move further.
+              </p>
+            </div>
+            <div class="col-md-7 text-right">
+              <div class="btn bg--grey--gray mr-5 btn-hw text-white lh-7 disabled" *ngIf="socialMediaForm.pristine">
+                Cancel
+              </div>
+              <button type="button" class="btn btn-outline-primary mr-5 btn-hw" *ngIf="!socialMediaForm.pristine"
+                (click)="updateForm();">Cancel
+              </button>
+              <div class="btn bg--grey--gray btn-hw text-white lh-7 disabled" *ngIf="f?.btnName?.value !== 'Save'">
+                {{f?.btnName?.value}}
+              </div>
+              <button type="submit" class="btn btn-primary btn-hw" *ngIf="f?.btnName?.value === 'Save'">
+                {{f?.btnName?.value}}
+              </button>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="newUser">
+          <div class="row pt-10">
+            <div class="col-md-5">
+              <p class="grey-color font-size-12">If you select any checkboxes, the URLs for those accounts must be added
+                before you
+                can move further.
+              </p>
+            </div>
+            <div class="col-md-7 text-right">
+              <button (click)="pauseEvent()" type="button" class="btn btn-hw btn-outline-primary mr-5">Pause</button>
+              <button type="button" class="btn btn-hw btn-outline-primary mr-5" (click)="previousEvent()">Back
+              </button>
+              <button type="button" class="btn btn-hw btn-primary lh-4" (click)="nextEvent()">Next</button>
+            </div>
+          </div>
+        </ng-container> -->
+      </div>
+    </div>
+  </form>
+</div>

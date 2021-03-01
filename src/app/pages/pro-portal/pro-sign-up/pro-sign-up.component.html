@@ -1,0 +1,51 @@
+<div class="container mt-28 mb-10 sign-up-page">
+  <app-account-banner [isSignUp]="true"></app-account-banner>
+  <div id="pro-sign-up-stepper" class="bs-stepper sign-up-bs-stepper mx-lg-5 px-lg-5">
+    <div id="pro-sign-up-stepper-header" class="bs-stepper-header overflow-auto">
+      <div class="step" data-target="#basic-registration">
+        <button class="step-trigger">
+          <span class="bs-stepper-circle">1</span>
+          <span class="bs-stepper-label">Basic registration</span>
+        </button>
+      </div>
+      <div class="line"></div>
+      <div class="step" data-target="#business-profile">
+        <button class="step-trigger">
+          <span class="bs-stepper-circle">2</span>
+          <span class="bs-stepper-label">Business profile</span>
+        </button>
+      </div>
+      <div class="line"></div>
+      <div class="step" data-target="#socialMedia">
+        <button class="step-trigger">
+          <span class="bs-stepper-circle">3</span>
+          <span class="bs-stepper-label">Social media</span>
+        </button>
+      </div>
+      <div class="line"></div>
+      <div class="step" data-target="#finalizeProfile">
+        <button class="step-trigger">
+          <span class="bs-stepper-circle">4</span>
+          <span class="bs-stepper-label">Finalize profile</span>
+        </button>
+      </div>
+    </div>
+    <div class="bs-stepper-content p-0">
+      <div id="basic-registration" class="content">
+        <app-basic-registration (next)="next($event)" [newUser]="true" (pause)="pause($event)"></app-basic-registration>
+      </div>
+      <div id="business-profile" class="content">
+        <app-business-profile (next)="next($event)" (previous)="previous($event)"
+                              [newUser]="true" (pause)="pause($event)"></app-business-profile>
+      </div>
+      <div id="socialMedia" class="content">
+        <app-social-media (next)="next($event)" (previous)="previous($event)"
+                          [newUser]="true" (pause)="pause($event)"></app-social-media>
+      </div>
+      <div id="finalizeProfile" class="content">
+        <app-finalize-profile (next)="next($event)" (previous)="previous($event)"></app-finalize-profile>
+      </div>
+    </div>
+  </div>
+</div>
+

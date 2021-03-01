@@ -1,0 +1,104 @@
+.social-media {
+  .btn-social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .icon {
+      height: 16px;
+      width: 16px;
+      margin-right: 0.25rem;
+    }
+  }
+  div.btn-social {
+    cursor: default;
+  }
+  .btn-fb {
+    .icon {
+      margin-top: -3px;
+    }
+  }
+  .btn-linkedin {
+    .icon {
+      margin-top: -6px;
+    }
+  }
+}
+// own-style//
+.social-media {
+  border-radius: 5px;
+  .error-message {
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 158.47%;
+    color: #ff0101;
+    float: right;
+  }
+  .title {
+    text-align: center;
+    border-bottom: 2px solid #3aa757;
+  }
+  .input-height {
+    height: calc(2em + 0.75rem + 2px);
+  }
+  .grey-color {
+    color: #999999;
+  }
+  .font-size-12 {
+    line-height: 19.02px;
+    font-size: 12px;
+  }
+  .social-img {
+    float: right;
+    width: 15px;
+    margin-right: 8px;
+  }
+  .social-media-search {
+    .checkbox-container {
+      padding-left: 0;
+      margin-bottom: 0;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .checkbox-container .checkmark {
+      position: absolute;
+      top: 0;
+      left: 0px;
+      height: 15px;
+      width: 15px;
+      border: 1px solid #cccccc;
+      background-color: transparent;
+    }
+    .checkbox-container .checkmark:after {
+      left: 4px;
+      top: 0px;
+      width: 5px;
+      height: 10px;
+      border-width: 0 2px 2px 0;
+    }
+    .checkbox-container input:checked ~ .checkmark {
+      background-color: #3aa757;
+      border: 1px solid #3aa757 !important;
+    }
+    .social-dropdown {
+      padding-left: 20px;
+    }
+    .align-right {
+      text-align: right;
+    }
+  }
+  
+}
+@media only screen and (max-width: 768px) {
+  .p-10 {
+    padding: 0.5rem !important;
+  }
+  .social-media-search {
+    max-width: 100%;
+  }
+  .align-right {
+    text-align: center;
+  }
+  .btn-hw {
+    width: 90px;
+  }
+}

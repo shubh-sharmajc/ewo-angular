@@ -1,0 +1,139 @@
+<div class="upload-page bg-white border rounded">
+  <h4 class="header-title" *ngIf="proUserRoles?.indexOf(user?.role) === -1">Upload Images(s)</h4>
+  <h5 class="text-primary text-center fs-px-20 font-weight-bold py-6 border-bottom border-primary mb-0"
+      *ngIf="proUserRoles?.indexOf(user?.role) > -1">
+    Upload media</h5>
+  <div class="row"></div>
+  <form [formGroup]="uploadMbItemsForm" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div class="row p-5">
+      <div class="col">
+        <div class="upload-image">
+          <div class="upload-image-box" (click)="getUploadImage()">
+            <img class="image" *ngIf="selectedImg > -1" [src]="mbItems?.at(selectedImg)?.controls?.image_url?.value"/>
+            <div class="plus-icon" *ngIf="selectedImg === -1" appMBUploadDragAndDrop (files)="fileChange($event)">
+              <div class="plus"></div>
+              <div class="upload-text">Click here or drag/drop images to upload</div>
+              <input style="visibility: hidden" type="file" (change)="fileChange($event)"
+                     id="getUploadImageFile" name="image" accept="image/*" multiple/>
+            </div>
+          </div>
+          <div class="border"></div>
+          <div class="grid upload-image-boxes-container m-0" formArrayName="mbItems">
+            <div class="col3 col3_sm-3_xs-3 upload-image-boxes first" (click)="getUploadingImage()">
+              <div class="plus-small"></div>
+              <input style="visibility: hidden;height: 0" type="file" (change)="fileChange($event)"
+                     id="getUploadingImageFile" name="image" accept="image/*" multiple/>
+              <div class="upload-image-boxes-text">Click to add</div>
+            </div>
+            <ng-container *ngFor="let mbi of mbItems.controls;let i = index">
+              <div class="col3 col3_sm-3_xs-3 upload-image-boxes" [formGroupName]="i">
+                <img class="upload-images" (click)="selectedImg = i" [class.active]="selectedImg === i"
+                     [src]="mbi?.controls?.image_url?.value"/>
+                <img (click)="removeMbItem(i, mbi?.controls?._id?.value)" class="delete-icon"
+                     src="assets/img/delete.svg" *ngIf="!progress"/>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <ng-container *ngIf="progress">
+          <div class="w-100 d-flex flex-column justify-content-center align-items-center"
+               style="height: calc(100% - 50px)">
+            <h1 class="fs-px-24 font-weight-normal">Uploading {{progress/100}}/{{mbItems?.value?.length}}</h1>
+            <progressbar [value]="progress" class="img-upload-progress"
+                         [max]="mbItems?.value?.length * 100"></progressbar>
+          </div>
+          <div class="col-12_sm-12_xs-12 buttons text-right">
+            <button type="button" (click)="removeMultipleMbItem()" class="btn btn-cancel outline">Cancel
+            </button>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!progress">
+          <ng-container *ngIf="mbItems?.value?.length && selectedImg > -1">
+            <div class="upload-form" formArrayName="mbItems"
+                 [ngClass]="{'min-height': (mbItems?.value?.length < 4 && mbItems?.value?.length !== 0),
+                 'minheight': mbItems?.value?.length === 4}">
+              <ng-container *ngFor="let mbi of mbItems.controls;let i = index">
+                <ng-container [formGroupName]="i" *ngIf="i === selectedImg">
+                  <div class="mb-5">
+                    <div class="text-secondary fs-px-16 pb-2 font-weight-bold">
+                      Create/Edit Experience: Item {{selectedImg + 1}} of {{mbItems?.value?.length}}
+                    </div>
+                    <div class="text-999 fs-px-14">Fields below help users find images via search.</div>
+                  </div>
+                  <div class="input">
+                    <label class="content-label">
+                      <span>Subject (required)</span>
+                    </label>
+                    <input [attr.id]="'subject'+selectedImg" type="text" formControlName="subject"
+                           placeholder="Enter a subject to capture user interest"
+                           [ngClass]="{'red-border': (!mbi?.controls?.subject?.pristine && mbi?.controls?.subject?.errors?.required)}"
+                           required pattern="^\w+( +\w+)*$"/>
+                  </div>
+                  <div class="input mT20">
+                    <label class="content-label">Description (required)</label>
+                    <textarea [attr.id]="'description'+selectedImg" maxlength="500" formControlName="description"
+                              rows="6" cols="40" class="textarea-field resize-none form-control"
+                              [ngClass]="{'red-border': (!mbi?.controls?.description?.pristine && mbi?.controls?.description?.errors?.required)}"
+                              placeholder="Inspire readers with the story of how this image relates to your customers and services"></textarea>
+                  </div>
+                  <div *ngIf="proUserRoles.indexOf(user?.role) > -1" class="input mT20">
+                    <label class="content-label">Tags (optional)</label>
+                    <textarea formControlName="tags" name="tags"
+                              rows="6" cols="40" class="textarea-field resize-none" maxlength="500"
+                              placeholder="Tags enable search even though they are not visible to users. Use comma-separated words and phrases not used in the fields above."></textarea>
+                  </div>
+                  <div class="col-12_sm-12_xs-12 buttons text-right">
+                    <button type="button" (click)="removeMultipleMbItem()" class="btn btn-cancel outline">Cancel
+                    </button>
+                    <button type="button" class="btn btn-cancel outline previous" *ngIf="mbItems?.value?.length>1"
+                            (click)="selectedImg !== 0 && move(-1)" [disabled]="selectedImg === 0">
+                      Previous
+                    </button>
+                    <button type="button" class="btn btn-cancel outline mr-0" (click)="move(1)"
+                            *ngIf="mbItems?.value?.length>1 && selectedImg !== mbItems?.value?.length - 1">
+                      Next
+                    </button>
+                    <button class="btn btn-submit" type="submit" *ngIf="selectedImg === mbItems?.value?.length - 1">
+                      Done
+                    </button>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!mbItems?.value?.length">
+            <div class="upload-form">
+              <div class="input">
+                <label class="content-label">
+                  <span>Subject (required)</span>
+                </label>
+                <div class="disabled-input">
+                  Enter a subject to help find this item later using search
+                </div>
+              </div>
+              <div class="input mT20">
+                <label class="content-label">Description (required)</label>
+                <div class="disabled-textarea">
+                  Inspire readers with the story of how this image relates to your customers and services.
+                </div>
+              </div>
+              <div *ngIf="proUserRoles?.indexOf(user?.role) > -1" class="input mT20">
+                <label class="content-label">Tags (optional)</label>
+                <div class="disabled-textarea">
+                  Tags enable search even though they are not visible to users. Use comma-separated words and phrases
+                  not used in the fields above.
+                </div>
+              </div>
+              <div class="col-12_sm-12_xs-12 buttons text-right">
+                <button type="button" class="btn btn-cancel outline" (click)="goBack()">Cancel</button>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </form>
+</div>
+

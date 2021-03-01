@@ -1,0 +1,27 @@
+<div class="registered-email-popup">
+  <div class="popup-header">
+    <h4 class="popup-title">
+      <div class="row m-0 align-items-center">
+        <div class="col">
+          <img class="logo" src="assets/img/logo/ewo_150.png">
+        </div>
+        <div class="col align-items-center fs-px-20 font-weight-bold text-primary">Alert</div>
+        <div class="col"></div>
+      </div>
+    </h4>
+  </div>
+  <div class="popup-body">
+    <div class="grid m0">
+      <div class="col12_sm-12_xs-12 text-center py-8">
+        <h4 class="fs-px-18 text-secondary font-weight-bold">Alert: {{email}}</h4>
+        <p class="text-secondary fs-px-16 mb-0">This email address ({{email}}) is already in the system.<br/>
+          Please login using the Existing User login form.<br/>
+          You can also <a [routerLink]="['/password/forgot']" (click)="closeDialog()">reset your password</a> if you
+          have forgotten it.</p>
+      </div>
+      <div class="col12 text-center pB0">
+        <a class="btn btn-submit" [routerLink]="['/signin']" (click)="closeDialog()">Go to Login page</a>
+      </div>
+    </div>
+  </div>
+</div>

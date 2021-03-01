@@ -1,0 +1,176 @@
+<div class="container p-0">
+  <div class="row mx-0">
+    <div class="col-md-3 border-bg px-0">
+      <p class="text-centers pl-3 ml-3 filter pt-2 mb-2">Filter by:</p>
+<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+  <a class="nav-link  hight-nav" id="v-pills-home-tabs" (click)="tabchange('top')" [ngClass]="{'active': tabname == 'top'}">Type of Pro <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+  <a class="nav-link hight-nav" id="v-pills-profile-tab" (click)="tabchange('location')" [ngClass]="{'active': tabname == 'location'}">Location <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+  <a class="nav-link hight-nav" id="v-pills-messages-tab" (click)="tabchange('ratings')" [ngClass]="{'active': tabname == 'ratings'}">Ratings <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+  <a class="nav-link hight-nav" id="v-pills-settings-tab" (click)="tabchange('insurance')" [ngClass]="{'active': tabname == 'insurance'}">Insurance <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+  <a class="nav-link hight-nav" id="v-pills-settings-tab" (click)="tabchange('price')" [ngClass]="{'active': tabname == 'price'}">Pricing <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+  <a class="nav-link hight-nav" id="v-pills-settings-tab" (click)="tabchange('gender')" [ngClass]="{'active': tabname == 'gender'}">Gender <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+  <a class="nav-link hight-nav" id="v-pills-settings-tab" (click)="tabchange('age')" [ngClass]="{'active': tabname == 'age'}">Age group <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+  <a class="nav-link hight-nav" id="v-pills-settings-tab" (click)="tabchange('language')" [ngClass]="{'active': tabname == 'language'}">Language <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+
+</div>
+    </div>
+    <div class="col-md-9 back-bg">
+<div class="tab-content" id="v-pills-tabContent">
+  <div class="tab-pane fade mt-5 pt-5" [ngClass]="{'show active': tabname == 'top'}">
+   <h6 class="search-text">Select an option to focus your search</h6>
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link" id="pills-home-tab" (click)="sectabchange('tops')" [ngClass]="{'active': tabnames == 'tops'}">
+          Pro Categories
+        </a>
+      <li class="nav-item">
+        <a class="nav-link" id="pills-profile-tab" (click)="sectabchange('service')" [ngClass]="{'active': tabnames == 'service'}">Services</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="pills-contact-tab" (click)="sectabchange('condition')" [ngClass]="{'active': tabnames == 'condition'}">Conditions</a>
+      </li>
+    </ul>
+ 
+    <div class="tab-content" id="pills-tabContent">
+      <div class="tab-pane fade" id="pills-home"  [ngClass]="{'show active': tabnames == 'tops'}">
+       <div class="row">
+         <div class="col-md-6 mt-2">
+        <input type="text" [(ngModel)]="searchKeyword"
+        class="form-control wdth" 
+        placeholder="Search for Pros by category"
+        [typeahead]="categoriesList"
+        typeaheadOptionField="name"
+        [typeaheadScrollable]="true"
+        
+        >
+       <div class="mt-4">
+        <p class="search-color">Common searches</p>
+        <form class="mt-4">
+          <input type="radio" class="check_active" (click)="radio('check')" [ngClass]="{'active': checkbox == 'check'}" id="vehicle1" name="vehicle1" value="Bike">
+          <label class="pl-2" for="vehicle1"> 
+            <i class="fa fa-check-square"></i>
+            <i class="fa fa-square-o"></i>
+
+            Acupuncturists</label><br>
+          <input type="radio" class="check_active" (click)="radio('check1')" [ngClass]="{'active': checkbox == 'check1'}" id="vehicle2" name="vehicle1" value="Car">
+          <label class="pl-2" for="vehicle2">
+            <i class="fa fa-check-square"></i>
+            <i class="fa fa-square-o"></i>
+            Physiotherapists</label><br>
+          <input type="radio" class="check_active" (click)="radio('check2')" [ngClass]="{'active': checkbox == 'check2'}" id="vehicle3" name="vehicle1" value="Boat">
+          <label class="pl-2" for="vehicle3"> 
+            <i class="fa fa-check-square"></i>
+            <i class="fa fa-square-o"></i>
+            Yoga instructors</label><br>
+          <input type="radio" class="check_active" (click)="radio('check3')" [ngClass]="{'active': checkbox == 'check3'}" id="vehicle4" name="vehicle1" value="Boat">
+          <label class="pl-2" for="vehicle4"> 
+            <i class="fa fa-check-square"></i>
+            <i class="fa fa-square-o"></i>
+            Life Coaches</label><br>
+          <input type="radio" class="check_active active" (click)="radio('check4')" [ngClass]="{'active': checkbox == 'check4'}" id="vehicle5" name="vehicle1" value="Boat" checked>
+          <label class="pl-2" for="vehicle5">
+            <i class="fa fa-check-square "></i>
+            <i class="fa fa-square-o"></i>
+            Chiropractors</label><br>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-6 fade" [ngClass]="{'show active': checkbox == 'check'}">
+      <div class="text-alignment">
+        <h4 class="heading">Acupuncturists</h4>
+        <p class="sub-heading">Understanding what they do</p>
+        <p class="disc">
+          Chiropractors treat conditions related to your body's structure. Their goal is to relieve pain and improve function. They don't prescribe drugs or do surgery. Rather, they adjust or manipulate your spine and other body parts to get them in the right position, or proper alignment.
+          <p class="disc">Chiropractors treat conditions related to your body's structure. Their goal is to relieve pain and improve function. They don't prescribe drugs or do surgery. Rather, they adjust or manipulate your spine and other body parts to get them in the right position, or proper alignment.</p>
+          <p class="disc">Chiropractors treat conditions related to your body's structure. Their goal is to relieve pain and improve function. </p>
+        
+      </div>
+    </div>
+    <div class="col-md-6 fade" [ngClass]="{'show active': checkbox == 'check1'}">
+      <div class="text-alignment">
+        <h4 class="heading">Physiotherapists</h4>
+        <p class="sub-heading">Understanding what they do</p>
+        <p class="disc">
+          Chiropractors treat conditions related to your body's structure. Their goal is to relieve pain and improve function. They don't prescribe drugs or do surgery. Rather, they adjust or manipulate your spine and other body parts to get them in the right position, or proper alignment.
+          <p class="disc">Chiropractors treat conditions related to your body's structure. Their goal is to relieve pain and improve function. They don't prescribe drugs or do surgery. Rather, they adjust or manipulate your spine and other body parts to get them in the right position, or proper alignment.</p>
+          <p class="disc">Chiropractors treat conditions related to your body's structure. Their goal is to relieve pain and improve function. </p>
+        
+      </div>
+    </div>
+    <div class="col-md-6 fade" [ngClass]="{'show active': checkbox == 'check2'}">
+      <div class="text-alignment">
+        <h4 class="heading">Yoga instructors</h4>
+        <p class="sub-heading">Understanding what they do</p>
+        <p class="disc">
+          Chiropractors treat conditions related to your body's structure. Their goal is to relieve pain and improve function. They don't prescribe drugs or do surgery. Rather, they adjust or manipulate your spine and other body parts to get them in the right position, or proper alignment.
+          <p class="disc">Chiropractors treat conditions related to your body's structure. Their goal is to relieve pain and improve function. They don't prescribe drugs or do surgery. Rather, they adjust or manipulate your spine and other body parts to get them in the right position, or proper alignment.</p>
+          <p class="disc">Chiropractors treat conditions related to your body's structure. Their goal is to relieve pain and improve function. </p>
+        
+      </div>
+    </div>
+    <div class="col-md-6 fade" [ngClass]="{'show active': checkbox == 'check3'}">
+      <div class="text-alignment">
+        <h4 class="heading"> Life Coaches</h4>
+        <p class="sub-heading">Understanding what they do</p>
+        <p class="disc">
+          Chiropractors treat conditions related to your body's structure. Their goal is to relieve pain and improve function. They don't prescribe drugs or do surgery. Rather, they adjust or manipulate your spine and other body parts to get them in the right position, or proper alignment.
+          <p class="disc">Chiropractors treat conditions related to your body's structure. Their goal is to relieve pain and improve function. They don't prescribe drugs or do surgery. Rather, they adjust or manipulate your spine and other body parts to get them in the right position, or proper alignment.</p>
+          <p class="disc">Chiropractors treat conditions related to your body's structure. Their goal is to relieve pain and improve function. </p>
+        
+      </div>
+    </div>
+    <div class="col-md-6 fade" [ngClass]="{'show active': checkbox == 'check4'}">
+      <div class="text-alignment">
+        <h4 class="heading">Chiropractors</h4>
+        <p class="sub-heading">Understanding what they do</p>
+        <p class="disc">
+          Chiropractors treat conditions related to your body's structure. Their goal is to relieve pain and improve function. They don't prescribe drugs or do surgery. Rather, they adjust or manipulate your spine and other body parts to get them in the right position, or proper alignment.
+          <p class="disc">Chiropractors treat conditions related to your body's structure. Their goal is to relieve pain and improve function. They don't prescribe drugs or do surgery. Rather, they adjust or manipulate your spine and other body parts to get them in the right position, or proper alignment.</p>
+          <p class="disc">Chiropractors treat conditions related to your body's structure. Their goal is to relieve pain and improve function. </p>
+        
+      </div>
+    </div>
+      </div>
+      </div>
+      <div class="tab-pane fade"  [ngClass]="{'show active': tabnames == 'service'}">
+        <div class="row">
+          <h2 class="text-center w-100">under construction</h2>
+      </div>
+      </div>
+      <div class="tab-pane fade" id="pills-contact" [ngClass]="{'show active': tabnames == 'condition'}">
+        <div class="row">
+          <h2 class="text-center w-100">under construction</h2>
+        </div>
+      </div>
+    </div>
+   
+    
+  </div>
+
+<div class="tab-pane fade mt-5 pt-5" [ngClass]="{'show active': tabname == 'location'}"><h2 class="text-center">under construction</h2></div>
+<div class="tab-pane fade mt-5 pt-5" [ngClass]="{'show active': tabname == 'ratings'}"> <h2 class="text-center">under construction</h2></div>
+<div class="tab-pane fade mt-5 pt-5" [ngClass]="{'show active': tabname == 'insurance'}"> <h2 class="text-center">under construction</h2></div>
+<div class="tab-pane fade mt-5 pt-5" [ngClass]="{'show active': tabname == 'price'}"><h2 class="text-center">under construction</h2> </div>
+<div class="tab-pane fade mt-5 pt-5" [ngClass]="{'show active': tabname == 'gender'}"> <h2 class="text-center">under construction</h2></div>
+<div class="tab-pane fade mt-5 pt-5" [ngClass]="{'show active': tabname == 'age'}"><h2 class="text-center">under construction</h2> </div>
+<div class="tab-pane fade mt-5 pt-5" [ngClass]="{'show active': tabname == 'language'}"> <h2 class="text-center">under construction</h2></div>
+
+
+</div>
+
+</div>
+</div>
+<div class="row br-top">
+  <div class="col-md-3">
+    <p class="text-center bt mb-0">Your Settings</p>
+  </div>
+<div class="col-md-9">
+<div class="filter">
+  <span class="border-text">Chiropractors <i class="fa fa-times-circle-o" aria-hidden="true"></i></span>
+</div>
+</div>
+</div>
+<div class="text-right p-5">
+<button class="btn btn-primary btn-hw mb-3 mt-2 mr-5"  type="submit">Done</button>
+</div>
+</div>

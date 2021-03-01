@@ -1,0 +1,284 @@
+<form class="bg-white" [formGroup]="businessProfileForm" (ngSubmit)="saveBP()"
+      [ngClass]="{'border rounded': newUser}">
+  <h5 class="text-center text-primary border-bottom border-primary py-5 mb-0">
+    {{editUser ? 'Edit' : 'Create'}} Business profile</h5>
+  <div class="row m-0">
+    <div class="col p-10">
+      <div class="row">
+        <div class="col-md-7 col-sm-12">
+          <div class="form-group mb-8">
+            <label class="text-666">Business name</label>
+            <div class="form-control fs-px-14" readonly>
+              {{f?.name?.value}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-7 col-sm-12">
+          <div class="form-group mb-0">
+            <label class="text-666">Email address</label>
+            <div class="form-control fs-px-14" readonly>
+              {{f?.email?.value}}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-12"></div>
+      </div>
+      <hr class="my-8"/>
+      <div class="row">
+        <div class="col-md-7 col-sm-12">
+          <div class="form-group mb-4">
+            <label class="text-666" for="tagline">Tagline</label>
+            <input formControlName="tagline" type="text" class="form-control fs-px-14" id="tagline" maxlength="80"
+                   (change)="autoSave()" (keyup)="resetBtnName();">
+            <div class="d-flex justify-content-end pt-1 text-999 fs-px-14">
+              {{80 - f?.tagline?.value?.length}} remaining
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-12">
+          <p class="text-999 fs-px-14 mt-md-4 lh-5">
+            Enter a sentence or a phrase to describe your business.<br/>
+            <span *ngIf="newUser">Example: Seattle’s first and best known acupuncturist.</span>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-7 col-sm-12">
+          <div class="form-group mb-8">
+            <label class="text-666 d-flex justify-content-between" for="launch">
+              <span>Date launched <span class="text-999 font-weight-normal">(required)</span></span>
+            </label>
+            <div class="form-control fs-px-14" (focus)="toggleDateView(f?.isDateEdit?.value)" contenteditable="true"
+                 *ngIf="!f?.isDateEdit?.value" [class.text-999]="!f?.launch?.value"
+                 [class.is-invalid]="f.launch.dirty && (f?.launch?.errors?.required || f?.launch?.errors?.dateValidator)">
+              {{getConvertedDate(f?.launch?.value)}}
+            </div>
+            <input formControlName="launch" type="text" class="form-control fs-px-14" id="launch"
+                   [ngClass]="{'is-invalid':f?.launch?.errors?.required || f?.launch?.errors?.dateValidator}"
+                   placeholder="MM DD YYYY" matInput mask="00 00 0000" [dropSpecialCharacters]="false"
+                   (blur)="toggleDateView(f?.isDateEdit?.value)" *ngIf="f?.isDateEdit?.value" (change)="autoSave()"
+                   (keyup)="resetBtnName();"/>
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-12">
+          <p class="text-999 fs-px-14 mt-md-4 lh-5">
+            Sharing the date your business was launched can help users build trust.
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-7 col-sm-12">
+          <div class="form-group mb-8">
+            <label class="text-666" for="stateLicense">State license #</label>
+            <input formControlName="license" type="text" class="form-control fs-px-14" id="stateLicense" maxlength="20"
+                   (change)="autoSave()" (keyup)="resetBtnName();"/>
+            <div class="d-flex justify-content-end pt-1 text-999 fs-px-14">
+              {{20 - f?.license?.value?.length}} remaining
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-12">
+          <p class="text-999 fs-px-14 mt-md-4 lh-5">
+            Please enter a current state license#
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-7 col-sm-12">
+          <div class="form-group mb-4">
+            <label class="text-666 d-flex justify-content-between" for="businessDescription">
+              <span>Business description <span class="text-999 font-weight-normal">(required)</span></span>
+            </label>
+            <textarea formControlName="description" class="form-control fs-px-14 resize-none" id="businessDescription"
+                      [ngClass]="{'is-invalid':bpSubmitted && f.description.errors && [f.description.errors.required || f.description.errors.cannotContainSpace]}"
+                      rows="5" maxlength="800" (change)="autoSave()" (keyup)="resetBtnName();"></textarea>
+            <div class="d-flex justify-content-end pt-1 text-999 fs-px-14">
+              {{800 - f?.description?.value?.length}} remaining
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-12">
+          <p class="text-999 fs-px-14 mt-md-4 lh-5">
+            Describe your business but don’t list individual services yet (see below).
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-7 col-sm-12">
+          <div class="form-group mb-4">
+            <label class="text-666" for="businessHistory">
+              Business history <span class="text-999 font-weight-normal">(optional)</span>
+            </label>
+            <textarea formControlName="history" class="form-control fs-px-14" id="businessHistory"
+                      rows="5" maxlength="1000" (change)="autoSave()" (keyup)="resetBtnName();"></textarea>
+            <div class="d-flex justify-content-end pt-1 text-999 fs-px-14">
+              {{1000 - f?.history?.value?.length}} remaining
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-12">
+          <p class="text-999 fs-px-14 mt-md-4 lh-5">
+            Share your history with users. They love stories and yours could attract them and their friends to
+            visit and transact. </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-7 col-sm-12">
+          <div class="form-group mb-4">
+            <label class="text-666 d-flex justify-content-between" for="whatsDifferentAboutOurServices">
+              <span>What’s different about our services <span
+                class="text-999 font-weight-normal">(required)</span></span>
+            </label>
+            <textarea formControlName="diff_services" class="form-control fs-px-14 resize-none"
+                      [ngClass]="{'is-invalid':bpSubmitted && f.diff_services.errors && [f.diff_services.errors.required || f.diff_services.errors.cannotContainSpace]}"
+                      id="whatsDifferentAboutOurServices" rows="5" maxlength="595" (change)="autoSave()"
+                      (keyup)="resetBtnName();"></textarea>
+            <div class="d-flex justify-content-end pt-1 text-999 fs-px-14">
+              {{595 - f?.diff_services?.value?.length}} remaining
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-12">
+          <p class="text-999 fs-px-14 mt-md-4 lh-5">
+            Differentiation can be key to attracting customers. Help them understand how your business is different.
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-7 col-sm-12">
+          <div class="form-group mb-4">
+            <label class="text-666 d-flex justify-content-between" for="services">
+              <span>Services <span class="text-999 font-weight-normal">(required)</span></span>
+            </label>
+            <textarea formControlName="services" class="form-control fs-px-14 resize-none" id="services"
+                      [ngClass]="{'is-invalid':bpSubmitted && f.services.errors && [f.services.errors.required || f.services.errors.cannotContainSpace]}"
+                      rows="5" maxlength="1000" (keyup)="resetBtnName();"
+                      (change)="autoSave();formatString('services', f['services'].value)"></textarea>
+            <div class="d-flex justify-content-end pt-1 text-999 fs-px-14">
+              {{1000 - f?.services?.value?.length}} remaining
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-12">
+          <p class="text-999 fs-px-14 mt-md-4 lh-5">List your services (comma separated).</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-7 col-sm-12">
+          <div class="form-group mb-4">
+            <label class="text-666" for="problemsSolvedAndConditionsTreated">
+              Problems addressed. Conditions treated <span class="text-999 font-weight-normal">(optional)</span>
+            </label>
+            <textarea formControlName="solutions" class="form-control fs-px-14 resize-none"
+                      id="problemsSolvedAndConditionsTreated"
+                      rows="5" maxlength="500" (keyup)="resetBtnName();"
+                      (change)="autoSave(); formatString('solutions', f['solutions'].value)"></textarea>
+            <div class="d-flex justify-content-end pt-1 text-999 fs-px-14">
+              {{500 - f?.solutions?.value?.length}} remaining
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-12">
+          <p class="text-999 fs-px-14 mt-md-4 lh-5">
+            List the problems you solve for your customers and the conditions you treat (comma separated).
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-7 col-sm-12">
+          <div class="form-group mb-8">
+            <label class="text-666 d-flex justify-content-between" for="zips">
+              <span>Service areas <span class="text-999 font-weight-normal">(zip codes served, required)</span></span>
+            </label>
+            <input type="text" formControlName="zips" class="form-control fs-px-14" id="zips" (change)="autoSave()"
+                   [ngClass]="{'is-invalid':bpSubmitted && f.zips.errors && [f.zips.errors.required || f.zips.errors.cannotContainSpace || f.zips.errors.pattern]}"
+                   (keyup)="resetBtnName();"/>
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-12">
+          <p class="text-999 fs-px-14 mt-md-4 lh-5">List zip codes (comma separated)</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-7 col-sm-12">
+          <div class="row">
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group mb-8">
+                <label class="text-666 d-flex justify-content-between" for="from">
+                  <span>Price range <span class="text-999 font-weight-normal">($-$$$$$)</span></span>
+                </label>
+                <input type="number" formControlName="from" class="form-control fs-px-14" id="from" placeholder="From $"
+                       [ngClass]="{'is-invalid':bpSubmitted && f.from.errors && f.from.errors.pattern}"
+                       (change)="autoSave()" (keyup)="resetBtnName();" min="0"/>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group mb-8">
+                <label class="text-999 d-flex fs-px-14 w-100 d-flex justify-content-end mt-4 mb-1" for="from">
+                </label>
+                <input type="number" formControlName="to" class="form-control fs-px-14" id="to" placeholder="To $$$$$"
+                       [ngClass]="{'is-invalid':bpSubmitted && f.to.errors && f.to.errors.pattern}"
+                       (change)="autoSave()" (keyup)="resetBtnName();" min="0"/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-12">
+          <p class="text-999 fs-px-14 mt-md-4 lh-5">
+            Enter the price range for your services.
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-7 col-sm-12">
+          <div class="form-group">
+            <label class="text-666" for="hours">Business Hours</label>
+            <textarea formControlName="hours" class="form-control fs-px-14 resize-none" id="hours" rows="5"
+                      maxlength="500" (change)="autoSave();formatString('hours', f['hours'].value)"
+                      (keyup)="resetBtnName();"></textarea>
+            <div class="d-flex justify-content-end pt-1 text-999 fs-px-14">
+              {{500 - f?.hours?.value?.length}} remaining
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-12">
+          <p class="text-999 fs-px-14 mt-md-4 lh-5">List days of week and business hours</p>
+        </div>
+      </div>
+      <ng-container *ngIf="editUser">
+        <div class="row pt-10">
+          <div class="d-flex justify-content-end col-sm-12 text-right">
+            <div class="btn bg--grey--gray mr-5 btn-hw text-white lh-7 disabled" *ngIf="businessProfileForm.pristine">
+              Cancel
+            </div>
+            <button type="button" class="btn btn-outline-primary mr-5 btn-hw" *ngIf="!businessProfileForm.pristine"
+                    (click)="updateForm();">Cancel
+            </button>
+            <div class="btn bg--grey--gray btn-hw text-white lh-7 disabled"
+                 *ngIf="f?.btnName?.value !== 'Save'">{{f?.btnName?.value}}
+            </div>
+            <button type="submit" class="btn btn-primary btn-hw" *ngIf="f?.btnName?.value === 'Save'">
+              {{f?.btnName?.value}}
+            </button>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="newUser">
+        <div class="row d-flex justify-content-end pt-10">
+          <div *ngIf="bpSubmitted && !businessProfileForm.valid" class="fs-px-14 mr-5 text-red mb-5">If a button is
+            unresponsive. please check fields above. A<br/>red border signals a problem with the data in that field.
+          </div>
+          <div class="col-sm-12 text-right">
+            <button (click)="pauseEvent()" type="button" class="btn btn-outline-primary btn-hw mr-5">Pause</button>
+            <button type="button" class="btn btn-outline-primary btn-hw mr-5" (click)="previousEvent()">
+              Back
+            </button>
+            <button type="button" class="btn btn-primary btn-hw" (click)="nextEvent()">Next</button>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</form>

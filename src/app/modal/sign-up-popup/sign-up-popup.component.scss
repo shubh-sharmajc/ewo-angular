@@ -1,0 +1,291 @@
+::ng-deep {
+  // Login Changes
+  .signUp-banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #C4C4C4;
+  }
+  .signUp-popup {
+    overflow: hidden;
+    margin: 0 auto;
+    height: 461px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    .signUp-Left {
+      width: 367px;
+      height: 461px;
+      padding-top: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-image: url('/assets/img/signup-popup-img.png');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      .formLogo {
+        text-align: center;
+        margin-bottom: 0;
+        img {
+          width: 120px;
+          height: 50px;
+        }
+      }
+      .logo-tagline {
+        font-family: 'Roboto', sans-serif;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 23px;
+        color: #ffffff;
+        margin-bottom: 20px;
+      }
+      .btn {
+        min-width: auto;
+        height: auto;
+        &.btn-primary-outline {
+          max-width: 236px;
+          height: 40px;
+          background: transparent;
+          border: 1px solid #3BA757;
+          border-radius: 5px;
+          font-family: 'Roboto', sans-serif;
+          text-transform: capitalize;
+          white-space: nowrap;
+          letter-spacing: 0;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 26px;
+          padding: 7px 30px;
+          color: #3BA757;
+          transition: all 0.3s ease 0s;
+          -moz-transition: all 0.3s ease 0s;
+          -webkit-transition: all 0.3s ease 0s;
+          &:hover {
+            color: #fff;
+            background-color: #3BA757;
+            transition: all 0.3s ease 0s;
+            -moz-transition: all 0.3s ease 0s;
+            -webkit-transition: all 0.3s ease 0s;
+          }
+        }
+      }
+      .text-danger{
+        color: #DC4139;
+      }
+    }
+    .signUp-Form {
+      width: 367px;
+      height: 461px;
+      position: relative;
+      .closeBtn {
+        position: absolute;
+        right: 14px;
+        top: 14px;
+        cursor: pointer;
+        z-index: 10;
+        .icon-close {
+          width: 14px;
+          height: 14px;
+          display: inline-block;
+          vertical-align: middle;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: 14px 14px;
+          background-image: url("data:image/svg+xml;charset=utf8,%3Csvg width='14' height='14' viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Crect width='14' height='14' fill='url(%23pattern0)' fill-opacity='0.8'/%3E%3Cdefs%3E%3Cpattern id='pattern0' patternContentUnits='objectBoundingBox' width='1' height='1'%3E%3Cuse xlink:href='%23image0' transform='scale(0.03125)'/%3E%3C/pattern%3E%3Cimage id='image0' width='32' height='32' xlink:href='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAQAAADZc7J/AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfkAQkRCyzNoelhAAABQElEQVRIx5WVu07DMBRAD4lIKYJKPAb4Hb6GFTHzHSwgQUEggUTLYymwQIGJ1wQbY7cMsCCBRBh6lThJ7d7rLHZ8z3FsXzuwSkqHGawlYoMeKzAgI+PWqIjYIiPjA/bJzIqIbaGuoMG5NO6YVeETbArxzjJYFRE7ZdymKPA3ltwOnSL24TpFzK5EvLI4KiCsiGmH8bCiwF/8uF8Rs5fjC+O2qa4w4XVFnOfqsw4HmKKXJ/ix1B6Z0+Llrxg+T8xb8KoigEdewR8/ef2bX+v4k5yUpqA9qVISOgI+OMupvi9cvGW/LxK6AtzTqiynQuHiRbBakXDqCVQp/LhKkXAmAX3PGEFFknf2A7P0KoqOcbs9UtHgwpAsNUWTS3lxo8y1iuJIGtdMq3Bw74sufMk/rqnGXcUnrJNyaMSHigNS1v4BpssHpjwO+V8AAAAldEVYdGRhdGU6Y3JlYXRlADIwMjAtMDEtMDlUMTc6MTE6NDQrMDA6MDC4MJFNAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIwLTAxLTA5VDE3OjExOjQ0KzAwOjAwyW0p8QAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII='/%3E%3C/defs%3E%3C/svg%3E");
+        }
+      }
+      .signUpForm {
+        padding: 20px;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        .formTitile {
+          margin-bottom: 10px;
+          span {
+            display: block;
+            font-family: 'Roboto', sans-serif;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 20px;
+            line-height: 23px;
+            color: #3BA757;
+            margin-top: 10px;
+          }
+        }
+        .formDiv {
+          .input {
+            input {
+              height: 40px;
+              border-radius: 3px;
+              border: solid 1px #cccccc;
+              background-color: #ffffff;
+              text-indent: 15px;
+              padding-right: 0rem;
+              color: #333333;
+              font-size: 14px;
+            }
+            .signUpForm-validation{
+              font-size: 14px;
+              float: right;
+            }
+            .red-border{
+              border: 1px solid #DC4139;
+            }
+          }
+        }
+        .or {
+          font-size: 14px;
+          font-weight: normal;
+          color: #cccccc;
+          padding: 20px 0;
+        }
+        .register-form {
+          .email-input {
+            margin-bottom: 20px;
+          }
+          .invalid-feedback{
+            bottom: 2px;
+            font-size: 12px;
+            color: #929292;
+          }
+        }
+      }
+      .formNote {
+        font-size: 12px;
+        color: #888;
+        font-weight: normal;
+        line-height: 1.5;
+        text-align: center;
+        a {
+          font-size: 12px;
+          color: #000;
+          text-decoration: none;
+          &:hover {
+            color: #000;
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  .btn:not(.disabled):hover.bg--green {
+    background-color: #3aa757;
+  }
+
+  .btn {
+    min-width: auto;
+    height: auto;
+    &.cutomBtn {
+      height: 40px;
+      border-radius: 3px;
+      background-color: #3aa757;
+      font-size: 14px;
+      font-weight: normal;
+      color: #ffffff;
+      min-height: 40px;
+      padding: 10px;
+    }
+    &.ewo_btn {
+      &.ss-btn {
+        width: 100%;
+        padding: 10px 50px;
+        height: 40px;
+        border-radius: 3px;
+        font-size: 14px;
+        font-weight: normal;
+        color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        &.fbutton {
+          position: relative;
+          background-color: #4267b2;
+          border: solid 0px #4267b2;
+          i {
+            width: 23px;
+            height: 23px;
+            display: inline-block;
+            position: absolute;
+            left: 10px;
+            background-image: url("data:image/svg+xml;charset=utf8,%3C?xml version='1.0' encoding='UTF-8'?%3E%3Csvg width='23px' height='23px' viewBox='0 0 23 23' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3C!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com --%3E%3Ctitle%3Eflaticon1567689658-eps%3C/title%3E%3Cdesc%3ECreated with Sketch.%3C/desc%3E%3Cg id='New-Final' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='EWO_Signup-Page' transform='translate(-1088.000000, -403.000000)' fill='%23FFFFFF'%3E%3Cg id='flaticon1567689658-eps' transform='translate(1088.000000, 403.000000)'%3E%3Cpath d='M23,3.83333333 C23,1.81923611 21.1820417,0 19.1666667,0 L3.83333333,0 C1.81795833,0 0,1.81923611 0,3.83333333 L0,19.1666667 C0,21.1807639 1.81795833,23 3.83333333,23 L11.5,23 L11.5,14.3114306 L8.68856944,14.3114306 L8.68856944,10.4780972 L11.5,10.4780972 L11.5,8.984375 C11.5,6.40869444 13.4342361,4.08920833 15.8125,4.08920833 L18.9107917,4.08920833 L18.9107917,7.92254167 L15.8125,7.92254167 C15.47325,7.92254167 15.0774583,8.33430556 15.0774583,8.95083333 L15.0774583,10.4780972 L18.9107917,10.4780972 L18.9107917,14.3114306 L15.0774583,14.3114306 L15.0774583,23 L19.1666667,23 C21.1820417,23 23,21.1807639 23,19.1666667 L23,3.83333333 Z' id='Fill-1'%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background-size: 23px auto;
+            background-position: center left;
+            background-repeat: no-repeat;
+          }
+        }
+        &.gbutton {
+          position: relative;
+          border: solid 1px #cccccc;
+          background-color: #ffffff;
+          color: #333333;
+          i {
+            width: 23px;
+            height: 23px;
+            display: inline-block;
+            position: absolute;
+            left: 10px;
+            background-image: url("data:image/svg+xml;charset=utf8,%3C?xml version='1.0' encoding='UTF-8'?%3E%3Csvg width='25px' height='25px' viewBox='0 0 25 25' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3C!-- Generator: sketchtool 54.1 (76490) - https://sketchapp.com --%3E%3Ctitle%3EB3F9B8B3-F43B-4282-B44E-5209EF157E83%3C/title%3E%3Cdesc%3ECreated with sketchtool.%3C/desc%3E%3Cdefs%3E%3Cpolygon id='path-1' points='0.0029296875 0.0130859375 5.54052734 0.0130859375 5.54052734 11.685498 0.0029296875 11.685498'%3E%3C/polygon%3E%3C/defs%3E%3Cg id='New-Final' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='EWO_Signup-Page' transform='translate(-1087.000000, -432.000000)'%3E%3Cg id='flaticon1567689783-eps' transform='translate(1087.000000, 432.000000)'%3E%3Cg id='Group-3' transform='translate(0.000000, 6.738281)'%3E%3Cmask id='mask-2' fill='white'%3E%3Cuse xlink:href='%23path-1'%3E%3C/use%3E%3C/mask%3E%3Cg id='Clip-2'%3E%3C/g%3E%3Cpath d='M5.54052734,8.36953125 L4.6703125,11.6181641 L1.48969727,11.685498 C0.539160156,9.92241211 0,7.90527344 0,5.76171875 C0,3.68891602 0.504101563,1.73422852 1.39765625,0.0130859375 L1.39833984,0.0130859375 L4.2300293,0.532275391 L5.47045898,3.346875 C5.21083984,4.10375977 5.06938477,4.91625977 5.06938477,5.76171875 C5.06938477,6.67929688 5.2355957,7.55844727 5.54052734,8.36953125' id='Fill-1' fill='%23F0B529' mask='url(%23mask-2)'%3E%3C/path%3E%3C/g%3E%3Cpath d='M24.7815918,10.1648437 C24.9251465,10.9209961 25,11.7019043 25,12.5 C25,13.3949219 24.9059082,14.2678711 24.7266602,15.1099121 C24.1181152,17.975293 22.5281738,20.4773438 20.3255371,22.2479492 L20.3248535,22.2472656 L16.758252,22.0652344 L16.253418,18.9141602 C17.7149902,18.0569824 18.8571289,16.7156738 19.4587891,15.1099121 L12.774707,15.1099121 L12.774707,10.1648437 L24.7815918,10.1648437' id='Fill-4' fill='%235E7CB0'%3E%3C/path%3E%3Cpath d='M20.3248535,22.2472656 L20.3255371,22.2479492 C18.1833984,23.9697754 15.462207,25 12.5,25 C7.73969727,25 3.60097656,22.3393066 1.48969727,18.4237793 L5.54052734,15.1078125 C6.59614258,17.9251465 9.31386719,19.9306152 12.5,19.9306152 C13.8694824,19.9306152 15.1524902,19.5604492 16.253418,18.9141602 L20.3248535,22.2472656' id='Fill-5' fill='%232FA948'%3E%3C/path%3E%3Cpath d='M20.4787109,2.87773437 L16.429248,6.19301758 C15.2898438,5.48076172 13.9430176,5.06938477 12.5,5.06938477 C9.24174805,5.06938477 6.47319336,7.16689453 5.47045898,10.0851563 L1.39833984,6.75136719 L1.39765625,6.75136719 C3.47802734,2.74038086 7.66894531,0 12.5,0 C15.532959,0 18.3138672,1.08037109 20.4787109,2.87773437' id='Fill-6' fill='%23DC4139'%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background-size: 23px auto;
+            background-position: center left;
+            background-repeat: no-repeat;
+            &:after {
+              content: '';
+              top: 2px;
+              bottom: 2px;
+              left: 35px;
+              position: absolute;
+              width: 1px;
+              border-radius: 0.5px;
+              background-color: #d8d8d8;
+            }
+          }
+        }
+        .fixed-right {
+          position: absolute;
+          right: -1px;
+          top: -1px;
+          width: 40px;
+          height: 42px;
+          object-fit: contain;
+          border-radius: 0 3px 3px 0;
+        }
+        span {
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          display: block;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 767px) {
+    .signUp-Form {
+      float: none;
+      margin: 0 auto;
+      text-align: center;
+      display: block;
+      width: 100%;
+      max-width: 367px;
+      .signUpForm {
+        margin: 10px auto 0;
+      }
+    }
+  }
+
+  @media (max-width: 400px) {
+    .signUp-Form {
+      max-width: 300px;
+      .signUpForm {
+        padding: 5px 20px;
+        margin-top: 0px;
+      }
+    }
+  }
+}

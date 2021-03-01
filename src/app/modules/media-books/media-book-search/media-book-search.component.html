@@ -1,0 +1,94 @@
+<div class="mediabook">
+  <div class="col12 col12_sm-12_xs-12 pB0">
+    <div class="section bg-white">
+      <h5 class="text-primary text-center fs-px-20 font-weight-bold py-6 border-bottom border-primary mb-0"
+          *ngIf="proUserRoles.indexOf(currentUser?.role) > -1">
+        Mediabooks Home</h5>
+      <div class="mediabook-grid-header">
+        <div class="title">SEARCH RESULTS <span>{{mediaBookList && mediaBookList.length}}</span></div>
+        <div class="right-container">
+          <div class="search-dd-container">
+            <div class="search-container input">
+              <img class="search-icon" src="assets/img/search-mediabook.svg"/>
+              <a href="javascript:void(0);"
+                 [routerLink]="[(proUserRoles.indexOf(currentUser?.role) > -1 ? '/pro/manage-media/' : '/user/')+currentUser.username+'/mediabooks']" class="cross-icon-main">
+                <img class="cross-icon" src="assets/img/cross.svg"/></a>
+              <input type="text" placeholder="Search Mediabooks" [(ngModel)]="qp.t"
+                     (ngModelChange)="searchOutput.next($event)" #search/>
+            </div>
+            <ng-select class="custom-grey action-dd border-none z-index-500" [items]="searchMediabook"
+                       [closeOnSelect]="true" bindLabel="name" bindValue="name" [searchable]="false"
+                       [(ngModel)]="qp.ssa" [clearable]="false" placeholder="All mediabooks"
+                       (change)="searchMenuChange()">
+            </ng-select>
+          </div>
+          <ng-select class="custom-green custom-green mb-action action-dd z-index-500" [items]="actions"
+                     [closeOnSelect]="true"
+                     [searchable]="false" [clearable]="false" bindLabel="name" placeholder="Actions"
+                     [(ngModel)]="selectAction" (change)="actionChange(selectAction.name)">
+          </ng-select>
+        </div>
+      </div>
+      <div class="container grid" detect-scroll (onScroll)="scrollHandler($event)" [bottomOffset]="500">
+        <ng-container *ngFor="let mbl of mediaBookList;let i = index">
+          <div class="position-relative image-container col3 col3_sm-6_xs-12 p-2" *ngIf="mbl.dataType === 'Mediabooks'"
+               [style.z-index]="499-i">
+            <div (click)="goToMBItems($event, mbl)">
+              <div class="image"
+                   [ngStyle]="{'background-image': 'url(\'' + (mbl.image_url ? mbl.image_url : getImgForEmptyMB(mbl?.name)) + '\')'}"></div>
+              <label class="checkbox-container" (click)="$event.stopPropagation();"
+                     [style.display]="mbl.checked?'block':''">
+                <input type="checkbox" [(ngModel)]="mbl.checked" (change)="checkboxChange()"/>
+                <span class="checkmark"></span>
+              </label>
+              <div class="mediabook-info">
+                <div class="header" [title]="mbl.name">{{mbl.default ? mbl.name + ' (Default)' : mbl.name}}</div>
+                <div class="sub-info">
+                  <div>{{mbl.saved_items ? mbl.saved_items : 0}} item(s)</div>
+                  <div>{{mbl.shared ? (mbl?.created_by?.first_name + ' ' + mbl?.created_by?.last_name) : (mbl.private ?
+                    'Private' : 'Public')}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <textarea [ngClass]="{'visiblity': mbl.shared}" class="input-field notes" placeholder="Notes"
+                      [(ngModel)]="mbl.notes" maxlength="500"
+                      (change)="changeMediabookNotes(mbl._id, mbl.notes)" style="resize: none;"></textarea>
+          </div>
+          <div class="col3 col3_sm-6_xs-12 mb-items-grid position-relative p-2"
+               *ngIf="mbl.dataType === 'MediabookItems'"
+               [style.z-index]="499-i">
+            <a [href]="getRedirectURL(mbl)">
+              <img class="image" [src]="mbl.image_url"/>
+              <div class="promotionName">
+                <a target="_blank">{{ getMediaBookItemType(mbl.type) | titlecase }}</a>
+              </div>
+              <a href="javascript:void(0);" class="staging" *ngIf="mbl?.status === 'Staging'"
+                 (click)="goToUploadMB(mbl)">Staging</a>
+              <div class="mediabook-info mb50">
+                <div class="header">
+                  <ng-container *ngIf="mbl?.status === 'Staging'">
+                    <div class="pr-2" *ngIf="mbl?.status === 'Staging'">
+                      <i>Please click on Staging above to finish labeling process.</i>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="mbl?.status !== 'Staging'">
+                    <div class="header-title" [title]="mbl.header">
+                      {{mbl.header | slice:0:55}}<span *ngIf="mbl.header.length > 55">...</span>
+                    </div>
+                    <div class="mediabook-name">From: {{mbl.mediabook.name ? mbl.mediabook.name : 'Mediabook item'}}</div>
+                  </ng-container>
+                  <a class="fs-px-14 font-weight-bold link-name" *ngIf="mbl?.link?.mediabook"
+                     [routerLink]="'/mediabook/slideshow/'+ mbl?.link?.mediabook">{{mbl?.link?.name}}</a>
+                </div>
+              </div>
+            </a>
+            <textarea class="input-field notes" placeholder="Notes" [(ngModel)]="mbl.notes" maxlength="500"
+                      (change)="changeItemNotes(mbl)" style="resize: none;"></textarea>
+          </div>
+        </ng-container>
+        <h1 class="msg" *ngIf="mediaBookList && !mediaBookList.length">No matching content found.</h1>
+      </div>
+    </div>
+  </div>
+</div>

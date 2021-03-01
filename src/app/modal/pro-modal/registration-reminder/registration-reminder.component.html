@@ -1,0 +1,29 @@
+<div class="registration-reminder-popup">
+  <div class="modal-header">
+    <h4 class="w-100 mb-0">
+      <div class="row m-0 align-items-center px-6">
+        <div class="col-2 px-0">
+          <img class="logo float-left" src="assets/img/logo/ewo_150.png">
+        </div>
+        <div class="col-8 align-items-center fs-px-20 font-weight-bold text-primary text-center">
+          Reminder: your registration is incomplete
+        </div>
+        <div class="col"></div>
+      </div>
+    </h4>
+  </div>
+  <div class="modal-body px-10">
+    <div class="row">
+      <div class="col-12">
+        <p class="text-000 fs-px-16 lh-6 m-0 text-center pt-2">
+          Your registration was paused last time you logged in.<br/>
+          Please complete registration now to use all our features.</p>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer d-flex justify-content-center pb-10">
+    <button type="button" class="btn btn-outline-primary btn-hw" (click)="onCancel()">Cancel</button>
+    <button type="button" class="btn btn-primary btn-hw btn-w" (click)="resumeRegistration()">Resume registration
+    </button>
+  </div>
+</div>

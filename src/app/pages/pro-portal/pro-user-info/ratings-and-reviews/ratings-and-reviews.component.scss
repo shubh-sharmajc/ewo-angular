@@ -1,0 +1,10 @@
+.request-reviews {
+  .outgoing-msg {
+    min-height: 185px;
+  }
+  .btn-link {
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>flaticon1568627610-eps</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="1.78863395e-16 0 18 0 18 18 1.78863395e-16 18"></polygon>
+    </defs>
+    <g id="Updated" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="flaticon1568627610-eps">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <g id="Clip-2"></g>
+            <path d="M16.874833,7.87504911 L10.1247741,7.87504911 L10.1247741,1.1251866 C10.1247741,0.503705838 9.62115564,0 9,0 C8.37853009,0 7.87483304,0.503705838 7.87483304,1.1251866 L7.87483304,7.87504911 L1.12508839,7.87504911 C0.503618476,7.87504911 0,8.37867637 0,8.99984286 C0,9.62132363 0.503618476,10.1250295 1.12508839,10.1250295 L7.87483304,10.1250295 L7.87483304,16.874892 C7.87483304,17.4963727 8.37853009,18 9,18 C9.62115564,18 10.1247741,17.4963727 10.1247741,16.874892 L10.1247741,10.1250295 L16.874833,10.1250295 C17.496303,10.1250295 18,9.62132363 18,8.99984286 C18,8.37867637 17.496303,7.87504911 16.874833,7.87504911 Z" id="Fill-1" stroke="#FFFFFF" stroke-width="0.5" fill="#000000" mask="url(#mask-2)"></path>
+        </g>
+    </g>
+</svg>

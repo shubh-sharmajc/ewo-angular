@@ -1,0 +1,150 @@
+.users-search .main-heading {
+  height: 35px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 17px;
+  text-align: left;
+  color: #333333;
+}
+
+.users-search .items-counts {
+  color: #666;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  height: 20px;
+  padding-bottom: 30px;
+  line-height: 17px;
+  text-align: left;
+}
+
+.users-search .user-image .profile-icon {
+  height: 50px;
+  width: 50px;
+}
+.user-details {
+  height: 60px;
+  display:block;
+  position: relative;
+  color: #333333;
+  &:hover {
+    color: #3BA757;
+  }
+}
+
+.user-details .user-image .rounded-circle {
+  height: 50px;
+  width: 50px;
+  border: 1px solid #ccc;
+  background-color: #c4c4c4;
+  background-size: contain;
+  z-index: 1;
+  position: relative;
+  border-radius: 50% !important;
+}
+.user-details .user-name {
+  position: absolute;
+  height: 50px;
+  width: 75%;
+  left: 60px;
+  top: 0;
+  padding-top: 1rem;
+  font-size: 16px;
+}
+
+.pagination-area {
+  text-align: center;
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 20px 0 40px;
+}
+.page-link {
+  position: relative;
+  display: block;
+  padding: .5rem .75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: #666;
+  background-color: #fff;
+  border: 1px solid #ccc;
+}
+
+.pagination-area .pagination {
+  color: #c4c4c4;
+  display: -webkit-box;
+  display: inline-flex;
+  padding-left: 0;
+  list-style: none;
+  border-radius: .25rem;
+}
+
+.pagination-area .pagination-sm .page-item:first-child .page-link {
+  border-top-left-radius: .2rem;
+  border-bottom-left-radius: .2rem;
+}
+.pagination-area .pagination-sm .page-item:last-child .page-link {
+  border-top-right-radius: .2rem;
+  border-bottom-right-radius: .2rem;
+}
+.pagination-area .page-item:first-child .page-link {
+  margin-left: 0;
+  border-top-left-radius: .25rem;
+  border-bottom-left-radius: .25rem;
+}
+.pagination-area .page-item:last-child .page-link {
+  margin-right: 0;
+  border-top-right-radius: .25rem;
+  border-bottom-right-radius: .25rem;
+}
+.pagination-area .pagination-sm .page-link {
+  padding: .25rem .5rem;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.pagination-area .page-item.active .page-link {
+  z-index: 3;
+  /*color: #fff;*/
+  background-color: #c4c4c4;
+  border-color: #ccc;
+}
+
+.noRecordFound{
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  line-height: normal;
+  font-weight: normal;
+  word-break: keep-all;
+  color: #333;
+}
+.noRecordFound p.result-not-found{
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  line-height: normal;
+  font-weight: normal;
+  padding-top: 10px;
+  word-break: keep-all;
+  color: #333;
+}
+.noRecordFound p.result-not-found:first-child{
+  font-size: 18px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.noRecordFound p.result-not-found .font18{
+  font-size: 18px !important;
+}
+h4.noRecordFound{
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  line-height: normal;
+  font-weight: 500;
+  padding-top: 10px;
+  margin-top: 0px;
+  margin-bottom: 10px;
+  word-break: keep-all;
+  color: #333;
+}

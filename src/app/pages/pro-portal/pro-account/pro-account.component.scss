@@ -1,0 +1,22 @@
+@import '../../../../scss/variables';
+
+.pro-account {
+  .side-nav {
+    .nav {
+      .nav-item {
+        .nav-link {
+          color: $secondary;
+          &:hover {
+            color: $primary;
+          }
+          &.active {
+            color: $primary;
+            border-radius: 0;
+            background: none;
+          }
+        }
+      }
+    }
+  }
+}
+

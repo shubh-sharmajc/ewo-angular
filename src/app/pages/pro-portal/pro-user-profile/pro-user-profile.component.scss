@@ -1,0 +1,301 @@
+@import '../../../../scss/variables';
+
+.pro-user-profile {
+  .user-profile-container {
+    height: 215px;
+
+    .btn-cover-photo {
+      text-transform: none;
+      display: flex;
+      border: 0.5px solid $white;
+      color: $white;
+      background: rgba(0, 0, 0, 0.15);
+      align-items: center;
+      padding: 5px 10px;
+      z-index: 1;
+      width: 247px;
+      justify-content: center;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.5);
+      }
+
+      img {
+        margin-right: 5px;
+      }
+    }
+
+    .avatar {
+      max-width: 180px;
+      max-height: 180px;
+      width: 100%;
+      height: 100%;
+      top: 4.5rem;
+      left: 1.8rem;
+      border: 1px solid $white;
+      box-sizing: border-box;
+      border-radius: 5px;
+      z-index: 1;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+
+      .avatar-hint {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-flow: column;
+        height: 100%;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        color: $white;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity .2s, visibility .2s;
+        cursor: pointer;
+        border-radius: 5px;
+
+        input {
+          display: none;
+        }
+      }
+
+      &:hover .avatar-hint {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+
+    .username-container {
+      padding: 1.25rem;
+
+      .loc-selection {
+        background: rgba(51, 51, 51, 0.6) url(/assets/img/dd.svg) no-repeat right 0.75rem center/18px 8px;
+        color: $white;
+        border: 1px solid $white;
+        box-sizing: border-box;
+        border-radius: 5px;
+        width: 276px;
+        font-weight: 500;
+      }
+
+      .user-name {
+        color: $white;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 36px;
+        line-height: 100%;
+      }
+
+      .user-location {
+        color: $white;
+        font-family: Roboto;
+        font-style: normal;
+        font-size: 16px;
+      }
+
+      .btn-publish {
+        box-sizing: border-box;
+        border-radius: 5px;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 18px;
+        width: 149px;
+        color: $white;
+        border: 1px solid $white;
+      }
+
+      .user-tag-line {
+        color: $white;
+        text-shadow: 2px 2px rgba(0, 0, 0, .73);
+      }
+
+      .contact-table {
+        border: 1px solid $white;
+        border-radius: 5px;
+        border-collapse: inherit;
+        border-spacing: 0;
+        width: 247px;
+        background: rgba(51, 51, 51, 0.6);
+
+        tr {
+          height: 56px;
+
+          &:first-child {
+            td {
+              border-bottom: 1px solid $white;
+            }
+          }
+        }
+      }
+
+      .message {
+        width: 153px !important;
+        height: 45px !important;
+        border: 1px solid #FFFFFF;
+        border-radius: 5px;
+      }
+    }
+  }
+
+  .nav {
+    .nav-item {
+      .nav-link {
+        color: $secondary;
+        font-weight: 500;
+
+        &:hover {
+          color: $primary;
+        }
+
+        &.active {
+          color: $primary;
+          border-bottom: 5px solid;
+          border-radius: 0;
+        }
+      }
+    }
+  }
+
+  .btn {
+    width: 100px;
+    &.btn-follow {
+      background: #3BA757;
+      border: 1px solid #3BA757;
+
+      &:hover {
+        background: #fff;
+        color: #3BA757;
+        border: 1px solid #3BA757;
+      }
+
+      &.outline {
+        background: #fff;
+        color: #3BA757;
+        border: 1px solid #3BA757;
+
+        &:hover {
+          color: #fff;
+          background: #3BA757;
+          border: 1px solid #3BA757;
+        }
+      }
+
+      &.outline:hover {
+        &.outline span {
+          display: none;
+        }
+
+        &.outline:before {
+          visibility: visible;
+          content: 'Unfollow';
+        }
+      }
+    }
+  }
+
+  .awards {
+    border-radius: 5px;
+    min-height: 240px;
+
+    .awards-container {
+      display: grid;
+      grid-template-columns: auto auto auto;
+
+      .award {
+        background-color: #c5c5c5;
+        border: 1px solid #c5c5c5;
+        padding: 23px;
+        font-size: 30px;
+        text-align: center;
+        margin: 6px;
+      }
+    }
+  }
+
+  .icon {
+    width: 35px;
+    height: 35px;
+  }
+
+  .stars {
+    img {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  .max-width {
+    max-width: 220px;
+    width: 100%;
+  }
+
+  .followers-following {
+    a:hover {
+      color: $primary !important;
+    }
+  }
+
+}
+
+@media screen and (max-width: 768px) {
+  .pro-user-profile {
+    .user-profile-container {
+      .username-container {
+        .btn-publish {
+          font-weight: 400;
+          font-size: 12px;
+          width: 70px;
+          height: 35px;
+          line-height: 1;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .pro-user-profile {
+    margin-top: 4.5rem !important;
+
+    .user-profile-container {
+      .avatar {
+        top: 3rem;
+        max-width: 120px;
+        max-height: 120px;
+        left: 1rem;
+      }
+
+      .username-container {
+        .user-name {
+          font-size: 16px;
+        }
+
+        .user-location {
+          font-size: 10px;
+        }
+
+        .user-tag-line {
+          font-size: 10px;
+        }
+      }
+    }
+
+    .nav {
+      font-size: 14px;
+      padding: 2rem 0 0 !important;
+      display: flex;
+      justify-content: space-around;
+
+      .nav-item {
+        .nav-link {
+          padding: 0.5rem 0.25rem;
+        }
+      }
+    }
+  }
+
+}
+

@@ -1,0 +1,94 @@
+<section class="user_signin">
+  <div class="signInModal">
+    <div class="modalTop">
+      <div><img src="assets/img/logo/ewo_150.png" alt="" srcset=""></div>
+      <h1>Welcome back, registered user or pro!</h1>
+      <div class="closeBtn"><a class="icon-close" href="javascript:void(0);" [routerLink]="['/']"></a></div>
+    </div>
+    <div class="modalInr">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="grid middle_align">
+          <div class="col6_sm-6_xs-12 pb-2">
+            <div *ngIf="showErrorMessage" class="error-msg-container">
+              <div class="error-msg">Invalid Email or Password</div>
+            </div>
+            <div class="formLeft">
+              <div class="input">
+                <input type="text" formControlName="email" tabindex="1"
+                       [ngClass]="{ 'red-border': submitted && f.email.errors && f.email.errors.required,
+                       'is-invalid': showErrorMessage}"
+                       placeholder="Email"/>
+
+                <span class="input__error meta-text red">Enter correct Email</span>
+                <span class="icon-cross red toggle"></span>
+                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                  <div *ngIf="f.email.errors.required">Please enter email.</div>
+                </div>
+              </div>
+              <div class="input">
+                <input type="password" tabindex="2" formControlName="password"
+                       [ngClass]="{ 'red-border': submitted && f.password.errors && f.password.errors.required,
+                       'is-invalid': showErrorMessage}"
+                       placeholder="Password"/>
+
+                <span class="input__error meta-text red">Enter correct Password</span>
+                <span class="icon-cross red toggle"></span>
+                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                  <div *ngIf="f.password.errors.required">Please enter password.</div>
+                </div>
+              </div>
+              <div class="grid">
+                <div class="col6_sm-6_xs-12 pb-4">
+                  <div class="checkbox rememberDiv" tabindex="3">
+                    <input type="checkbox" class="checkbox__input" id="cb_default" formControlName="remember_me"
+                           value="1">
+                    <label for="cb_default" class="checkbox__label text">
+                      <span class="checkbox__button"></span>
+                      Remember Me
+                    </label>
+                  </div>
+                </div>
+                <div class="col6_sm-6_xs-12 pb-4">
+                  <div class="forgt_pwd">
+                    <a href="javascript:void(0);"
+                       [routerLink]="['/password/forgot']">
+                      Forgot Password?</a>
+                  </div>
+                </div>
+              </div>
+              <div class="joinTerm">
+                By signing in or creating a new account, I agree to EWO's
+                <a [href]="WP_LINK+'privacy-policy'" tabindex="4" target="_blank">Terms of Use</a> and
+                <a [href]="WP_LINK+'privacy-policy'" tabindex="5" target="_blank">Privacy Policy. </a>
+              </div>
+              <div class="btnBlock text-center">
+                <button tabindex="6" [disabled]="loading" class="btn white btn--md bg--green cutomBtn mT9">
+                  Sign in to EWO
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col6_sm-6_xs-12 pb-2" [ngClass]="{ 'mT35': showErrorMessage}">
+            <div class="ewoSec">
+              <div class="ewoBtn mB20">
+                <img class="fb-icon" src="assets/img/fb.svg"/>
+                <button type="button" class="btn-facebook" (click)="loginWithFacebook()">Sign In using Facebook</button>
+              </div>
+              <div class="ewoBtn">
+                <img class="google-icon" src="assets/img/google.svg"/>
+                <button type="button" class="btn-google" (click)="loginWithGoogle()">Sign In using Google</button>
+                <div class="btnBlock text-center">
+                  <div class="checkAccount"> Don’t have an account yet?</div>
+                  <a tabindex="6" [routerLink]="['/']"
+                     class="btn btn--md outline ewo_btn on-hover--white btn--md cutomBtn new-account">
+                    Create a new account
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,90 @@
+<div class="view-profile-page grid mT20">
+  <div class="col3 col3_sm-3_xs-12 pB0">
+    <div class="section">
+      <div class="followers bg-white">
+        <p class="mb-0">
+          <a [href]="profileUrl+'/followers'">
+            Followers {{ffData && (ffData.follower === 0 ? 0 : ffData.follower | shortNumber)}}
+          </a>
+          <span class="span-pipe">|</span>
+          <a [href]="profileUrl+'/following'">
+            Following {{ffData && (ffData.following === 0 ? 0 : ffData.following | shortNumber)}}
+          </a>
+        </p>
+        <button type="button" [class]="'btn btn-follow mT20 ' + (ffData && ffData.isFollowing && 'outline')"
+                *ngIf="user?.username !== currentUser?.username" (click)="followerFollowing()">
+          <span>{{ffData && !ffData.isFollowing ? 'Follow' : 'Following'}}</span>
+        </button>
+      </div>
+      <!--<div class="awards bg-white mT20">
+        <h1>AWARDS</h1>
+        <div class="awards-container">
+          <div class="award">&nbsp;</div>
+          <div class="award"></div>
+          <div class="award">&nbsp;</div>
+          <div class="award">&nbsp;</div>
+          <div class="award">&nbsp;</div>
+          <div class="award">&nbsp;</div>
+        </div>
+      </div>-->
+      <div class="location bg-white mT20">
+        <table>
+          <tr *ngIf="user && (user?.city || user?.state || user?.country)">
+            <td class="img-icon"><img src="assets/img/location.svg"></td>
+            <td>Location: <span *ngIf="user?.city">{{user?.city}}, </span>
+              <span *ngIf="user?.state">{{user?.state}}, </span>
+              <span *ngIf="user?.country">{{user?.country}}.</span></td>
+          </tr>
+          <tr *ngIf="user && user?.occupation">
+            <td class="img-icon"><img src="assets/img/occupation.svg"></td>
+            <td><span>Occupation: </span>{{user && user?.occupation}}</td>
+          </tr>
+          <tr *ngIf="user && user?.hobbies">
+            <td class="img-icon"><img src="assets/img/interest.svg"></td>
+            <td><span>Hobbies: </span>{{user && user?.hobbies}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col9 col9_sm-9_xs-12 pB0">
+    <div class="section bg-white about-me">
+      <h1>About me</h1>
+      <div class="container">
+        <p class="para" [class.show]="showMoreText">
+          {{user?.about_me}}
+        </p>
+        <a href="javascript:void(0);" (click)="showMoreText = !showMoreText" *ngIf="user?.about_me?.length">
+          {{(!showMoreText) ? 'See more' : 'See less'}}
+        </a>
+      </div>
+    </div>
+    <div class="section bg-white mediabook">
+      <h1 class="m-0">
+        <span>Mediabooks</span>
+        <a class="view-all-mb" [routerLink]="['/user/'+user?.username+'/mediabooks']">View all</a>
+      </h1>
+      <div class="container grid">
+        <ng-container *ngFor="let mbl of mediaBookList | slice:0:3;let i = index">
+          <div class="position-relative image-container col4 col4_sm-6_xs-12 p-2">
+            <a href="javascript:void(0);" (click)="openMediaBookList(user,mbl)">
+              <div class="image"
+                   [style.background-image]="mbl.image_url ? 'url('+(mbl.image_url)+')' : getImgForEmptyMB(mbl?.name)"></div>
+              <div class="mediabook-info">
+                <div class="header" [title]="mbl.name">{{mbl.default ? mbl.name + ' (Default)' : mbl.name}}</div>
+                <div class="sub-info">
+                  <div>{{mbl.saved_items ? mbl.saved_items : 0}} item(s)</div>
+                  <div>{{mbl.shared ? (mbl?.created_by?.first_name + ' ' + mbl?.created_by?.last_name) : (mbl.private ?
+                    'Private' : 'Public')}}
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </ng-container>
+        <h1 class="msg" *ngIf="mediaBookList && !mediaBookList.length">
+          This user has not yet created any public Mediabooks.</h1>
+      </div>
+    </div>
+  </div>
+</div>

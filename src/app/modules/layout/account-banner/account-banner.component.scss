@@ -1,0 +1,67 @@
+@import '../../../../scss/variables';
+
+.account-banner {
+  height: 215px;
+
+  .business-name {
+    color: $white;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 0.5rem;
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 25px;
+  }
+
+  .banner-cover {
+    height: 215px;
+    display: flex;
+    justify-content: center;
+    .avatar {
+      max-width: 180px;
+      max-height: 180px;
+      width: 100%;
+      height: 100%;
+      top: 4.5rem;
+      left: 1.8rem;
+      border: 1px solid $white;
+      box-sizing: border-box;
+      border-radius: 5px;
+      z-index: 1;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .username-container {
+      padding: 1.25rem;
+
+      .user-name {
+        color: $white;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 36px;
+        line-height: 100%;
+      }
+
+      .user-location {
+        color: $white;
+        font-family: Roboto;
+        font-style: normal;
+        font-size: 16px;
+      }
+    }
+  }
+}
+@media screen and (max-width:767px) {
+  .account-banner {
+    .banner-cover {
+      border-radius: 5px;
+    }
+  }
+}

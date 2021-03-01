@@ -1,0 +1,8 @@
+<div class="review-rating">
+  <ng-template #t let-fill="fill">
+  <span class="star" [class.full]="fill === 100" [style.font-size]="fontSize">
+    <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+  </span>
+  </ng-template>
+  <ngb-rating [(rate)]="rate" [starTemplate]="t" [readonly]="readonly" [max]="max"></ngb-rating>
+</div>

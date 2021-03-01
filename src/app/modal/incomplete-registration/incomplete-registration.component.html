@@ -1,0 +1,31 @@
+<div class="incomplete-register-popup">
+  <div class="popup-header">
+    <h4 class="popup-title">
+      <div class="row m-0 align-items-center">
+        <div class="col">
+          <img class="logo" src="assets/img/logo/ewo_150.png">
+        </div>
+        <div class="col align-items-center fs-px-20 font-weight-bold text-primary">Alert</div>
+        <div class="col">
+          <div class="closeBtn"><a class="icon-close" href="javascript:void(0);" (click)="closeDialog()"></a></div>
+        </div>
+      </div>
+    </h4>
+  </div>
+  <div class="popup-body">
+    <div class="grid m0">
+      <div class="col12_sm-12_xs-12 text-center py-8">
+        <h4 class="fs-px-18 text-secondary font-weight-bold">Incomplete Registration</h4>
+        <p class="text-secondary fs-px-16 mb-0 mt-5">We found your email address in our system, but the verification link emailed to you
+          was not activated. Please select one of the following options to continue..</p>
+      </div>
+      <div class="col12 text-center pB0">
+        <button class="btn btn-submit outline mT10" style="margin-right: 10px"
+                (click)="incompleteRegistration()">Restart Registration
+        </button>
+        <button class="btn btn-submit mT10" (click)="sendEmailNotification()">Resend Email</button>
+      </div>
+    </div>
+  </div>
+</div>
+

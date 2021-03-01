@@ -1,0 +1,71 @@
+<section class="main_content">
+  <div class="container">
+    <div class="recent_search users-search">
+      <div class="page-title">
+        <h1 class="main-heading"> Search for {{ searchStr }}</h1>
+        <div *ngIf="(usersSearchData && usersSearchData.totalDocs);" class="items-counts">Results {{usersSearchData.page
+          > 1 ? usersSearchData.pagingCounter + "-": ""}}{{usersSearchData.totalDocs > (usersSearchData.page *
+          usersSearchData.limit) ? usersSearchData.page * usersSearchData.limit : usersSearchData.totalDocs}} of
+          {{usersSearchData.totalDocs}} users
+        </div>
+      </div>
+      <div class="grid" *ngIf="loaded && usersList && usersList.length > 0">
+        <ng-container class="">
+          <div *ngFor="let user of usersList;let i = index" class="col4">
+            <a href="javascript:void(0);" class="user-details"
+               [routerLink]="[(proUserRoles.indexOf(user?.role) > -1 ? '/pro/user/': '/user/')+user?.username]">
+              <div class="user-image">
+                <div class="rounded-circle" [style.background-image]="sanitizeImage(user.picture_url)"></div>
+              </div>
+              <div class="user-name">
+                {{user.name}}
+              </div>
+            </a>
+          </div>
+        </ng-container>
+        <div class="pagination-area">
+          <ul class="pagination pagination-sm">
+            <li *ngIf="(usersSearchData && usersSearchData.page > 1);" class="page-item ">
+              <a href="javascript:void(0);" class="page-link" aria-label="First" (click)="pagination()">
+                <span aria-hidden="true" class="">First</span>
+              </a>
+            </li>
+            <li *ngIf="(usersSearchData && usersSearchData.hasPrevPage );" class="page-item ng-star-inserted">
+              <a href="javascript:void(0);" class="page-link" aria-label="Previous"
+                 (click)="pagination(usersSearchData.prevPage)"><span aria-hidden="true" class="">Previous</span></a>
+            </li>
+            <li *ngIf="(usersSearchData && usersSearchData.page > 2 );" class="page-item">
+              <a href="javascript:void(0);" class="page-link " (click)="pagination(usersSearchData.prevPage - 1)">
+                {{usersSearchData.page - 2 }} </a>
+            </li>
+            <li *ngIf="(usersSearchData && usersSearchData.page > 1 );" class="page-item">
+              <a href="javascript:void(0);" class="page-link " (click)="pagination(usersSearchData.prevPage)">
+                {{usersSearchData.page - 1}} </a>
+            </li>
+            <li class="page-item active ">
+              <a href="javascript:void(0);" class="page-link "> {{usersSearchData.page}} </a>
+            </li>
+            <li *ngIf="(usersSearchData && usersSearchData.page < usersSearchData.totalPages );" class="page-item">
+              <a href="javascript:void(0);" class="page-link " (click)="pagination(usersSearchData.nextPage)">
+                {{usersSearchData.page + 1}} </a>
+            </li>
+            <li *ngIf="(usersSearchData && usersSearchData.page < usersSearchData.totalPages -1 );" class="page-item">
+              <a href="javascript:void(0);" class="page-link " (click)="pagination(usersSearchData.nextPage + 1)">
+                {{usersSearchData.page + 2}} </a>
+            </li>
+            <li *ngIf="(usersSearchData && usersSearchData.hasNextPage);" class="page-item ">
+              <a href="javascript:void(0);" class="page-link" aria-label="Next"
+                 (click)="pagination(usersSearchData.nextPage)"><span aria-hidden="true" class="">Next</span></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="noRecordFound" *ngIf="loaded && usersList && !usersList.length">
+        <p class="result-not-found font18 mb20 mt20">No results were found in this category. </p>
+        <h4 class="noRecordFound">Things to try</h4>
+        <p class="result-not-found">Please search in a different category or try different keywords. </p>
+        <p class="result-not-found">To see trending searches, just place your cursor in the top search box.</p>
+      </div>
+    </div>
+  </div>
+</section>

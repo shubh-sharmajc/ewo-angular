@@ -1,0 +1,44 @@
+.mediabook-item-carousel {
+  .content {
+    display: flex;
+    .item {
+      width: 100%;
+      display: block;
+
+      .img {
+        width: 100%;
+        display: block;
+        background-size: cover;
+        background-position: center;
+        height: 0;
+        padding-bottom: 50%;
+      }
+    }
+  }
+
+  .carousel {
+    color: #333333;
+  }
+
+  .item {
+    width: 100%;
+    display: block;
+
+    .img {
+      width: 100%;
+      display: block;
+      background-size: cover;
+      background-position: center;
+      height: 0;
+      padding-bottom: 50%;
+    }
+  }
+
+  .click-area {
+    width: 25px;
+    text-align: center;
+    img {
+      width: 20px;
+    }
+  }
+}

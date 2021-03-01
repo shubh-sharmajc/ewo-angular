@@ -1,0 +1,19 @@
+<div class="pause-registration-popup">
+  <div class="modal-header d-flex justify-content-center">
+    <h4 class="modal-title pull-left">
+      <span class="text-secondary fs-px-18">Confirm Pause Registration</span>
+    </h4>
+  </div>
+  <div class="modal-body px-10">
+    <div class="row">
+      <div class="col-12">
+        <p class="text-secondary fs-px-16 mt-5 text-center">The Pause button will autosave your data and log you out. If you select this option,<br/>
+          please login again from the Pro portal and select <span class="text-000 font-weight-bold">Resume Registration</span> to continue .</p>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer d-flex justify-content-center pb-10">
+    <button type="button" class="btn btn-outline-primary btn-hw"  (click)="onCancel()">Cancel</button>
+    <button type="button" class="btn btn-primary btn-hw" (click)="onConfirm()">Confirm</button>
+  </div>
+</div>

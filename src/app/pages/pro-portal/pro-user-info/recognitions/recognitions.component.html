@@ -1,0 +1,92 @@
+<form class="recognitions bg-white" [formGroup]="recognitionForm">
+  <h5 class="text-center text-primary border-bottom border-primary py-5 mb-0">Enter Recognitions</h5>
+  <div class="row m-0">
+    <div class="col p-10">
+      <h5 class="text-secondary fs-px-16 mb-0">Enter up to 5 other public recognitions <span
+        class="text-999 font-weight-normal">(optional)</span></h5>
+      <div class="row mt-5" formArrayName="recognitions"
+           *ngFor="let item of recognitionsF?.controls; let i = index;">
+        <div class="col" [formGroupName]="i">
+          <div class="row">
+            <div class="col-md-7 col-sm-12">
+              <div class="form-group mb-4">
+                <label class="text-666" [for]="'org'+i">Organization / Publications #{{i+1}} </label>
+                <input class="form-control fs-px-14" [id]="'org'+i" formControlName="org" (keyup)="resetBtnName(i)"
+                       placeholder="Enter name of awarding organization" maxlength="70"/>
+                <div class="d-flex justify-content-end pt-1 text-999 fs-px-14">
+                  {{70 - item?.controls?.org?.value.length}} remaining
+                </div>
+              </div>
+            </div>
+            <div class="col-md-5 col-sm-12">
+              <p class="text-999 fs-px-14 mt-md-4 lh-5">Magazine or professional org e.g. xyz magazine, Oct 2020
+                issue</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-7 col-sm-12">
+              <div class="form-group mb-4">
+                <label class="text-666" [for]="'tagline'+i">Tagline / Basis for selection</label>
+                <input type="text" class="form-control fs-px-14" [id]="'tagline'+i" maxlength="70"
+                       formControlName="tagline" placeholder="Example: Seattle’s Best Doctors"
+                       (keyup)="resetBtnName(i)"/>
+                <div class="d-flex justify-content-end pt-1 text-999 fs-px-14">
+                  {{70 - item?.controls?.tagline?.value.length}} remaining
+                </div>
+              </div>
+            </div>
+            <div class="col-md-5 col-sm-12"></div>
+          </div>
+          <div class="row">
+            <div class="col-md-7 col-sm-12">
+              <div class="form-group mb-4">
+                <label class="text-666 d-flex justify-content-between" [for]="'provided_at'+i">
+                  <span>Date of recognition</span>
+                  <span class="text-danger" *ngIf="item?.controls?.provided_at?.errors?.dateValidator">
+                    Please enter valid date.</span>
+                </label>
+                <div class="form-control fs-px-14" (click)="toggleDateView(i, item?.controls?.isDateEdit?.value)"
+                     *ngIf="!item?.controls?.isDateEdit?.value" [class.text-999]="!item?.controls?.provided_at?.value"
+                     [class.is-invalid]="item?.controls?.provided_at?.errors?.dateValidator">
+                  {{getConvertedDate(item?.controls?.provided_at?.value)}}
+                </div>
+                <input [ngClass]="{'is-invalid':item?.controls?.provided_at?.errors?.dateValidator}"
+                       type="text" class="form-control fs-px-14" [id]="'dateProvided'+i" formControlName="provided_at"
+                       placeholder="MM DD YYYY" matInput mask="00 00 0000" [dropSpecialCharacters]="false"
+                       *ngIf="item?.controls?.isDateEdit?.value" contenteditable="true" (keyup)="resetBtnName(i)"
+                       (blur)="toggleDateView(i, item?.controls?.isDateEdit?.value)">
+              </div>
+            </div>
+            <div class="col-md-5 col-sm-12"></div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-12 d-flex align-items-center justify-content-between">
+              <a class="text-999" href="javascript:void(0);"
+                 *ngIf="this.isAddMore || recognitionsF?.controls.length >= 3">
+                + Add recognition
+              </a>
+              <a href="javascript:void(0);" (click)="addRecognitions()"
+                 *ngIf="!this.isAddMore && recognitionsF?.controls.length < 3">
+                + Add recognition
+              </a>
+              <div class="btn bg--grey--gray text-white lh-7 disabled btn-cancel" *ngIf="item?.pristine">Cancel</div>
+              <button type="button" class="btn btn-outline-primary lh-7 btn-cancel" (click)="resetRecognitionsForm(i);"
+                      *ngIf="!item?.pristine">
+                Cancel
+              </button>
+              <div class="btn bg--grey--gray text-white lh-7 disabled btn-save"
+                   *ngIf="item?.controls?.btnName?.value !== 'Save'">
+                {{item?.controls?.btnName?.value ? item?.controls?.btnName?.value : 'Save'}}
+              </div>
+              <button type="button" class="btn btn-outline-primary lh-7 btn-save" (click)="saveRecognition(item, i)"
+                      *ngIf="item?.controls?.btnName?.value === 'Save'">
+                {{item?.controls?.btnName?.value}}
+              </button>
+            </div>
+          </div>
+          <hr class="mb-2 mt-3" *ngIf="(recognitionsF?.controls.length - 1) !== i"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

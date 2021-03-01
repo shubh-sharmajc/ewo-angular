@@ -1,0 +1,112 @@
+
+  <div class="modal-header d-flex justify-content-center">
+    <h4 class="modal-title pull-left">
+      <span class="text-secondary fs-px-18">Step 1 of 2: Create the vanity link title</span>
+    </h4>
+  </div>
+  <div class="modal-body px-10">
+    <!-- <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <div class="form-group" formGroupName="mediabookId">
+          <input formControlName="name" type="text" class="form-control fs-px-14"
+                 placeholder="Start typing to search for Mediabook by name"
+                 [typeahead]="mediaBookList"
+                 typeaheadOptionField="name"
+                 [typeaheadScrollable]="true"
+                 (typeaheadOnSelect)="onSelectMb($event)"/>
+        </div>
+      </div>
+    </div> -->
+    <div class="row">
+      <div class="col-md-7 col-sm-7">
+        <label>Enter the vanity link title (for display on the image)</label>
+        <div class="form-group">
+          <input #vanityLink = "ngModel" [(ngModel)]="vanityLinkText" type="text" class="form-control fs-px-14 frst"
+                 placeholder="Vanity link title" [ngClass]="{ 'red-border': submitted  && vanityLinkText == ''}">
+                 
+          <div class="d-flex justify-content-end pt-1 text-999 fs-px-14">
+            <div *ngIf="submitted  && vanityLinkText == ''" class="invalid-feedback">
+              <div>Please enter vanity</div>
+            </div>
+            {{30 - vanityLink.value?.length}} remaining
+          </div>
+
+        </div>
+      </div>
+      <div class="col-md-5 col-sm-5 mt-cls">
+      <p class="align">A vanity link connects an image in Mediabook-1 to a public Mediabook-2. Mediabook 1 should also be public if you want others to find the source image.</p>
+        </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-primary btn-hw" (click)="onClose.next(true);bsModalRef.hide();">
+      Cancel
+    </button>
+    <button type="submit" (click)="doneButton()" class="btn btn-primary btn-hw">Done</button>
+  </div>
+
+
+<div class="modal fade" id="exampleModal" [ngClass]="{'show in': modal}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog wdth1" role="document">
+    <form [formGroup]="linkToMediabookForm" (ngSubmit)="onSubmit()">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="exampleModalLabel">Step 2 of 2: Select the destination Mediabook</h5>
+        <!-- <button type="button" class="close" (click)="modal = false" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+      </div>
+      <div class="modal-body px-10">
+        <p>Is the destination Mediabook public and does it contain media?</p>
+        <div class="check-box d-flex">
+          <input type="radio" class="check_active" (click)="enableMediabook(true)" id="yes" name="yesno" value="true">
+          <label class="pl-2 d-flex" for="yes">
+            <i class="fa fa-check-square pr-1"></i>
+            <i class="fa fa-square-o pr-1"></i>
+            Yes</label>
+
+            <input type="radio" class="check_active" (click)="enableMediabook(false)" id="no" name="yesno" value="false">
+            <label class="pl-2 d-flex" for="no">
+              <i class="fa fa-check-square pr-1"></i>
+              <i class="fa fa-square-o pr-1"></i>
+              No</label>
+
+        <!-- <input type="radio" id="yes"  (click)="enableMediabook(true)" name="yesno" value="true">Yes
+       <input type="radio" id="no" name="yesno"  (click)="enableMediabook(false)"  value="false"> No -->
+        <p class="align-sec" *ngIf="enableMedia"> Please create the Mediabook, add media and select ‘Yes’. You can add more media later.</p>
+      </div>
+      
+          <div class="row">
+          
+            <div class="col-md-12 col-sm-8 mt-cls">
+              <label>Select the Mediabook</label>
+              <div class="form-group" formGroupName="mediabookId">
+                <div class="d-flex align-items-center">
+                <input  formControlName="name" type="text" class="form-control fs-px-14"
+                       placeholder="Type and select name from dropdown"
+                       [typeahead]="mediaBookList"
+                       [(ngModel)]="mediabook"
+                       typeaheadOptionField="name"
+                       [typeaheadScrollable]="true"
+                       (typeaheadOnSelect)="onSelectMb($event)"/>
+
+                       <i class="fa fa-check-circle ml-2 input_check" [ngClass]="{'text-gray': mediabook == ''}"></i>
+                </div>
+             
+              <div class="justify-content-end sec">
+                {{30 - mb.controls.name?.value?.length}} remaining
+              </div>
+            </div>
+            </div>
+            
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary btn-hw" (click)="modal = false" data-dismiss="modal">Cancal</button>
+        <button type="submit" [disabled]='enableMedia' class="btn btn-primary btn-hw">Done</button>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>
+<!-- </form> -->

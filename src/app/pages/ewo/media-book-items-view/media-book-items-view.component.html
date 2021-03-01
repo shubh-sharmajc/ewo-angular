@@ -1,0 +1,62 @@
+<section class="main_content mb-items-view" detect-scroll (onScroll)="scrollHandler($event)" [bottomOffset]="500">
+  <div class="container">
+    <div class="section">
+      <div class="mb-items-grid grid">
+        <div class="col5 col5_sm-12_xs-12 title py-0 mb-sm-2" *ngIf="mediaBookObj">
+          <div class="heading">
+            <span class="mediabook-header">MEDIABOOK: {{mediaBookObj?.name}}</span>
+            <span class="private text-999">(Public)</span>
+          </div>
+        </div>
+        <div class="col7 col7_sm-12_xs-12 filter-by d-flex justify-content-lg-end py-0 mb-2"
+             *ngIf="mediaBookObj">
+          <div class="pb-0 actions">
+            <div class="user">
+              <img class="user-icon"
+                   [src]="mediaBookObj?.shareCount ? 'assets/img/user.svg' : 'assets/img/user-disable.svg'"/>
+              <span class="user-sharing-count" *ngIf="mediaBookObj?.shareCount">
+              +{{mediaBookObj?.shareCount}}</span>
+            </div>
+          </div>
+          <div class="d-flex align-items-center action-container">
+            <span class="filter-text text-right"> Filter By:</span>
+            <ng-select class="custom-grey action-dd show z-index-500" [items]="filterByArr" [closeOnSelect]="true"
+                       [searchable]="false" bindLabel="name" bindValue="value" placeholder="Show All"
+                       [(ngModel)]="selectedFilterBy" (change)="changeFilterBy()">
+            </ng-select>
+          </div>
+          <div class="item-count text-666">
+            Displaying: {{mediaBookItems && mediaBookItems.length}}
+          </div>
+        </div>
+        <div class="description" *ngIf="mediaBookObj?.desc">{{mediaBookObj?.desc}}</div>
+        <ng-container *ngIf="mediaBookItems && !mediaBookItems.length">
+          <div class="col12 col12_sm-12_xs-12 empty-mediabook">
+            <div class="header">This mediabook is empty.</div>
+          </div>
+        </ng-container>
+        <div class="container px-2 mt-lg-5 mt-2">
+          <div class="container grid px-0">
+            <ng-container *ngFor="let mbi of mediaBookItems;let i = index">
+              <div class="listitemClass col3 col3_sm-6_xs-12 position-relative mb-image-container p-2"
+                   [style.z-index]="499-i" [attr.id]="'imageNo'+ i">
+                <a [href]="getRedirectURL(mbi)">
+                  <img class="image" (click)="clickCount(mbi.ref_id)" [src]="mbi.image_url"/></a>
+                <div class="promotionName">
+                  <a target="_blank">{{ getMediaBookItemType(mbi.type) | titlecase }}</a>
+                </div>
+                <div class="mediabook-info position-relative">
+                  <div class="header d-flex">
+                    <div class="multi-truncate pr-2" *ngIf="mbi?.status !== 'Staging'" [title]="mbi.header">
+                      {{mbi.header}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

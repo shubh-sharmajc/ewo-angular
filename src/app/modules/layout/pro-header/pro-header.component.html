@@ -1,0 +1,225 @@
+<header class="nav-header border-bottom">
+  <div class="container">
+    <div class="grid">
+      <div class="col2_sm-3_xs-12 pB0 viewSm">
+        <a [routerLink]="'/'" class="logo">
+          <img src="assets/img/logo/ewo_300.png">
+        </a>
+      </div>
+      <div class="col10_sm-9_xs-4 pB0">
+        <div class="grid">
+          <div class="pB0 hidesm relative col8_sm-7_xs-8">
+            <div class="hdr_btm" *ngIf="router.url.includes('/growth')">
+              <ul>
+                <li>
+                  <a class="nav lh-8" [routerLink]="'/growth/solutions'" [routerLinkActive]="['active']">
+                    <span class="text uppercase">MARKETING SOLUTIONS</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="nav lh-8" [routerLink]="'/growth/pro-categories'" [routerLinkActive]="['active']">
+                    <span class="text uppercase">PRO CATEGORIES</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="nav lh-8" [routerLink]="'/growth/how-it-works'" [routerLinkActive]="['active']">
+                    <span class="text uppercase">HOW IT WORKS</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="nav lh-8" [routerLink]="'/growth/pro-pricing'" [routerLinkActive]="['active']">
+                    <span class="text uppercase">PRICE PLANS</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="hdr_btm"
+                 *ngIf="router.url.includes('/pro/account') || router.url.includes('/pro/manage-media') || router.url.includes('/pro/resources') || router.url.includes('/pro/resume-registration') || router.url.includes('/pro/sign-up')">
+              <ul>
+                <li>
+                  <a class="nav lh-8" href="javascript:void(0);"
+                     *ngIf="router.url.includes('/pro/resume-registration') || router.url.includes('/pro/sign-up')">
+                    <span class="text uppercase text-999">Your Account</span>
+                  </a>
+                  <a class="nav lh-8"
+                     *ngIf="!router.url.includes('/pro/resume-registration') && !router.url.includes('/pro/sign-up')"
+                     [routerLink]="'/pro/account'" [routerLinkActive]="['active']">
+                    <span class="text uppercase">Your Account</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="nav lh-8" href="javascript:void(0);"
+                     *ngIf="router.url.includes('/pro/resume-registration') || router.url.includes('/pro/sign-up')">
+                    <span class="text uppercase text-999">MANAGE Media</span>
+                  </a>
+                  <a class="nav lh-8"
+                     *ngIf="!router.url.includes('/pro/resume-registration') && !router.url.includes('/pro/sign-up')"
+                     [routerLink]="'/pro/manage-media/'+currentUser?.username+'/mediabooks'"
+                     [routerLinkActive]="['active']"><span class="text uppercase">MANAGE Media</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="nav lh-8" href="javascript:void(0);">
+                    <span class="text uppercase text-999">Ad Center</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="nav lh-8" href="javascript:void(0);"
+                     *ngIf="router.url.includes('/pro/resume-registration') || router.url.includes('/pro/sign-up')">
+                    <span class="text uppercase text-999">PRO RESOURCES</span>
+                  </a>
+                  <a class="nav lh-8"
+                     *ngIf="!router.url.includes('/pro/resume-registration') && !router.url.includes('/pro/sign-up')"
+                     [routerLink]="'/pro/resources'" [routerLinkActive]="['active']">
+                    <span class="text uppercase">PRO RESOURCES</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="pB0 col4_sm-5_xs-4">
+            <div class="rightHeader">
+              <ul class="hidesm">
+                <li (click)="$event.stopPropagation()">
+                  <div class="userLogin" *ngIf="currentUser;else signBtn" (clickOutside)="showDropDown = false">
+                    <div class="userImg" [ngStyle]="{'background': 'url(\'' + currentUser?.picture_url + '\')'}"
+                         (click)="showDropDown = !showDropDown"></div>
+
+                    <div class="userName" (click)="showDropDown = !showDropDown">My Account</div>
+
+                    <ul class="logoutnav" *ngIf="showDropDown">
+                      <li class="logoutnavProfile" *ngIf="proUserRoles.indexOf(currentUser?.role) === - 1">
+                        <a (click)="showDropDown = false"
+                           [routerLink]="(proUserRoles.indexOf(currentUser?.role) > - 1  ? '/pro/' : '/') + profileUrl">
+                          <div class="userImg"
+                               [ngStyle]="{'background': 'url(\'' + currentUser?.picture_url + '\')'}"></div>
+                          <span class="font-weight-bold">{{currentUser?.name}}</span></a>
+                      </li>
+                      <li class="logoutnavProfile" *ngIf="proUserRoles.indexOf(currentUser?.role) > - 1">
+                        <a (click)="showDropDown = false"
+                           [routerLink]="(proUserRoles.indexOf(currentUser?.role) > - 1  ? '/pro/' : '/') + profileUrl">
+                          <div class="userImg"
+                               [ngStyle]="{'background': 'url(\'' + currentUser?.picture_url + '\')'}"></div>
+                          <span class="font-weight-bold">{{business?.name?.name}}</span></a>
+                      </li>
+                      <li>
+                        <a (click)="showDropDown = false"
+                           [routerLink]="(proUserRoles.indexOf(currentUser?.role) > - 1  ? '/pro/' : '/') + profileUrl">
+                          {{(proUserRoles.indexOf(currentUser?.role) > - 1 ? 'Edit' : 'View')}} Profile</a>
+                      </li>
+                      <li *ngIf="proUserRoles.indexOf(currentUser?.role) > - 1">
+                        <a (click)="showDropDown = false" [routerLink]="'/pro/account'">View Account Home</a>
+                      </li>
+                      <li>
+                        <a (click)="showDropDown = false"
+                           [routerLink]="(proUserRoles.indexOf(currentUser?.role) > - 1  ? '/pro/manage-media/' : '/user/') + mediabooksUrl">
+                          Mediabooks</a>
+                      </li>
+                      <li><a href="{{preUrl}}">Conversation Settings</a></li>
+                      <li><a href="javascript:$zopim.livechat.window.show();">Support</a></li>
+                      <li *ngIf="proUserRoles.indexOf(currentUser?.role) === - 1">
+                        <a [href]="WP_LINK+'help'">Help</a></li>
+                      <li *ngIf="proUserRoles.indexOf(currentUser?.role) > - 1">
+                        <a [href]="WP_LINK+'help'">Help</a></li>
+                      <li class="logoutLink"><a href="javascript:;" (click)="logout()">Sign Out</a></li>
+                    </ul>
+                  </div>
+                  <ng-template #signBtn>
+                    <a href="javascript:void(0);" [routerLink]="'/signin'">
+                      <i class="profile-icon"></i> <span class="text">Sign In</span>
+                    </a>
+                  </ng-template>
+                </li>
+              </ul>
+              <div class="mobileMenu">
+                <a class="nav" href="javascript:;" (click)="openMobileMenu()">
+                  <span></span>
+                </a>
+                <div class="navigation-part">
+                  <div class="footerLink">
+                    <h2>Connect With Us</h2>
+                    <ul class="s-connect">
+                      <li><a href="#"><span class="social_icon"><img src="assets/img/blog-w.svg"></span></a></li>
+                      <li><a href="#"><span class="social_icon"><img src="assets/img/twitter-w.svg"></span></a></li>
+                      <li class="fb_pd"><a href="#"><span class="social_icon"><img
+                        src="assets/img/facebook-w.svg"></span></a></li>
+                      <li class="fb_pd"><a href="#"><span class="social_icon"><img
+                        src="assets/img/youtube-w.svg"></span></a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mobileview">
+      <div class="moblieSearch">
+        <div class="input imputsearch">
+          <input class="font-weight-bold" type="text" placeholder="Search..."
+                 maxlength="30" autocomplete="off"/>
+          <span class="closeSearch"></span>
+          <button class="btn white btn--sm bg--green">
+            <img src="assets/img/left-arrow.svg">
+          </button>
+        </div>
+      </div>
+      <ul class="headerIcon">
+        <li class="hide_md"><span class="searchicon"></span></li>
+        <li><a title="Help" href="javascript:;"><i class="help-icon"></i></a></li>
+        <li (click)="$event.stopPropagation()">
+          <a href="javascript:;" *ngIf="currentUser;else signInMobBtn" (clickOutside)="showMoDropDwon = false">
+            <div class="userLogin">
+              <div class="userImg" (click)="showMoDropDwon = !showMoDropDwon"
+                   [ngStyle]="{'background': 'url(\'' + currentUser?.picture_url + '\')'}"></div>
+              <ul class="logoutnav" *ngIf="showMoDropDwon">
+                <li class="logoutnavProfile" *ngIf="proUserRoles.indexOf(currentUser?.role) === - 1">
+                  <a (click)="showDropDown = false"
+                     [routerLink]="(proUserRoles.indexOf(currentUser?.role) > - 1  ? '/pro/' : '/') + profileUrl">
+                    <div class="userImg"
+                         [ngStyle]="{'background': 'url(\'' + currentUser?.picture_url + '\')'}"></div>
+                    <span class="font-weight-bold">{{currentUser?.name}}</span></a>
+                </li>
+                <li class="logoutnavProfile" *ngIf="proUserRoles.indexOf(currentUser?.role) > - 1">
+                  <a (click)="showDropDown = false"
+                     [routerLink]="(proUserRoles.indexOf(currentUser?.role) > - 1  ? '/pro/' : '/') + profileUrl">
+                    <div class="userImg"
+                         [ngStyle]="{'background': 'url(\'' + currentUser?.picture_url + '\')'}"></div>
+                    <span class="font-weight-bold">{{business?.name?.name}}</span></a>
+                </li>
+                <li>
+                  <a (click)="showDropDown = false"
+                     [routerLink]="(proUserRoles.indexOf(currentUser?.role) > - 1  ? '/pro/' : '/') + profileUrl">
+                    {{(proUserRoles.indexOf(currentUser?.role) > - 1 ? 'Edit' : 'View')}} Profile</a>
+                </li>
+                <li *ngIf="proUserRoles.indexOf(currentUser?.role) > - 1 ">
+                  <a (click)="showDropDown = false" [routerLink]="'/pro/account'">View Account Home</a>
+                </li>
+                <li>
+                  <a (click)="showDropDown = false"
+                     [routerLink]="(proUserRoles.indexOf(currentUser?.role) > - 1  ? '/pro/manage-media/' : '/user/') + mediabooksUrl">
+                    Mediabooks</a>
+                </li>
+                <li><a href="{{preUrl}}">Conversation Settings</a></li>
+                <li><a href="javascript:$zopim.livechat.window.show();">Support</a></li>
+                <!-- <li *ngIf="proUserRoles.indexOf(currentUser?.role) === - 1">
+                  <a [href]="WP_LINK+'help-for-users'">Help - Users</a></li>
+                <li *ngIf="proUserRoles.indexOf(currentUser?.role) > - 1">
+                  <a [href]="WP_LINK+'help-for-business'">Help - Business</a></li> -->
+                <li><a [href]="WP_LINK+'help'">Help</a></li>
+                <li class="logoutLink"><a href="javascript:;" (click)="logout()">Sign Out</a></li>
+              </ul>
+            </div>
+          </a>
+          <ng-template #signInMobBtn>
+            <div class="d-flex align-items-center">
+              <a href="javascript:void(0);" [routerLink]="'/signin'">
+                <i class="profile-icon"></i></a>
+            </div>
+          </ng-template>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>

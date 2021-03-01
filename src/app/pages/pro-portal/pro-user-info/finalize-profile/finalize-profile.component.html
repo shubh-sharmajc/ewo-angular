@@ -1,0 +1,45 @@
+<div class="finalize-profile">
+  <form class="bg-white border rounded">
+    <h5 class="text-center text-primary border-bottom border-primary py-5 mb-0">Congratulations, new Pro!</h5>
+    <div class="row m-0">
+      <div class="col p-10">
+        <div class="row justify-content-center">
+          <div class="col-md-9 col-sm-12">
+            <p class="text-center text-666">
+              Your profile is now ready for review. Please click the View Profile button to view it and update your
+              cover image and profile image.</p>
+            <p class="pt-5 text-center text-666">
+              You can modify or enhance your profile further from your Account Home page.</p>
+          </div>
+        </div>
+        <div class="row pt-3">
+          <div class="d-flex justify-content-center col-12 text-center">
+            <button type="button" class="btn btn-hw btn-outline-primary mr-5" [disabled]="business?.is_complete"
+                    (click)="previousEvent()">Back
+            </button>
+            <button type="button" class="btn btn-hw btn-primary" (click)="nextEvent()">View profile
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="advertise row mt-9 mx-0 bg-white border rounded">
+    <div class="col px-0">
+      <div class="row d-flex align-items-center">
+        <div class="col-md-5 col-sm-12">
+          <img class="advertise-img rounded-left" src="assets/img/finalize_image.png"/>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <h5 class="text-center text-primary py-5 mb-0">Advertise with us</h5>
+          <p class="text-center text-666">
+            Advertising on EWO can get your business in front of local <br/> customers who are actively looking for your
+            services.
+          </p>
+        </div>
+        <div class="col-md-2 col-sm-12"></div>
+      </div>
+    </div>
+  </div>
+</div>
+

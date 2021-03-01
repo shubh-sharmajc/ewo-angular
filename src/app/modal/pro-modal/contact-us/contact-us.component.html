@@ -1,0 +1,38 @@
+<div class="contact-us-popup">
+  <div class="modal-header d-flex justify-content-center">
+    <h4 class="modal-title pull-left">
+      <span class="text-primary fs-px-20">How can we help?</span>
+    </h4>
+  </div>
+  <div class="modal-body px-10">
+    <div class="row">
+      <div class="col-12">
+        <div class="font-weight-bold fs-px-20 text-secondary py-4">Skintone Medspa |
+          <span class="font-weight-normal text-666 fs-px-14">Aug 10, 2020</span></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <div class="form-group">
+          <label class="text-666" for="message">Message</label>
+          <textarea class="form-control fs-px-14" placeholder="Enter message..." id="message" rows="8"></textarea>
+          <div class="d-flex justify-content-end pt-1 text-999 fs-px-14">500 remaining</div>
+          <div class="d-flex pt-1 text-999 fs-px-12 lh-4">By using this form you give us permission to let the recipient view your user profile page.</div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <div class="form-check py-2">
+          <input type="checkbox" class="form-check-input" id="shortMessage">
+          <label class="form-check-label fs-px-12 text-999 lh-5" for="shortMessage">
+            I will not use this messaging service for any other purpose except for genuine business inquiries about provider services.</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer d-flex justify-content-end pb-10">
+    <button type="button" class="btn btn-outline-primary btn-hw" (click)="bsModalRef.hide()">Cancel</button>
+    <button type="button" class="btn btn-primary btn-hw" (click)="bsModalRef.hide()">Submit</button>
+  </div>
+</div>

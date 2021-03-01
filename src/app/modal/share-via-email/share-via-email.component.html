@@ -1,0 +1,37 @@
+<div class="share-via-email-mb-popup">
+  <div class="popup-header">
+    <h4 class="popup-title">Share Via Email</h4>
+  </div>
+  <div class="popup-body">
+    <div class="section m0 p0">
+      <form [formGroup]="shareViaEmailForm" (ngSubmit)="onSubmit()" autocomplete="off">
+        <div class="grid">
+          <div class="col12_sm-12_xs-12">
+            <div class="input mT20">
+              <label class="content-label"><span>To (enter recipient emails, comma separated):</span></label>
+              <input [ngClass]="{ 'red-border': submitted && f.emails.errors && [f.emails.errors.required || f.emails.errors.pattern]}" name="mediaBookID" class="custom-grey action-dd"
+                type="text" formControlName="emails" placeholder="" required/>
+              <a class="import">Import Gmail contacts to make sharing easier (Future feature)</a>
+            </div>
+            <div class="input mT30">
+              <label class="content-label"><span>Subject</span></label>
+              <input [ngClass]="{ 'red-border': submitted && f.subject.errors && f.subject.errors.required}"
+                type="text" formControlName="subject" placeholder="Story title/conversation topic." required/>
+            </div>
+            <div class="input mT20">
+              <label class="content-label">Message</label>
+              <textarea #notes class="input-field notes" maxlength="500" placeholder="Enter message here"
+                        formControlName="message"></textarea>
+              <span class="notesCharacters"><span>{{ 500 - notes.value.length }} remaining</span></span>
+            </div>
+          </div>
+          <div class="col12_sm-12_xs-12 text-right">
+            <button type="button" class="btn btn-cancel outline" value="Cancel" (click)="closeDialog(null)">Cancel
+            </button>
+            <button type="submit" class="btn btn-submit" value="Submit">Send</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

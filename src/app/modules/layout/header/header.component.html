@@ -1,0 +1,457 @@
+<div [class]="!showMenu? 'overlay show':'overlay'" (click)="closeOverlay($event)">
+  <div class="searchSec">
+    <div class="input" (clickOutside)="(showSearchList || showTrendingList)?onClickedOutside($event):''">
+      <input type="text" [(ngModel)]="searchStr" placeholder="Search Stories, Photos, Conversations & More..."
+             class="search-field" id="searchResult" maxlength="55" autocomplete="off"
+             (keyup)="commonSearch($event)" (click)="commonSearch($event)"
+             style="position: absolute;background: 0 0;height:45px;">
+      <input type="text" class="search_disabled" autocomplete="off" style="height:45px;z-index:-1"
+             [placeholder]="(searchStr)?(is_navigated?searchStr:(searchStr+' in '+pHStyle?.phText)):''"/>
+      <span class="searchicon" style="top:12px;"></span>
+      <button class="btn white btn--sm close-btn" (click)="showMenu=!showMenu">
+        <img style="height:16px" src="assets/img/delete.svg">
+      </button>
+
+      <div id="autosearch" [ngStyle]="{'display': (showSearchList ?'block':'none')}">
+        <ng-container *ngFor="let item of searchList">
+          <div class="stories_search"
+               *ngIf="(item.key != 'recent') || (item.key == 'recent' && item.result.length > 0)">
+            <i class="{{item.icon}}"></i>
+            <div [ngClass]="{'searchselected': true, 'fl01': true, 'active':(hoverContent == item.key)}"
+                 style="cursor: pointer;"
+                 (click)="searchData(searchStr,item.key,((item.key == 'recent')?'Photos':item.name),'')"
+                 (mouseover)="showActive(item)">
+                                          <span class="keyword">
+                                              <a href="javascript:void(0);"
+                                                 class="keyword_link"><b>{{searchStr}}</b></a>
+                                          </span>
+              <span class="in-categoryin"> in
+                                              <span class="coverText">{{ item?.name }}</span>
+                                          </span>
+              <span class="view_all" *ngIf="item.result.length > 2 && item.key != 'recent'">
+                                              View All
+                                          </span>
+            </div>
+            <ng-container *ngIf="item.result">
+              <div class="guide_search" *ngFor="let rec of item.result">
+                <div class="searchselected" style="cursor: pointer;"
+                     (click)="searchData(rec?.search_key || rec?.first_name,((item.key == 'recent')?rec?.category:item.key),((item.key == 'recent')?rec?.category:item.name),'save')"
+                     (mouseover)="showActive(item)">
+                                                  <span class="keyword">
+                                                      <a href="javascript:void(0);"
+                                                         class="keyword_link">{{ rec?.search_key || rec?.first_name || rec?.name?.name }}</a>
+                                                  </span>
+                  <span class="in-categoryin"> in
+                                                      <span class="coverText"
+                                                            *ngIf="item.key != 'recent';else recentSearchName">{{ item?.name }}</span>
+                                                      <ng-template #recentSearchName>
+                                                          <span class="coverText">
+                                                              {{ rec?.category }}
+                                                          </span>
+                                                      </ng-template>
+                                                  </span>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+
+      <div id="autosearch" [ngStyle]="{'display': (showTrendingList ?'block':'none')}">
+        <div class="trending_search" *ngIf="trendingList.length > 0">
+                                  <span class="trending_heading">
+                                      Trending searches
+                                  </span>
+        </div>
+        <div class="trending_data">
+          <ng-container *ngFor="let item of trendingList">
+            <div class="trending_search">
+              <div class="d-flex align-items-center" [ngClass]="{'searchselected': true, 'fl01': true}"
+                   style="cursor: pointer;"
+                   (click)="searchData(item?.search_key,item.category,item.category,'')">
+                <i class="mr-1 {{item.icon}}"></i>
+                <span class="keyword mr-1">
+                                              <a href="javascript:void(0);"
+                                                 class="keyword_link"><b>{{item?.search_key}}</b></a>
+                                          </span>
+                <span class="in-categoryin"> in
+                                              <span class="coverText">{{ item?.category }}</span>
+                                          </span>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<header class="nav-header border-bottom">
+  <div class="container">
+    <div class="grid">
+      <div class="col2_sm-3_xs-12 pB0 viewSm">
+        <a [routerLink]="'/'" class="logo">
+          <img src="assets/img/logo/ewo_300.png">
+        </a>
+      </div>
+      <div class="col10_sm-9_xs-4 pB0 hidesm" *ngIf="showMenu">
+        <div class="grid">
+          <div class="col8_sm-8_xs-8 pB0 hidesm relative">
+            <div class="hdr_btm">
+              <ul>
+                <li>
+                  <a class="nav" href="{{WP_STORIES_LINK}}">
+                    <span class="text uppercase pl-0">Stories</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="nav" href="{{disscussion_link}}">
+                    <span class="text uppercase pl-0">Conversations</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="nav" [routerLink]="'/find-pros'" [routerLinkActive]="['active']">
+                    <span class="text uppercase">Find Providers</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col4_sm-4_xs-4 pB0">
+            <div class="rightHeader">
+              <ul class="hidesm">
+                <li *ngIf="!currentUser?.first_name">
+                  <a href="javascript:void(0);" class="btn btn-hw white btn--md bg--green cutomBtn mr-3 pros-enter-btn"
+                     [routerLink]="'/growth'" style="margin-top: -7px;">Pros Enter Here</a>
+                </li>
+                <li>
+                  <a id="global-search" href="javascript:void(0);" role="button" (click)="hideMenu()">
+                    <i class="global-searchicon"></i>
+                  </a>
+                </li>
+                <li class="chat-counter" *ngIf="currentUser?.first_name">
+                  <a title="Chat" href="{{chatUrl}}">
+                    <i class="chat-icon"></i><span>{{(unreadMsgCount > 0) ? unreadMsgCount : ''}}</span>
+                  </a>
+                </li>
+                <li class="chat-counter" *ngIf="currentUser && currentUser.first_name"
+                    (clickOutside)="showNoti = false">
+                  <a href="{{notfication_link}}"> <i
+                    class="alert-icon"></i><span>{{(unreadNoteCount > 0) ? unreadNoteCount : ''}}</span></a>
+                  <ul *ngIf="showNoti" class="dropdown-menu notification-list-header">
+                    <li class="notifHeadingOuter">
+                      <h2>Notifications</h2>
+                      <span class="icon-gear navy icon--md"></span>
+                    </li>
+                    <li>
+                      <ul component="notifications/list" class="notification-list">
+                        <li>
+                          <a class="imgNotif" href="/user/nodebb-test">
+                            <img class="pull-left user-img avatar avatar-md avatar-rounded"
+                                 [src]="serverURL+'/uploads/thumb/5d80a50ded12a1350083cb05BonwWert4PGh9bcz5cb08644155405150492fe4fka2SrswvcH9g9ZMazulmaury-saavedra-615963-unsplash.jpg'"></a>
+                          <div class="pull-right mark-read" aria-label="Mark Read"></div>
+                          <a href="/post/239">
+                            <span class="pull-right relTime">2d</span>
+                            <span class="text"><strong>nodebb test</strong> has posted a reply to: <strong>After Markdown</strong></span>
+                          </a>
+                          <div class="clear"></div>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class="notif-dropdown-link"><a href="#" class="mark-all-read">Mark all notifications read</a>
+                    </li>
+                    <li class="notif-dropdown-link seeAllNotif"><a href="/notifications">See all notifications</a></li>
+                  </ul>
+                </li>
+                <li (click)="$event.stopPropagation()">
+                  <div class="userLogin" *ngIf="currentUser;else signBtn" (clickOutside)="showDropDown = false">
+                    <div class="userImg" [ngStyle]="{'background': 'url(\'' + currentUser?.picture_url + '\')'}"
+                         (click)="showDropDown = !showDropDown"></div>
+
+                    <div class="userName" (click)="showDropDown = !showDropDown">
+                      My {{proUserRoles.indexOf(currentUser?.role) > - 1 ? 'Account': 'EWO'}}
+                    </div>
+                    <ul class="logoutnav" *ngIf="showDropDown">
+                      <li class="logoutnavProfile" *ngIf="proUserRoles.indexOf(currentUser?.role) === - 1">
+                        <a (click)="showDropDown = false"
+                           [routerLink]="(proUserRoles.indexOf(currentUser?.role) > - 1  ? '/pro/' : '/') + profileUrl">
+                          <div class="userImg"
+                               [ngStyle]="{'background': 'url(\'' + currentUser?.picture_url + '\')'}"></div>
+                          <span class="font-weight-bold">{{currentUser?.name}}</span></a>
+                      </li>
+                      <li class="logoutnavProfile" *ngIf="proUserRoles.indexOf(currentUser?.role) > - 1">
+                        <a (click)="showDropDown = false"
+                           [routerLink]="(proUserRoles.indexOf(currentUser?.role) > - 1  ? '/pro/' : '/') + profileUrl">
+                          <div class="userImg"
+                               [ngStyle]="{'background': 'url(\'' + currentUser?.picture_url + '\')'}"></div>
+                          <span class="font-weight-bold">{{business?.name?.name}}</span></a>
+                      </li>
+                      <li>
+                        <a (click)="showDropDown = false"
+                           [routerLink]="(proUserRoles.indexOf(currentUser?.role) > - 1  ? '/pro/' : '/') + profileUrl">
+                          {{(proUserRoles.indexOf(currentUser?.role) > - 1 ? 'Edit' : 'View')}} Profile</a>
+                      </li>
+                      <li *ngIf="proUserRoles.indexOf(currentUser?.role) > - 1 ">
+                        <a (click)="showDropDown = false" [routerLink]="'/pro/account'">View Account Home</a>
+                      </li>
+                      <li>
+                        <a (click)="showDropDown = false"
+                           [routerLink]="(proUserRoles.indexOf(currentUser?.role) > - 1  ? '/pro/manage-media/' : '/user/') + mediabooksUrl">
+                          Mediabooks</a>
+                      </li>
+                      <li><a href="{{preUrl}}">Conversation Settings</a></li>
+                      <li><a href="javascript:$zopim.livechat.window.show();">Support</a></li>
+                      <!--<li><a title="Help" href="javascript:$zopim.livechat.window.show();">Help</a></li>-->
+                      <!-- <li *ngIf="proUserRoles.indexOf(currentUser?.role) === - 1">
+                        <a [href]="WP_LINK+'help-for-users'">Help - Users</a></li>
+                      <li *ngIf="proUserRoles.indexOf(currentUser?.role) > - 1">
+                        <a [href]="WP_LINK+'help-for-business'">Help - Business</a></li> -->
+                      <li><a [href]="WP_LINK+'help'">Help</a></li> 
+                      <li class="logoutLink"><a href="javascript:;" (click)="logout()">Sign Out</a></li>
+                    </ul>
+                  </div>
+                  <ng-template #signBtn>
+                    <a href="javascript:void(0);" [routerLink]="'/signin'">
+                      <i class="profile-icon"></i> <span class="text">User Sign In</span>
+                    </a>
+                  </ng-template>
+                </li>
+              </ul>
+
+              <div class="mobileMenu">
+                <a class="nav" href="javascript:;" (click)="openMobileMenu()">
+                  <span></span>
+                </a>
+
+                <div class="navigation-part">
+                  <ul>
+                    <li>
+                      <a [ngClass]="{'mobile_stories': true,'active': showStories}" href="javascript:;"
+                         (click)="showStories = !showStories">
+                        <span class="text uppercase">Stories</span>
+                        <i class="zmdi zmdi-chevron-down myg"></i>
+                      </a>
+                      <div class="dropdown" *ngIf="categories && showStories">
+                        <div class="accordion_container mobileToggle-view myclass" *ngFor="let item of categories">
+                          <div
+                            [ngClass]="{'accordin_row': true, 'story_sub_cat':(item?.sub_cateogory && item.sub_cateogory.length > 0)}"
+                            class="accordin_row">
+                            <div class="accordion_head">
+                              <a [ngClass]="{'active': item.show}" [href]="WP_STORIES_LINK+item?.url"
+                                 [innerHTML]="item?.name"></a>
+                              <a href="javascript:void(0);" class="addIcon"
+                                 *ngIf="item?.sub_cateogory && item.sub_cateogory.length > 0"
+                                 (click)="item.show = !item.show"><i class="zmdi zmdi-chevron-down"></i></a>
+                            </div>
+                            <div class="accordion_body"
+                                 *ngIf="item?.sub_cateogory && item.sub_cateogory.length > 0 && item?.show">
+                              <ul class="subcategory sublist">
+                                <li *ngFor="let sub_item of item?.sub_cateogory">
+                                  <a class="mobile_stories" [href]="WP_STORIES_LINK+sub_item?.url">
+                                    <span class="text uppercase">{{ sub_item?.name }}</span>
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li><a class="mobile_stories" href="{{disscussion_link}}"><span
+                      class="text uppercase">Conversations</span></a></li>
+                    <li><span class="text uppercase">Find Providers</span></li>
+                  </ul>
+                  <div class="footerLink">
+                    <h2>Connect With Us</h2>
+                    <ul class="s-connect">
+                      <li><a href="#"><span class="social_icon"><img src="assets/img/blog-w.svg"></span></a></li>
+                      <li><a href="#"><span class="social_icon"><img src="assets/img/twitter-w.svg"></span></a></li>
+                      <li class="fb_pd"><a href="#"><span class="social_icon"><img
+                        src="assets/img/facebook-w.svg"></span></a></li>
+                      <li class="fb_pd"><a href="#"><span class="social_icon"><img
+                        src="assets/img/youtube-w.svg"></span></a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mobileview">
+      <div class="moblieSearch">
+        <!-- <div class="input imputsearch">
+            <input type="text" name="email" placeholder="beauty in Guides">
+            <span class="closeSearch "></span>
+        </div> -->
+
+        <div class="input imputsearch">
+          <input type="text" [(ngModel)]="searchStr" placeholder="Search Stories, Photos, Conversations & More..."
+                 maxlength="30" autocomplete="off" (keyup)="commonSearch($event)" (click)="commonSearch($event)"
+                 style="font-weight: bold;"/>
+
+          <span class="closeSearch"></span>
+          <button class="btn white btn--sm bg--green" (click)="searchData(searchStr,'photoicon','Photos','')">
+            <img src="assets/img/left-arrow.svg">
+          </button>
+          <span class="placeholdertext" [ngStyle]="{'display': 'inline','left':pHStyle.left,'color':pHStyle.color}"
+                *ngIf="pHStyle.is_display"> in <span class="changeTexthover">{{ pHStyle?.phText }}</span></span>
+          <div id="autosearch" [ngStyle]="{'display': (showSearchList ?'block':'none')}">
+            <ng-container *ngFor="let item of searchList">
+              <div class="stories_search"
+                   *ngIf="(item.key != 'recent') || (item.key == 'recent' && item.result.length > 0)">
+                <i class="{{item.icon}}"></i>
+                <div [ngClass]="{'searchselected': true, 'fl01': true, 'active':(hoverContent == item.key)}"
+                     style="cursor: pointer;"
+                     (click)="searchData(searchStr,item.key,((item.key == 'recent')?'Photos':item.name),'')"
+                     (mouseover)="showActive(item)">
+                                          <span class="keyword">
+                                              <a href="javascript:void(0);"
+                                                 class="keyword_link"><b>{{searchStr}}</b></a>
+                                          </span>
+                  <span class="in-categoryin"> in
+                                              <span class="coverText">{{ item?.name }}</span>
+                                          </span>
+                </div>
+                <ng-container *ngIf="item.result">
+                  <div class="guide_search" *ngFor="let rec of item.result">
+                    <div class="searchselected" style="cursor: pointer;"
+                         (click)="searchData(rec?.search_key,((item.key == 'recent')?rec?.category:item.key),((item.key == 'recent')?rec?.category:item.name),'save')"
+                         (mouseover)="showActive(item)">
+                                                  <span class="keyword">
+                                                      <a href="javascript:void(0);"
+                                                         class="keyword_link">{{ rec?.search_key }}</a>
+                                                  </span>
+                      <span class="in-categoryin"> in
+                                                      <span class="coverText"
+                                                            *ngIf="item.key != 'recent';else recentSearchName">{{ item?.name }}</span>
+                                                      <ng-template #recentSearchName>
+                                                          <span class="coverText">
+                                                              {{ rec?.category }}
+                                                          </span>
+                                                      </ng-template>
+                                                  </span>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </ng-container>
+          </div>
+
+          <div id="autosearch" [ngStyle]="{'display': (showTrendingList ?'block':'none')}">
+            <div class="trending_search" *ngIf="trendingList.length > 0">
+                                  <span class="trending_heading">
+                                      Trending searches
+                                  </span>
+            </div>
+            <div class="trending_data">
+              <ng-container *ngFor="let item of trendingList">
+                <div class="trending_search">
+                  <div [ngClass]="{'searchselected': true, 'fl01': true}" style="cursor: pointer;"
+                       (click)="searchData(item?.search_key,item.category,item.category,'')">
+                                          <span class="keyword">
+                                              <a href="javascript:void(0);"
+                                                 class="keyword_link"><b>{{item?.search_key}}</b></a>
+                                          </span>
+                    <span class="in-categoryin"> in
+                                              <span class="coverText">{{ item?.category }}</span>
+                                          </span>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ul class="headerIcon">
+        <li class="hide_md"><span class="searchicon"></span></li>
+        <!-- <li><a title="Chat" href="javascript:;" ><i class="chat-icon"></i></a></li> -->
+        <li class="chat-counter" *ngIf="currentUser && currentUser.first_name"><a title="Chat" href="{{chatUrl}}"><i
+          class="chat-icon"></i><span>{{(unreadMsgCount > 0) ? unreadMsgCount : ''}}</span></a></li>
+        <li class="chat-counter" *ngIf="currentUser && currentUser.first_name" (clickOutside)="showMoNoti = false">
+          <a href="{{notfication_link}}"><i
+            class="alert-icon"></i><span>{{(unreadNoteCount > 0) ? unreadNoteCount : ''}}</span></a>
+          <ul *ngIf="showMoNoti" class="dropdown-menu notification-list-header">
+            <li class="notifHeadingOuter">
+              <h2>Notifications</h2>
+              <span class="icon-gear navy icon--md"></span>
+            </li>
+            <li>
+              <ul component="notifications/list" class="notification-list">
+                <li>
+                  <a class="imgNotif" href="/user/nodebb-test">
+                    <img class="pull-left user-img avatar avatar-md avatar-rounded"
+                         [src]="serverURL+'uploads/thumb/5d80a50ded12a1350083cb05BonwWert4PGh9bcz5cb08644155405150492fe4fka2SrswvcH9g9ZMazulmaury-saavedra-615963-unsplash.jpg'"></a>
+                  <div class="pull-right mark-read" aria-label="Mark Read"></div>
+                  <a href="/post/239">
+                    <span class="pull-right relTime">2d</span>
+                    <span
+                      class="text"><strong>nodebb test</strong> has posted a reply to: <strong>After Markdown</strong></span>
+                  </a>
+                  <div class="clear"></div>
+                </li>
+              </ul>
+            </li>
+            <li class="notif-dropdown-link"><a href="#" class="mark-all-read">Mark all notifications read</a></li>
+            <li class="notif-dropdown-link seeAllNotif"><a href="/notifications">See all notifications</a></li>
+          </ul>
+        </li>
+        <li *ngIf="currentUser"><a title="Help" href="javascript:$zopim.livechat.window.show();"><i
+          class="help-icon"></i></a></li>
+        <li (click)="$event.stopPropagation()">
+          <a href="javascript:;" *ngIf="currentUser;else signInMobBtn" (clickOutside)="showMoDropDwon = false">
+            <div class="userLogin">
+              <div class="userImg" (click)="showMoDropDwon = !showMoDropDwon"
+                   [ngStyle]="{'background': 'url(\'' + currentUser?.picture_url + '\')'}"></div>
+              <ul class="logoutnav" *ngIf="showMoDropDwon">
+                <li class="logoutnavProfile" *ngIf="proUserRoles.indexOf(currentUser?.role) === - 1">
+                  <a (click)="showDropDown = false"
+                     [routerLink]="(proUserRoles.indexOf(currentUser?.role) > - 1  ? '/pro/' : '/') + profileUrl">
+                    <div class="userImg"
+                         [ngStyle]="{'background': 'url(\'' + currentUser?.picture_url + '\')'}"></div>
+                    <span class="font-weight-bold">{{currentUser?.name}}</span></a>
+                </li>
+                <li class="logoutnavProfile" *ngIf="proUserRoles.indexOf(currentUser?.role) > - 1">
+                  <a (click)="showDropDown = false"
+                     [routerLink]="(proUserRoles.indexOf(currentUser?.role) > - 1  ? '/pro/' : '/') + profileUrl">
+                    <div class="userImg"
+                         [ngStyle]="{'background': 'url(\'' + currentUser?.picture_url + '\')'}"></div>
+                    <span class="font-weight-bold">{{business?.name?.name}}</span></a>
+                </li>
+                <li>
+                  <a (click)="showDropDown = false"
+                     [routerLink]="(proUserRoles.indexOf(currentUser?.role) > - 1  ? '/pro/' : '/') + profileUrl">
+                    {{(proUserRoles.indexOf(currentUser?.role) > - 1 ? 'Edit' : 'View')}} Profile</a>
+                </li>
+                <li *ngIf="currentUser && proUserRoles.indexOf(currentUser?.role) > - 1">
+                  <a (click)="showDropDown = false" [routerLink]="'/pro/account'">View Account Home</a>
+                </li>
+                <li>
+                  <a (click)="showDropDown = false"
+                     [routerLink]="(proUserRoles.indexOf(currentUser?.role) > - 1 ? '/pro/manage-media/' : '/user/') + mediabooksUrl">
+                    Mediabooks</a>
+                </li>
+                <li><a href="{{preUrl}}">Conversation Settings</a></li>
+                <li><a href="javascript:$zopim.livechat.window.show();">Support</a></li>
+                <!-- <li *ngIf="proUserRoles.indexOf(currentUser?.role) === - 1">
+                  <a [href]="WP_LINK+'help-for-users'">Help - Users</a></li>
+                <li *ngIf="proUserRoles.indexOf(currentUser?.role) > - 1">
+                  <a [href]="WP_LINK+'help-for-business'">Help - Business</a></li> -->
+                <li><a [href]="WP_LINK+'help'">Help</a></li>
+                <li class="logoutLink"><a href="javascript:;" (click)="logout()">Sign Out</a></li>
+              </ul>
+            </div>
+          </a>
+          <ng-template #signInMobBtn>
+            <div class="d-flex align-items-center">
+              <a href="javascript:void(0);" class="btn white btn--md bg--green cutomBtn mr-2 pros-enter-btn"
+                 [routerLink]="'/growth'" style="width: 40px;">Pros</a>
+              <a href="javascript:void(0);" routerLink="/signin">
+                <i class="profile-icon"></i></a>
+            </div>
+          </ng-template>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>

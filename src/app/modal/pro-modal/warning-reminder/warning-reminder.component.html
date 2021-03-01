@@ -1,0 +1,20 @@
+<div class="warning-reminder-popup">
+  <div class="modal-header d-flex justify-content-center">
+    <h4 class="modal-title pull-left">
+      <span class="text-secondary fs-px-18">Warning: System Timeout</span>
+    </h4>
+  </div>
+  <div class="modal-body px-10">
+    <div class="row">
+      <div class="col-12">
+        <p class="text-secondary fs-px-16 mt-5 text-center px-10">Due to inactivity, you will be logged out of the
+          system in a few minutes. Please select 'Cancel' to exit this form and continue registration or select 'Pause'
+          if you wish to Pause the registration process and continue later. </p>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer d-flex justify-content-center pb-10">
+    <button type="button" class="btn btn-outline-primary btn-hw" (click)="onCancel()">Cancel</button>
+    <button type="button" class="btn btn-primary btn-hw" (click)="onConfirm()">Confirm</button>
+  </div>
+</div>

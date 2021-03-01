@@ -1,0 +1,128 @@
+::ng-deep {
+
+  // Overlay
+  .overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+  }
+
+  .registered-email-popup {
+    position: relative;
+    background: #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 5px;
+    z-index: 1050;
+    height: 100%;
+    overflow-y: auto;
+
+    .popup-header {
+      border-bottom: 2px solid #3BA757;
+      text-align: center;
+      position: relative;
+
+      .popup-title {
+        font-family: 'Roboto', sans-serif;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 18px;
+        color: #333333;
+        line-height: 158.47%;
+        margin: 0;
+        padding: 10px 0;
+
+        .logo {
+          width: 110px;
+          height: 40.22px;
+          object-fit: cover;
+        }
+      }
+    }
+
+    .popup-body {
+      .btn {
+        padding: 10px;
+        min-width: 140px;
+        display: inline-block;
+        height: 40px;
+        text-align: center;
+        border-radius: 5px;
+        font-family: 'Roboto', sans-serif;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        text-transform: capitalize;
+        color: #fff;
+        line-height: 18px;
+
+        &.btn-submit, &.btn-cancel {
+          background: #3BA757;
+          border: 1px solid #3BA757;
+
+          &:hover {
+            background: #fff;
+            color: #3BA757;
+            border: 1px solid #3BA757;
+          }
+
+          &.outline {
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 10px;
+            background: #fff;
+            color: #3BA757;
+            min-width: 100px;
+            border: 1px solid #3BA757;
+
+            &:hover {
+              color: #fff;
+              background: #3BA757;
+              border: 1px solid #3BA757;
+            }
+          }
+        }
+
+        &.btn-cancel {
+          margin-right: 10px;
+        }
+      }
+
+      p {
+        line-height: 24px;
+      }
+      .change-cover{
+        text-align: left;
+        padding: 0 0 0 25px
+      }
+    }
+  }
+
+
+  @media screen and (max-width: 600px) {
+    .registered-email-popup.register-finished .popup-header {
+      padding: 0;
+    }
+    .registered-email-popup {
+      margin: 20px 0;
+      .popup-body {
+        padding: 20px;
+      }
+    }
+    .tooltips-container {
+      display: none;
+    }
+  }
+  @media screen and (max-width: 600px) {
+    .registered-email {
+      height: 450px !important;
+    }
+    .closeBtn {
+      top: -14px;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+$sizes: 50;
+
+@mixin line-height-classes {
+  @for $i from 1 through $sizes {
+    $line-height: $i * 0.25rem;
+    .lh-#{$i} {
+      line-height: $line-height !important;
+    }
+  }
+}
+
+@include line-height-classes;

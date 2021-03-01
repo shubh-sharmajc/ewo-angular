@@ -1,0 +1,133 @@
+::ng-deep {
+  .share-mb-popup {
+    position: relative;
+    background: #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 5px;
+    z-index: 1050;
+    height: 100%;
+
+    .popup-header {
+      border-bottom: 1px solid #3BA757;
+      text-align: center;
+      padding: 15px 30px;
+      position: relative;
+
+      .popup-title {
+        font-family: 'Roboto', sans-serif;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 18px;
+        color: #333333;
+        line-height: 158.47%;
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    .popup-body {
+      padding: 10px 30px 0 30px;
+
+      .input {
+        .content-label {
+          font-family: 'Roboto', sans-serif;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 14px;
+          color: #666666;
+          margin-bottom: 5px;
+          display: flex;
+          justify-content: space-between;
+          line-height: 158.47%;
+          width: 100%;
+        }
+      }
+
+      .btn {
+        padding: 10px;
+        min-width: 130px;
+       display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        text-align: center;
+        border-radius: 5px;
+        font-family: 'Roboto', sans-serif;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        text-transform: capitalize;
+        color: #fff;
+        margin-bottom: 10px;
+        &.outline {
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 15px;
+          background: #666666;
+          color: #FFFFFF;
+          min-width: 130px;
+          font-family: 'Roboto', sans-serif;
+          height: 35px;
+          &:hover {
+            color: #fff;
+            background: #3BA757;
+            border: 1px solid #3BA757;
+          }
+        }
+        img{
+
+          height: 25px;
+          width: 25px;
+        }
+        .mb2{
+          margin-bottom: 2px;
+        }
+        .mb5{
+          margin-bottom: 5px;
+        }
+        .mb10{
+          margin-right: 10px;
+        }
+        .mb9{
+          margin-right: 9px;
+          margin-left: -24px;
+        }
+      }
+
+      .btn {
+        padding: 10px;
+        min-width: 130px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        text-align: center;
+        border-radius: 5px;
+        font-family: 'Roboto', sans-serif;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        text-transform: capitalize;
+        color: #fff;
+        &.btn-cancel{
+          float: right;
+          background: #FFFFFF;
+          color:  #3BA757;
+          border: 1px solid #3BA757;
+          height: 35px;
+          &:hover{
+            background: #3BA757;
+            color: #FFFFFF;
+          }
+        }
+      }
+
+      .social-share {
+        margin-top: 25px;
+        display: flex;
+       flex-direction: column;
+        align-items: center;
+      }
+    }
+  }
+}

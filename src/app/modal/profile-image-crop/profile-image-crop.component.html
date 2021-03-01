@@ -1,0 +1,33 @@
+<div class="profile-img-crop-popup">
+  <div class="popup-header">
+    <h2 class="heading-title mb-0">REPLACE PROFILE PHOTO</h2>
+    <div class="closeBtn">
+      <a class="icon-close" href="javascript:void(0);" (click)="closeDialog()"></a>
+    </div>
+  </div>
+  <div class="image">
+    <ng-container *ngIf="progress">
+      <div class="h-100 w-100 d-flex flex-column justify-content-center align-items-center px-4">
+        <h1 class="fs-px-24 font-weight-normal">Uploading</h1>
+        <progressbar [value]="progress" class="img-upload-progress"></progressbar>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!progress">
+      <image-cropper
+        [format]="'jpeg'"
+        [imageQuality]="70"
+        [cropperMinWidth]="400"
+        [cropperMinHeight]="400"
+        [imageChangedEvent]="imageChangedEvent"
+        [maintainAspectRatio]="true"
+        (imageCropped)="imageCropped($event)"
+        (imageLoaded)="imageLoaded()"
+        (cropperReady)="cropperReady()"
+        (loadImageFailed)="loadImageFailed()"></image-cropper>
+    </ng-container>
+  </div>
+  <div class="buttons pr-0">
+    <button class="btn btn-cancel outline" (click)="closeDialog()">Cancel</button>
+    <button (click)="!progress && getCroppedImage()" class="btn btn-submit" [disabled]="progress">Crop & Save</button>
+  </div>
+</div>

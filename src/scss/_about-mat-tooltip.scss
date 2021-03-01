@@ -1,0 +1,13 @@
+.about-mat-tooltip {
+  font-size: 12px;
+  color: #666666 !important;
+  background: #FFFFFF;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25);
+  max-width: 340px !important;
+}
+
+@media (max-width: 1024px) {
+  .about-mat-tooltip {
+    max-width: 260px !important;
+  }
+}

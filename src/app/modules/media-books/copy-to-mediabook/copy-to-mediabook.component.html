@@ -1,0 +1,80 @@
+<div class="copy-mb-popup">
+  <div class="popup-header">
+    <h4 class="popup-title">Copy to mediabook</h4>
+  </div>
+  <div class="popup-body">
+    <div class="section m0 p0">
+      <form #copyToMBIForm="ngForm" role="form" (ngSubmit)="onSubmit(copyToMBIForm)" autocomplete="off">
+        <div class="grid m0">
+          <div class="col12_sm-12_xs-12">
+            <div class="input">
+              <label class="content-label"><span>Select mediabook (required)</span>
+                <div class="text-danger" *ngIf="copyToMBIForm.submitted && !mediaBookID.valid && mediaBookID.errors['required']">Please select mediabook.</div>
+              </label>
+              <ng-select [ngClass]="{ 'red-border': copyToMBIForm.submitted && !mediaBookID.valid && mediaBookID.errors['required']}" name="mediaBookID" class="custom-grey action-dd" [items]="mediaBookList" [closeOnSelect]="true"
+                         [searchable]="false" bindLabel="name" placeholder="Select"  (change)="menuChange($event)" #mediaBookID="ngModel"
+                         bindValue="_id" [(ngModel)]="mbObj.mediaBookID" required>
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <ngx-hm-carousel name="carousel" [(ngModel)]="index" class="mediabook-item-carousel"
+                         (ngModelChange)="indexChanged()">
+          <section ngx-hm-carousel-container class="content">
+            <article class="item cursor-pointer visible_important" ngx-hm-carousel-item
+                     *ngFor="let item of mbObj.items;let i = index">
+              <div class="grid m0 mx-10">
+                <div class="col4_sm-4_xs-12 mT20 pb-0">
+                  <div><img class="image" [src]="item.image_url"/></div>
+                </div>
+                <div class="col8_sm-8_xs-12 mT20 pb-0">
+                  <div *ngIf="item.title" class="title"> Title:
+                    <div class="subject">{{item.title ? item.title : ''}}</div>
+                  </div>
+                  <div *ngIf="item.subject" class="title">Subject: <span
+                    class="subject">{{item.subject ? item.subject : ''}}</span></div>
+                  <div class="description-text">
+                    <div *ngIf="item.desc" class="description-title">Description :
+                      <span class="description"
+                            [innerHtml]="item.desc.length > 150 && !item.showMoreText ? sanitizer.bypassSecurityTrustHtml(((item.desc | slice:0:150) + '...')) : sanitizer.bypassSecurityTrustHtml((item.desc))"></span>
+                      <a class="see-more" href="javascript:void(0);" *ngIf="item.desc.length > 150"
+                         (click)="item.showMoreText = !item.showMoreText">{{(!item.showMoreText) ? 'see more' : ' less'}}</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col12_sm-12_xs-12 p0 pb-0">
+                  <div class="input mT20">
+                    <label class="content-label">Notes (optional)</label>
+                    <textarea [id]="'notes'+i+''" [name]="'notes['+i+']'" [(ngModel)]="item.notes" rows="6" cols="50"
+                              class="input-field notes" maxlength="500" placeholder="Example:reason for saving"
+                              style="resize: none;"></textarea>
+                    <span class="notesCharacters"><span>{{ 500 - item.notes.length }} remaining</span></span>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </section>
+          <ng-template #carouselPrev>
+            <div class="click-area">
+              <img style="width: 25px!important;" *ngIf="mbObj.items.length <= 1 || index === 0" src="assets/img/left1-arrow.svg">
+              <img *ngIf="mbObj.items.length > 1 && index > 0" src="assets/img/left-strock.png">
+            </div>
+          </ng-template>
+          <ng-template #carouselNext>
+            <div class="click-area">
+              <img style="width: 25px!important;" *ngIf="mbObj.items.length <= 1 || (index + 1) === mbObj.items.length" src="assets/img/right-arrow.svg">
+              <img *ngIf="mbObj.items.length > 1 && (index + 1) !== mbObj.items.length" src="assets/img/right-strock.png">
+            </div>
+          </ng-template>
+        </ngx-hm-carousel>
+        <div class="grid m0">
+          <div class="col12_sm-12_xs-12 buttons mT20">
+            <button type="button" class="btn btn-cancel outline" value="Cancel" (click)="closeDialog()">Cancel
+            </button>
+            <button type="submit" class="btn btn-submit" value="Submit">Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

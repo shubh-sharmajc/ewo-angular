@@ -1,0 +1,43 @@
+@import '../../../../../scss/variables';
+
+.pro-user-account {
+  .location-dd {
+    padding: 0.65rem 2rem;
+  }
+
+  .side-nav {
+    .nav {
+      .nav-item {
+        .nav-link {
+          color: $secondary;
+
+          &:hover {
+            color: $primary;
+          }
+
+          &.active {
+            color: $primary;
+            border-radius: 0;
+            background: none;
+          }
+
+          &.disable {
+            color: $gray-999!important;
+            pointer-events: none;
+            background: #FFFFFF;
+          }
+        }
+
+        .parent {
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+  .staff-bios {
+    .btn-hw {
+      height: calc(1.5em + 0.75rem) !important;
+    }
+  }
+}

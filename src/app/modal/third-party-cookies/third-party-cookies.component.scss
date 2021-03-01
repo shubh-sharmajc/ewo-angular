@@ -1,0 +1,111 @@
+::ng-deep {
+  // Overlay
+  .overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+  }
+
+  .third-party-cookies-popup {
+    position: relative;
+    background: #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 5px;
+    z-index: 1050;
+    height: 100%;
+    overflow-y: auto;
+
+    .popup-header {
+      border-bottom: 1px solid #3BA757;
+      text-align: center;
+      position: relative;
+
+      .popup-title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-family: 'Roboto', sans-serif;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 18px;
+        color: #333333;
+        line-height: 158.47%;
+        margin: 0;
+        padding: 10px 0;
+
+        .logo {
+          width: 150px;
+        }
+      }
+    }
+
+    .popup-body {
+      padding: 0 15px;
+      .btn {
+        padding: 10px;
+        min-width: 100px;
+        display: inline-block;
+        height: 30px;
+        text-align: center;
+        border-radius: 5px;
+        font-family: 'Roboto', sans-serif;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        text-transform: capitalize;
+        color: #fff;
+        line-height: 10px;
+
+        &.btn-submit, &.btn-cancel {
+          background: #3BA757;
+          border: 1px solid #3BA757;
+
+          &:hover {
+            background: #fff;
+            color: #3BA757;
+            border: 1px solid #3BA757;
+          }
+
+          &.outline {
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 10px;
+            background: #fff;
+            color: #3BA757;
+            min-width: 100px;
+            border: 1px solid #3BA757;
+
+            &:hover {
+              color: #fff;
+              background: #3BA757;
+              border: 1px solid #3BA757;
+            }
+          }
+        }
+
+        &.btn-cancel {
+          margin-right: 10px;
+        }
+      }
+
+      p {
+        line-height: 24px;
+      }
+
+      .ordered-lists {
+        display: block;
+        list-style-type: decimal;
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+        padding-inline-start: 40px;
+      }
+    }
+  }
+}

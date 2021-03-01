@@ -1,0 +1,79 @@
+<div class="basic-account-setup-popup">
+  <div class="popup-header">
+    <h4 class="popup-title">Basic Account Setup</h4>
+  </div>
+  <div class="popup-body">
+    <div style="padding-top: 30px" class="section m0">
+      <form [formGroup]="basicAccountSetupForm" (ngSubmit)="onSubmit()" autocomplete="off">
+        <div class="grid">
+          <div class="col8_sm-8_xs-12 pb-4">
+            <div class="input">
+              <label class="content-label"><span>First name (required, visible to others)</span>
+                <div class="text-danger" *ngIf="f.first_name.dirty && f.first_name.errors && [f.first_name.errors.required || f.first_name.errors.pattern]">Please enter first name.</div>
+              </label>
+              <input [ngClass]="{'red-border':f.first_name.dirty && f.first_name.errors && [f.first_name.errors.required || f.first_name.errors.pattern]}"
+                type="text" formControlName="first_name" placeholder="First name" required=""/>
+            </div>
+          </div>
+          <div class="col8_sm-8_xs-12 pb-4">
+            <div class="input">
+              <label class="content-label"><span>Last name (required, only first initial displayed)</span>
+                <div class="text-danger last-name" *ngIf="f.last_name.dirty && f.last_name.errors && [f.last_name.errors.required || f.last_name.errors.pattern]">Please enter last name.</div>
+              </label>
+              <input [ngClass]="{'red-border':f.last_name.dirty && f.last_name.errors && [f.last_name.errors.required || f.last_name.errors.pattern]}"
+                type="text" formControlName="last_name" placeholder="Last name" required=""/>
+            </div>
+          </div>
+          <div class="col8_sm-8_xs-12 pb-4">
+            <div class="input">
+              <label class="content-label"><span>Email</span>
+                <div class="text-danger" *ngIf="f.email.dirty && f.email.errors && f.email.errors.required">Please enter email.</div>
+                <div class="text-danger" *ngIf="f.email.dirty && f.email.errors && f.email.errors.email">Please enter valid email address.</div>
+              </label>
+              <input [ngClass]="{'red-border':f.email.dirty && f.email.errors && [f.email.errors.required || f.email.errors.email]}"
+                type="email" formControlName="email" placeholder="emilyhunt12@gmail.com" required=""/>
+            </div>
+          </div>
+          <div class="col8_sm-8_xs-12 pb-4">
+            <div class="relative">
+              <div class="input">
+                <label class="content-label"><span>Password (required)</span>
+                  <div class="text-danger" *ngIf="f.password.dirty && f.password.errors && f.password.errors.required">Please enter password.</div>
+                  <div class="text-danger" *ngIf="f.password.dirty && f.password.errors && f.password.errors.pattern">Please enter valid password.</div>
+                </label>
+                <input [ngClass]="{'red-border':f.password.dirty && f.password.errors && [f.password.errors.required || f.password.errors.pattern]}"
+                  type="password" formControlName="password" placeholder="Password" required=""
+                       autocomplete="new-password"/>
+              </div>
+              <div class="tooltips-container">
+                <div class="tooltips-head">Password Guidelines</div>
+                <div class="tooltips-text">Select a password with six or more characters. Include at least one uppercase
+                  and one lowercase character, one integer and one special character.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col8_sm-8_xs-12 pb-4" style="padding-bottom: 20px !important;">
+            <div class="input">
+              <label class="content-label"><span>Confirm Password (required)</span>
+                <div class="text-danger" *ngIf="f.confirm_password.dirty && f.confirm_password.errors && f.confirm_password.errors.required">Please re-enter password.</div>
+                <div class="text-danger" *ngIf="f.confirm_password.dirty && f.confirm_password.errors && f.confirm_password.errors.mustMatch">Passwords entered do not match.</div>
+              </label>
+              <input [ngClass]="{'red-border':f.confirm_password.dirty && f.confirm_password.errors && [f.confirm_password.errors.required || f.confirm_password.errors.pattern]}"
+                type="password" formControlName="confirm_password" placeholder="Confirm Password" required=""
+                     autocomplete="new-password"/>
+            </div>
+          </div>
+          <div *ngIf="message"  class="msg">
+            <small>{{message}}</small>
+          </div>
+          <div class="col8_sm-8_xs-12 text-right" style="padding-top: 20px;padding-bottom: 40px;">
+            <button type="button" class="btn btn-cancel outline" value="Cancel" (click)="closeDialog(null)">Cancel
+            </button>
+            <button type="submit" class="btn btn-submit" value="Submit">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+<div class="container px-3 py-8 listing">
+  <ng-container *ngFor="let listData of list; let i = index">
+    <div class="row" [ngClass]="(i===0) ? '' : 'mt-32'">
+      <div class="col-lg-6 col-md-12" [ngClass]="(i%2!=0) ? 'order-2' : ''">
+        <h3 class="fs-px-16 font-weight-normal text-uppercase sub-title">{{listData?.subtitle}}</h3>
+        <h1 class="fs-px-32 font-weight-normal mt-5">{{listData?.title}}</h1>
+        <h2 class="fs-px-20 text-666 font-weight-normal mt-8">{{listData?.desc}}</h2>
+        <ng-container *ngIf="listData?.feature">
+          <h3 class="fs-px-16 text-666 font-weight-normal mt-8" *ngIf="listData?.desc">“<i>{{listData?.desc}}</i>”</h3>
+          <h4 class="fs-px-16 font-weight-normal" *ngIf="listData?.name">- <i>{{listData?.name}}</i></h4>
+          <div class="btn-container">
+            <a *ngIf="!currentUser" class="btn btn-primary btn-register mt-8" [routerLink]="['/pro/sign-up']">Register now</a>
+            <a *ngIf="currentUser && !business?.is_complete" [routerLink]="['/pro/resume-registration']" class="btn btn-primary btn-register mt-8">Resume registration</a>
+            <a *ngIf="currentUser && business?.is_complete" [routerLink]="['/pro/user/'+currentUser?.username]" class="btn btn-primary btn-register mt-8">View profile</a>
+          </div>
+        </ng-container>
+      </div>
+      <div class="col-lg-6 col-md-12" [ngClass]="(i%2!=0) ? 'order-1' : ''">
+        <img class="img-fluid rounded listing-img" [src]="listData?.image"/>
+      </div>
+    </div>
+  </ng-container>
+</div>

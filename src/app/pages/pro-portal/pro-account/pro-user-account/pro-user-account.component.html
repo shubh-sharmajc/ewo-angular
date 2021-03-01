@@ -1,0 +1,98 @@
+<div class="container pro-user-account p-0">
+  <div class="row">
+    <div class="col-lg-3 col-md-4 col-sm-12">
+      <div class="bg-white border rounded">
+        <div class="border-bottom mb-0 d-flex align-items-center location-dd">
+          <label class="text-secondary fs-px-20 mt-2 mr-1 font-weight-bold">Location:</label>
+          <ng-select class="custom-grey location" [items]="bLocation" [closeOnSelect]="true" [searchable]="false"
+                     [clearable]="false" bindLabel="location.name" placeholder="Location" [(ngModel)]="selectedLoc"
+                     (change)="locationChange()">
+            <ng-template ng-option-tmp let-item="item">
+              <span>{{item.location.name}}</span>
+            </ng-template>
+          </ng-select>
+        </div>
+        <div class="side-nav px-2 py-3">
+          <ul class="nav flex-column">
+            <ng-container *ngFor="let t of tabs;let i = index">
+              <li class="nav-item" (click)="!t.tabs && changeTab(t)">
+                <a class="nav-link" href="javascript:void(0);" (click)="t.name === 'Account Home' && changeTab(t)"
+                   [class.parent]="t.active" [class.active]="t.active">{{t.name}}</a>
+                <ng-container *ngIf="t.tabs && t.tabs.length">
+                  <ul class="nav flex-column pl-3">
+                    <ng-container *ngFor="let st of t.tabs;let j = index">
+                      <ng-container *ngIf="!st.hide">
+                        <li class="nav-item" (click)="!st?.disable && changeTab(st)">
+                          <a class="nav-link" href="javascript:void(0);" [class.active]="st.active"
+                             [class.disable]="st?.disable">
+                            {{st.name}}</a>
+                        </li>
+                      </ng-container>
+                    </ng-container>
+                  </ul>
+                </ng-container>
+              </li>
+            </ng-container>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-9 col-md-8 col-sm-12 pl-lg-0 pl-md-0">
+      <div class="bg-white border rounded">
+        <ng-container *ngIf="paramTabValue === 'add-new-services' || paramTabValue === 'contact-us'">
+          <form>
+            <h5 class="text-center text-primary border-bottom border-primary py-5 mb-0">{{tab?.name}}</h5>
+            <div class="row m-0">
+              <div class="col p-10">
+                <h5 class="m-0 text-center text-uppercase fs-px-20 text-danger">ON HOLD</h5>
+              </div>
+            </div>
+          </form>
+        </ng-container>
+        <ng-container *ngIf="paramTabValue === 'account-home'">
+          <app-account-home (next)="next($event)" [editUser]="true"></app-account-home>
+        </ng-container>
+        <ng-container *ngIf="paramTabValue === 'basic-registration'">
+          <app-basic-registration (next)="next($event)" [editUser]="true"></app-basic-registration>
+        </ng-container>
+        <ng-container *ngIf="paramTabValue === 'business-profile'">
+          <app-business-profile (next)="next($event)" [editUser]="true"></app-business-profile>
+        </ng-container>
+        <ng-container *ngIf="paramTabValue === 'request-reviews'">
+          <app-ratings-and-reviews></app-ratings-and-reviews>
+        </ng-container>
+        <ng-container *ngIf="paramTabValue === 'social-links'">
+          <app-social-media (next)="next($event)" [editUser]="true"></app-social-media>
+        </ng-container>
+        <ng-container *ngIf="paramTabValue === 'testimonials'">
+          <app-testimonials [editUser]="true" (next)="getProUser()"></app-testimonials>
+        </ng-container>
+        <ng-container *ngIf="paramTabValue === 'recognitions'">
+          <app-recognitions [editUser]="true" (next)="getProUser()"></app-recognitions>
+        </ng-container>
+        <ng-container *ngIf="paramTabValue === 'account-security'">
+          <app-account-security [editUser]="true"></app-account-security>
+        </ng-container>
+        <ng-container *ngIf="paramTabValue === 'billing-and-payments'">
+          <app-billing-and-payments (next)="next($event)" [editUser]="true"></app-billing-and-payments>
+        </ng-container>
+        <ng-container *ngIf="paramTabValue === 'add-locations'">
+          <app-basic-registration (next)="next($event)" [addLocation]="true"></app-basic-registration>
+        </ng-container>
+        <!-- <ng-container *ngIf="paramTabValue === 'staff-bios'">
+           <app-staff-bias [editUser]="true"></app-staff-bias>
+         </ng-container>-->
+        <ng-container *ngIf="paramTabValue === 'staff-bios'">
+          <form>
+            <h5 class="text-center text-primary border-bottom border-primary py-5 mb-0">{{tab?.name}}</h5>
+            <div class="row m-0">
+              <div class="col p-10">
+                <h5 class="m-0 text-center text-uppercase fs-px-20 text-danger">COMING SOON...</h5>
+              </div>
+            </div>
+          </form>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

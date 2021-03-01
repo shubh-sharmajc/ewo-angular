@@ -1,0 +1,24 @@
+<div class="container mt-28 mb-10 pro-account">
+  <div class="row">
+    <div class="col">
+      <div class="p-8 bg-white banner d-flex align-items-end justify-content-end"
+           [style.background-image]="'url(https://picsum.photos/1280/500)'">
+        <ng-container>
+          <a class="btn btn-primary" *ngIf="!currentUser" [routerLink]="['/pro/sign-up']">Register now</a>
+          <a class="btn btn-primary"
+             *ngIf="currentUser && !business?.is_complete" [routerLink]="['/pro/resume-registration']">
+            Resume Registration</a>
+          <a class="btn btn-primary"
+             *ngIf="currentUser && business?.is_complete" [routerLink]="['/pro/user/'+currentUser?.username]">
+            View Profile</a>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+

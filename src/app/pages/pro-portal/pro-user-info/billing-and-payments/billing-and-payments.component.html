@@ -1,0 +1,160 @@
+<div class="billing-and-payments bg-white">
+  <h5 class="text-center text-primary border-bottom border-primary py-5 mb-0">Billing & Payments</h5>
+  <div class="row m-0">
+    <div class="col p-10">
+      <div class="row">
+        <div class="col-md-8 col-sm-12">
+          <div class="d-flex justify-content-between">
+            <div>
+              <div class="fs-px-16 text-secondary font-weight-bold">Your current plan: <span class="text-666 font-weight-normal">
+                {{currentPlan?.name}} ({{currentPlan?.price == 0? "Free": calculatePlanPrice(currentPlan)}})
+              </span>
+              </div>
+              <a class="text-primary fs-px-16 py-2" [routerLink]="'/growth/pro-pricing'">
+                Change Plan</a>
+            </div>
+            <div>
+              <div class="fs-px-16 font-weight-bold text-secondary">Payments</div>
+              <div class="d-flex justify-content-between align-items-center pay-info-container">
+                <span class="fs-px-14 text-secondary mr-5">
+                  Amount due: <span class="text-999">{{calculatePlanPrice(currentPlan)}}</span>
+                </span>
+                <span class="fs-px-14 text-secondary">Duration: <span class="text-999">{{payment}}</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-12"></div>
+      </div>
+      <div class="text-secondary fs-px-16 mt-8 mb-5 font-weight-bold">Billing address</div>
+      <div class="row">
+        <div class="col-md-7 col-sm-12">
+          <div class="form-group mb-8">
+            <label class="w-100 d-flex justify-content-between text-666" for="address">
+              <span>Street address <span class="text-999 font-weight-normal">(required)</span></span>
+            </label>
+            <input type="text" class="form-control fs-px-14" id="address" placeholder="Address line 1">
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-12"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-7 col-sm-12">
+          <div class="form-group mb-8">
+            <label class="text-666" for="addressLine2">Suite, Unit, Building etc. <span
+              class="text-999 font-weight-normal">(optional)</span></label>
+            <input type="text" class="form-control fs-px-14" id="addressLine2" placeholder="Address line 2">
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-12"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-7 col-sm-12">
+          <div class="row">
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group mb-4">
+                <label class="text-666 d-flex justify-content-between">
+                  <span>Country <span class="text-999 font-weight-normal">(required)</span></span>
+                </label>
+                <div class="form-control fs-px-14 disabled-input dropdown" readonly>United States</div>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group mb-8">
+                <label class="text-666 d-flex flex-column justify-content-between" for="state">
+                  <span>State <span class="text-999 font-weight-normal">(required)</span></span>
+                </label>
+                <select name="state" class="form-control text-secondary fs-px-14" id="state">
+                  <option value="">Choose state</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-12"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-7 col-sm-12">
+          <div class="row">
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group mb-8">
+                <label class="text-666 d-flex justify-content-between" for="city">
+                  <span>City <span class="text-999 font-weight-normal">(required)</span></span>
+                </label>
+                <input type="text" class="form-control fs-px-14" id="city" placeholder="City">
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group mb-4">
+                <label class="text-666 d-flex justify-content-between" for="zip">
+                  <span>Zip code <span class="text-999 font-weight-normal">(required)</span></span>
+                </label>
+                <input type="text" class="form-control fs-px-14" id="zip" placeholder="Zip code">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-12"></div>
+      </div>
+      <div class="text-secondary fs-px-16 mt-4 mb-5 font-weight-bold">Payment Method</div>
+      <div class="row">
+        <div class="col-md-7 col-sm-12">
+          <div class="form-group mb-5">
+            <input type="text" class="form-control fs-px-14 position-relative" id="credit" placeholder="Credit Card">
+            <div class="card-img">
+              <img class="mr-3" src="../../../../../assets/img/card.svg"/>
+              <img class="mr-3" src="../../../../../assets/img/card.svg"/>
+              <img class="mr-3" src="../../../../../assets/img/card.svg"/>
+              <img class="mr-3" src="../../../../../assets/img/card.svg"/>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-12"></div>
+      </div>
+      <div class="text-666 fs-px-14 mb-2">Enter your card information</div>
+      <div class="row">
+        <div class="col-md-7 col-sm-12">
+          <div class="form-group mb-5">
+            <input type="text" class="form-control fs-px-14" id="name" placeholder="Cardholder Name*">
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-12"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-7 col-sm-12">
+          <div class="form-group mb-5">
+            <input type="text" class="form-control fs-px-14" id="number" placeholder="Credit Card Number">
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-12"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-7 col-sm-12">
+          <div class="row">
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group mb-5">
+                <input type="text" class="form-control fs-px-14" id="expires" placeholder="Expires(mm/yy)">
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group mb-4">
+                <input type="text" class="form-control fs-px-14" id="cvc" placeholder="CVC">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-12"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+          <div class="form-check pb-3 lh-6">
+            <input id="doNotDisplay" type="checkbox" class="form-check-input">
+            <label class="form-check-label fs-px-14 text-666" for="doNotDisplay">Billing address same as
+              shipping</label>
+          </div>
+          <button type="button" class="btn btn-primary btn-hw" (click)="makePayment()">Make Payment</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

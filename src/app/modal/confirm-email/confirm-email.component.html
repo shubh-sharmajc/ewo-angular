@@ -1,0 +1,26 @@
+<div class="confirm-email-popup">
+  <div class="popup-header">
+    <h4 class="popup-title">
+      <div class="row m-0 align-items-center px-6">
+        <div class="col-3">
+          <img class="logo float-left" src="assets/img/logo/ewo_150.png">
+        </div>
+        <div class="col-6 align-items-center fs-px-20 font-weight-bold text-primary text-center">Authenticate your email address</div>
+        <div class="col text-right">
+          <div class="closeBtn "><a class="icon-close" href="javascript:void(0);" (click)="closeDialog()"></a></div>
+        </div>
+      </div>
+    </h4>
+  </div>
+  <div class="popup-body">
+    <div class="grid m0 px-6">
+      <div class="col12_sm-12_xs-12 text-center py-8">
+        <p class="text-secondary fs-px-16 mb-0 text-left">We sent an email to the address you provided. Please click on the link inside to continue
+          registration. The link expires in 1 hour. Please check your Spam folder if you can't find it.</p>
+      </div>
+     <div class="col12 text-center pB0">
+       <button type="button" class="btn btn-submit outline mR20" value="Resend email" (click)="sendEmailNotification()">Resend email</button>
+     </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+@import 'variables';
+
+.pro-user-edit-profile {
+  .edit-Profile-tabset {
+    .nav {
+      display: flex;
+      justify-content: flex-start;
+
+      .nav-item {
+        .nav-link {
+          color: $secondary;
+          padding: 1rem;
+          font-weight: 500;
+
+          &:hover {
+            color: $primary;
+          }
+
+          &.active {
+            color: $primary;
+            border-radius: 0;
+            background: none;
+          }
+        }
+      }
+    }
+  }
+
+  .credentials-tabset {
+    .nav {
+      display: flex;
+      justify-content: space-between;
+
+      .nav-item {
+        .nav-link {
+          color: $secondary;
+
+          &:hover {
+            color: $primary;
+          }
+
+          &.active {
+            background-color: $white;
+            color: $primary;
+            border-bottom: 5px solid;
+            border-radius: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .btn-hw {
+    width: 140px;
+    height: 40px;
+  }
+}
+
+.account-tabset {
+  .nav {
+    display: flex;
+    justify-content: flex-start;
+
+    .nav-item {
+      .nav-link {
+        color: $secondary;
+        padding: 1rem;
+        font-weight: 500;
+        font-size: 16px;
+
+        &:hover {
+          color: #3AA757
+        }
+
+        &.active {
+          color: #3AA757;
+          border-radius: 0;
+          background: none;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}

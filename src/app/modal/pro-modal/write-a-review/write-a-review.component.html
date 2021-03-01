@@ -1,0 +1,79 @@
+<form [formGroup]="writeAReviewForm" (ngSubmit)="writeAReviewSubmit()">
+  <div class="write-a-review-popup">
+    <div class="modal-header d-flex justify-content-center">
+      <h4 class="modal-title pull-left">
+        <span *ngIf="review._id" class="text-secondary fs-px-18">Edit Review</span>
+        <span *ngIf="!review._id" class="text-secondary fs-px-18">Write a Review</span>
+      </h4>
+    </div>
+    <div class="modal-body px-10">
+      <div class="row mb-3">
+        <div class="col-12">
+          <div class="font-weight-bold fs-px-20 text-secondary py-2">{{review?.business?.name?.name}}</div>
+          <div class="d-flex align-items-center">
+            <div class="pr-5">Overall rating</div>
+            <rating formControlName="rate" [max]="max" [customTemplate]="t" style="font-size: 30px; color:#FFC200;"
+                    [readonly]="false"></rating>
+            <ng-template #t let-index="index" let-value="value">{{index < value ? '&#9733;' : '&#9734;'}}</ng-template>
+          </div>
+        </div>
+      </div>
+      <hr class="my-5"/>
+      <div class="row mb-3">
+        <div class="col-md-12 col-sm-12">
+          <div class="font-weight-bold text-secondary fs-px-16 mb-2">Pro Attributes</div>
+          <ng-container formArrayName="keywords">
+            <ng-container *ngFor="let keyword of keywordsCtrl.controls;let i = index">
+              <div class="form-check py-1 pl-0">
+                <label class="fs-px-14">
+                  <input [id]="'keyword'+i" type="checkbox" [formControlName]="i"/> {{keywords[i]}}
+                </label>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-12 col-sm-12">
+          <div class="form-group">
+            <label class="text-666 d-flex justify-content-between" for="detailedReview">
+              <span>Detailed review <span class="text-999 font-weight-normal">(required)</span></span>
+              <span class="text-danger" *ngIf="wrSubmitted && f.details.errors && [f.details.errors.required || f.details.errors.cannotContainSpace]">
+                    Please enter detailed review.
+                </span>
+            </label>
+            <div class="d-flex pt-1 text-999 fs-px-12">Did the service meet your needs? Will you return for future
+              services? Recommend to friends? If so, please acknowledge work well done.
+              If not, please provide constructive feedback to help the Pro improve their services. Pros can respond to
+              your comments.
+            </div>
+            <textarea formControlName="details" class="form-control fs-px-14 resize-none" id="detailedReview" rows="5"
+                      [ngClass]="{'is-invalid':wrSubmitted && f.details.errors && [f.details.errors.required ||  f.details.errors.cannotContainSpace]}">
+            </textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+          <div class="form-group">
+            <label class="text-666 d-flex justify-content-between" for="stateLicense">
+              <span>Add a title for your review <span class="text-999 font-weight-normal">(required)</span></span>
+              <span class="text-danger" *ngIf="wrSubmitted && f.title.errors && [f.title.errors.required || f.title.errors.cannotContainSpace]">
+                    Please enter title for your review.
+                  </span>
+            </label>
+            <input formControlName="title" type="text" class="form-control fs-px-14" id="stateLicense"
+                   [ngClass]="{'is-invalid':wrSubmitted && f.title.errors && [f.title.errors.required || f.title.errors.cannotContainSpace]}"
+                   placeholder="Summarize your review with short title">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer border-none pb-10">
+      <button type="button" class="btn btn-outline-primary btn-hw" (click)="bsModalRef.hide();onClose.next(false);">
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary btn-hw">Submit</button>
+    </div>
+  </div>
+</form>

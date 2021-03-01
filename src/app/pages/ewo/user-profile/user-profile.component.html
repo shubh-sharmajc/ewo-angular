@@ -1,0 +1,64 @@
+<section class="user-profile-page">
+  <div class="container">
+    <div class="grid">
+      <div class="col12 col12_sm-12_xs-12 pB0">
+        <div class="user-photos">
+          <div class="cover"
+               [ngStyle]="{'background': 'linear-gradient(180deg, rgba(196, 196, 196, 0) 0%, rgba(0, 0, 0, 0.8) 105.61%), url(\'' + (user && user?.cover_picture_url && !user.cover_picture_url.includes('noImage') ? (user?.cover_picture_url|imageExists: 'assets/img/cover-img-gallery/6.jpg'|async) : 'assets/img/cover-img-gallery/6.jpg') + '\')'}"></div>
+          <a class="btn btn-submit btn-profile" [routerLink]="['/user/'+username+'/edit-profile']"
+             (click)="broadcaster.showMyInfoView(true)"
+             *ngIf="username === currentUser?.username && !router.url.includes('mediabooks') && !router.url.includes('my-reviews')">
+            Edit Profile
+          </a>
+          <button (click)="changeCoverPhoto()" class="btn btn-cover-photo"
+                  *ngIf="username === currentUser?.username && !router.url.includes('mediabooks') && !router.url.includes('my-reviews')">
+            <img src="assets/img/camera.svg">
+            Change cover photo
+          </button>
+          <div class="avatar-wrap">
+            <img
+              [src]="user && user?.picture_url ? (user.picture_url|imageExists: 'assets/img/avatar.jpg'|async) : 'assets/img/avatar.jpg'"
+              class="avatar"/>
+            <label class="avatar-img-description"
+                   *ngIf="username === currentUser?.username && !router.url.includes('mediabooks') && !router.url.includes('my-reviews')">
+              <input #avatar type="file" (change)="changeProfile($event)" id="getFile" name="image"
+                     accept="image/*" onclick="this.value = null;"/>
+              <img src="assets/img/camera.svg">
+              <div class="text-center">
+                <p>Change profile photo</p>
+                <p style="font-size: 14px;padding: 10px;">Photo must be between 250KB to 4MB.</p>
+              </div>
+            </label>
+          </div>
+          <h1 class="user-name">{{userName}}</h1>
+        </div>
+      </div>
+    </div>
+    <div class="grid tabs-container">
+      <div class="col3 col3_sm-3_xs-12 pB0">
+      </div>
+      <div class="col3 col9_sm-9_xs-12 pB0 tabs-nav">
+        <ul class="tabs">
+          <li>
+            <a class="tab" [routerLink]="['/user/'+username]"
+               [class.active]="(router.url === '/user/'+username) || router.url.includes('/edit-profile')">Profile</a>
+          </li>
+          <li>
+            <a class="tab" [routerLink]="['/user/'+username+'/mediabooks']" [routerLinkActive]="['active']">
+              Mediabooks
+            </a>
+          </li>
+          <li *ngIf="username === currentUser?.username">
+            <a [href]="profileUrl+'/chats'" class="tab">Messages</a></li>
+          <li>
+            <a [href]="profileUrl+'/activity'" class="tab"
+               [class.active]="router.url.includes('/my-reviews')">Community</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="container mT20 p-0">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</section>
